@@ -47,10 +47,7 @@ LIBS = [
     # "django_celery_results",
 ]
 APPS = [
-    "apps.users",
-    "apps.main",
-    "apps.ads",
-    "apps.chat",
+    "apps.clients",
 ]
 INSTALLED_APPS = BASE_APPS + LIBS + APPS
 
@@ -118,7 +115,7 @@ REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'conf.pagination.CustomPagination',
 }
 
-AUTH_USER_MODEL = "users.User"
+# AUTH_USER_MODEL = "users.User"
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/
