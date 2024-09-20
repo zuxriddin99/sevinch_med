@@ -1,0 +1,7 @@
+.env
+django/db.sqlite3
+mounts
+.idea
+media
+locale_files
+django/db.sqlite3
