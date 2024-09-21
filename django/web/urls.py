@@ -1,9 +1,9 @@
 from django.urls import include, path
 
-from web.views import TestView
+from web.views import HomeView
 
 app_name = "web"
 urlpatterns = [
-    path("auth/", include("web.auth.urls", namespace="auth")),
-    path("", TestView.as_view(), name="test"),
+    path("home/", HomeView.as_view(), name="home"),
+    path("", include("web.auth.urls", namespace="auth")),
 ]

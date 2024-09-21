@@ -14,6 +14,7 @@ from datetime import timedelta
 from pathlib import Path
 
 import dj_database_url
+from django.contrib.messages import constants as messages
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -185,3 +186,9 @@ CSRF_TRUSTED_ORIGINS = ["https://*.zukhriddin.uz", "https://*.zukhriddin.uz", "h
 # CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'
 
 DATA_UPLOAD_MAX_MEMORY_SIZE = 104857600
+MESSAGE_TAGS = {
+    messages.INFO: 'info',
+    messages.SUCCESS: 'success',
+    messages.WARNING: 'warning',
+    messages.ERROR: 'danger',
+}
