@@ -49,6 +49,8 @@ LIBS = [
 ]
 APPS = [
     "apps.clients",
+    "apps.users",
+    "apps.main",
 ]
 INSTALLED_APPS = BASE_APPS + LIBS + APPS
 
@@ -115,8 +117,6 @@ REST_FRAMEWORK = {
     ),
     'DEFAULT_PAGINATION_CLASS': 'conf.pagination.CustomPagination',
 }
-
-# AUTH_USER_MODEL = "users.User"
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/
@@ -192,3 +192,4 @@ MESSAGE_TAGS = {
     messages.WARNING: 'warning',
     messages.ERROR: 'danger',
 }
+AUTH_USER_MODEL = "users.CustomUser"  # new
