@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 import os
 from datetime import timedelta
 from pathlib import Path
+import sentry_sdk
 
 import dj_database_url
 from django.contrib.messages import constants as messages
@@ -121,7 +122,7 @@ REST_FRAMEWORK = {
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'uz-UZ'
 
 TIME_ZONE = 'Asia/Tashkent'
 
@@ -193,3 +194,14 @@ MESSAGE_TAGS = {
     messages.ERROR: 'danger',
 }
 AUTH_USER_MODEL = "users.CustomUser"  # new
+
+sentry_sdk.init(
+    dsn=os.environ.get("SENTRY_DSN", None),
+    # Set traces_sample_rate to 1.0 to capture 100%
+    # of transactions for tracing.
+    traces_sample_rate=1.0,
+    # Set profiles_sample_rate to 1.0 to profile 100%
+    # of sampled transactions.
+    # We recommend adjusting this value in production.
+    profiles_sample_rate=1.0,
+)

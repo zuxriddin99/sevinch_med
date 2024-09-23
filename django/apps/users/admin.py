@@ -11,7 +11,7 @@ from apps.users.models import CustomUser
 class CustomUserAdmin(UserAdmin):
     add_form = CustomUserCreationForm
     form = CustomUserChangeForm
-    list_display = ["id", "username"]
+    list_display = ["id", "username", "department_name"]
     list_display_links = ["id", "username"]
     fieldsets = (
         (None, {'fields': ('username', 'password', 'department')}),
@@ -27,3 +27,7 @@ class CustomUserAdmin(UserAdmin):
     )
     search_fields = ('username',)
     ordering = ('username',)
+
+    @staticmethod
+    def department_name(obj):
+        return obj.department.name if obj.department else ""

@@ -68,6 +68,7 @@ class Transaction(BaseModel):
     class TypeTransactionEnum(models.TextChoices):
         CARD = "card", "Card"
         CASH = "cash", "Cash"
+
     payment_procedure = models.ForeignKey(
         PaymentProcedure, on_delete=models.CASCADE, related_name='payment_transactions')
     amount = models.IntegerField(default=0)
@@ -76,3 +77,35 @@ class Transaction(BaseModel):
         verbose_name = 'Transaction'
         verbose_name_plural = 'Transactions'
         db_table = 'transactions'
+
+
+class ReferralPerson(BaseModel):
+    full_name = models.CharField(max_length=255)
+    phone_number = models.CharField(max_length=15, blank=True, default='')
+    additional_information = models.TextField(blank=True, default='')
+
+    def __str__(self):
+        return self.full_name
+
+    class Meta:
+        verbose_name = 'Referral Person'
+        verbose_name_plural = 'Referral Persons'
+        db_table = 'referral_persons'
+
+    @property
+    def total_invited_people(self):
+        return self.referral_items.all().count()
+
+    @property
+    def unpaid_invited_people(self):
+        return self.referral_items.filter(was_paid=False).count()
+
+
+class ReferralItem(BaseModel):
+    referral = models.ForeignKey(ReferralPerson, on_delete=models.CASCADE, related_name='referral_items')
+    was_paid = models.BooleanField(default=False)
+
+    class Meta:
+        verbose_name = 'Referral Item'
+        verbose_name_plural = 'Referral Items'
+        db_table = 'referral_items'
