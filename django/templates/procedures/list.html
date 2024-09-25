@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
-{% block title %}Mijozlar ro'yxati.{% endblock %}
+{% block title %}Muolajalar ro'yxati.{% endblock %}
 {% block style %}
 
 
@@ -25,7 +25,7 @@
         <div class="card-header">
             <div class="row flex-between-center">
                 <div class="col-4 col-sm-auto d-flex align-items-center pe-0">
-                    <h5 class="fs-9 mb-0 text-nowrap py-2 py-xl-0">Mijozlar.</h5>
+                    <h5 class="fs-9 mb-0 text-nowrap py-2 py-xl-0">Muolajalar.</h5>
                 </div>
                 <div class="search-box" style="width: 30%">
                     <form class="position-relative" data-bs-toggle="search" data-bs-display="static">
@@ -73,14 +73,13 @@
                         <th class="text-900 no-sort pe-1 align-middle white-space-nowrap" data-sort="phone">Telefon
                             raqami
                         </th>
-                        <th class="text-900 no-sort pe-1 align-middle white-space-nowrap" data-sort="dt_birth">Tug'ilgan
-                            kuni
+                        <th class="text-900 no-sort pe-1 align-middle white-space-nowrap" data-sort="procedure_type">Muolaja turi.
                         </th>
-                        <th class="text-900 no-sort pe-1 align-middle white-space-nowrap" data-sort="address"
-                            style="min-width: 200px;">Manzil
+                        <th class="text-900 no-sort pe-1 align-middle white-space-nowrap" data-sort="address" >Tavsiya etilgan<br>muolajalar soni
                         </th>
-                        <th class="text-900 no-sort pe-1 align-middle white-space-nowrap" data-sort="joined">Tizimga
-                            qo'shilgan vaht.
+                        <th class="text-900 no-sort pe-1 align-middle white-space-nowrap" data-sort="address" >Qabul qilingan<br>muolajalar soni
+                        </th>
+                        <th class="text-900 no-sort pe-1 align-middle white-space-nowrap" style="max-width: 60px" data-sort="joined">Muolaja holati.
                         </th>
                     </tr>
                     </thead>
@@ -129,5 +128,5 @@
     <script src="{% static 'vendors/jquery/jquery.min.js' %}"></script>
     <script src="{% static 'vendors/select2/select2.min.js' %}"></script>
     <script src="{% static 'vendors/select2/select2.full.min.js' %}"></script>
-    <script src="{% static 'assets/js/custom.js' %}"></script>
+    <script src="{% static 'assets/js/procedures_list.js' %}"></script>
 {% endblock %}

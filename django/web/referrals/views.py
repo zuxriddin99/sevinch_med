@@ -14,11 +14,13 @@ from web.auth import forms
 from web.clients.serializers import ClientSerializer
 from rest_framework import generics
 
+from web.referrals.serializers import ReferralPersonListSerializer, ReferralPersonCreateSerializer
 from web.views import LoginRequiredMixin
 
-class ClientsListAPIView(generics.ListAPIView):
-    queryset = Client.objects.all()
-    serializer_class = ClientSerializer
+
+class ReferralPersonListAPIView(generics.ListAPIView):
+    queryset = ReferralPerson.objects.all()
+    serializer_class = ReferralPersonListSerializer
     permission_classes = (permissions.AllowAny,)
     pagination_class = CustomPagination
 
@@ -26,8 +28,8 @@ class ClientsListAPIView(generics.ListAPIView):
         search = request.GET.get('search')
         q_filter = Q()
         if search:
-            q_filter = Q(first_name__icontains=search) | Q(last_name__icontains=search)
-        queryset = Client.objects.filter(q_filter).order_by('-updated_at')
+            q_filter = Q(full_name__icontains=search)
+        queryset = ReferralPerson .objects.filter(q_filter).order_by('-updated_at')
         data = self.get_response_data(self.serializer_class, queryset, many=True)
         return Response(data)
 
@@ -40,6 +42,11 @@ class ClientsListAPIView(generics.ListAPIView):
         return serializer_class(instance, **kwargs).data
 
 
-class ClientListView(LoginRequiredMixin, generic.TemplateView):
-    template_name = 'clients/clients_list.html'
+class ReferralPersonCreateAPIView(generics.CreateAPIView):
+    model = ReferralPerson
+    serializer_class = ReferralPersonCreateSerializer
+    permission_classes = (permissions.AllowAny,)
 
+
+class ReferralPersonListView(LoginRequiredMixin, generic.TemplateView):
+    template_name = 'referrals/referral_person_list.html'

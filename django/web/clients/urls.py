@@ -1,6 +1,6 @@
 from django.urls import include, path
 
-from web.clients.views import AuthView, ClientsListAPIView, ClientListView
+from web.clients.views import ClientsListAPIView, ClientListView
 
 app_name = "clients"
 urlpatterns = [

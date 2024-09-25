@@ -10,7 +10,6 @@ class LoginRequiredMixin(AccessMixin):
     """Verify that the current user is authenticated."""
 
     def dispatch(self, request, *args, **kwargs):
-        print(11)
         if not request.user.is_authenticated:
             return self.handle_no_permission()
         # if not self.has_department(request.user):

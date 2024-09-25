@@ -47,6 +47,11 @@ class Procedure(BaseModel):
         db_table = 'procedures'
 
 
+class ProcedureItem(BaseModel):
+    procedure = models.ForeignKey(Procedure, on_delete=models.CASCADE, related_name='items')
+    n_th_treatment = models.IntegerField(default=0)
+
+
 class PaymentProcedure(BaseModel):
     procedure = models.ForeignKey(Procedure, on_delete=models.CASCADE, related_name='procedure_payments')
     total_amount = models.IntegerField(default=0)  # use integer field because in sum use only integer number
@@ -99,6 +104,13 @@ class ReferralPerson(BaseModel):
     @property
     def unpaid_invited_people(self):
         return self.referral_items.filter(was_paid=False).count()
+
+    @property
+    def formated_phone_number(self):
+        if self.phone_number.startswith("+998") and len(self.phone_number) == 13:
+            return f"{self.phone_number[:4]} ({self.phone_number[4:6]}) {self.phone_number[6:9]} {self.phone_number[9:11]} {self.phone_number[11:]}"
+        else:
+            return self.phone_number if self.phone_number else "-"
 
 
 class ReferralItem(BaseModel):
