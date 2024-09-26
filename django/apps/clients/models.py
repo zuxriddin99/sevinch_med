@@ -23,14 +23,14 @@ class Client(BaseModel):
     def translated_date_of_birth(self):
         if self.date_of_birth:
             locale.setlocale(locale.LC_TIME, 'uz_UZ.UTF-8')
-            return self.date_of_birth.strftime('%Y-yil %d-%B')
+            return self.date_of_birth.strftime('%Y-yil %d-%b')
         return ""
 
     @property
     def translated_created_at(self):
         if self.created_at:
             locale.setlocale(locale.LC_TIME, 'uz_UZ.UTF-8')
-            return self.created_at.strftime('%Y-yil %-d-%B %H:%M')
+            return self.created_at.strftime('%Y-yil %-d-%b %H:%M')
         return ""
 
     @property

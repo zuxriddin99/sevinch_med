@@ -1,4 +1,5 @@
 from django.db import models
+import locale
 
 from apps.base_app.models import BaseModel
 
@@ -46,10 +47,22 @@ class Procedure(BaseModel):
         verbose_name_plural = 'Procedures'
         db_table = 'procedures'
 
+    @property
+    def translated_created_at(self):
+        if self.created_at:
+            locale.setlocale(locale.LC_TIME, 'uz_UZ.UTF-8')
+            return self.created_at.strftime('%Y-yil %-d-%b %H:%M')
+        return ""
+
 
 class ProcedureItem(BaseModel):
     procedure = models.ForeignKey(Procedure, on_delete=models.CASCADE, related_name='items')
     n_th_treatment = models.IntegerField(default=0)
+
+    class Meta:
+        verbose_name = "Procedure item"
+        verbose_name_plural = "Procedure items"
+        db_table = 'procedure_items'
 
 
 class PaymentProcedure(BaseModel):

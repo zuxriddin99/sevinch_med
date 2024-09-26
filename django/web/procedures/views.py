@@ -1,6 +1,6 @@
 from django.contrib import messages
 from django.contrib.auth import authenticate, login
-from django.db.models import Q
+from django.db.models import Q, Count
 from django.shortcuts import render, redirect
 from django.views import generic
 from gunicorn.config import User
@@ -66,7 +66,7 @@ class ProcedureListAPIView(generics.ListAPIView):
             q_filter = Q(Q(client__first_name__icontains=search) | Q(client__last_name__icontains=search))
         if department_id:
             q_filter &= Q(department_id=department_id)
-        queryset = Procedure.objects.filter(q_filter).order_by('-updated_at').select_related('client', "procedure_type").prefetch_related("")
+        queryset = Procedure.objects.filter(q_filter).order_by('-updated_at').select_related('client', "procedure_type").prefetch_related("items").annotate(items_count=Count('items'))
         data = self.get_response_data(self.serializer_class, queryset, many=True)
         return Response(data)
 
