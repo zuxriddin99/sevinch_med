@@ -16,6 +16,7 @@ from rest_framework import generics
 
 from web.views import LoginRequiredMixin
 
+
 class ClientsListAPIView(generics.ListAPIView):
     queryset = Client.objects.all()
     serializer_class = ClientSerializer
@@ -27,6 +28,8 @@ class ClientsListAPIView(generics.ListAPIView):
         q_filter = Q()
         if search:
             q_filter = Q(first_name__icontains=search) | Q(last_name__icontains=search)
+            if search.isdigit():
+                q_filter |= Q(id=search)
         queryset = Client.objects.filter(q_filter).order_by('-updated_at')
         data = self.get_response_data(self.serializer_class, queryset, many=True)
         return Response(data)
@@ -42,4 +45,3 @@ class ClientsListAPIView(generics.ListAPIView):
 
 class ClientListView(LoginRequiredMixin, generic.TemplateView):
     template_name = 'clients/clients_list.html'
-

@@ -50,6 +50,7 @@ class ReferralPersonListSerializer(serializers.ModelSerializer):
         # Get the first letter of the first two words (if they exist)
         return "".join([name[0].upper() for name in name_parts[:2]])
 
+
 class ReferralPersonCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = ReferralPerson
@@ -64,3 +65,12 @@ class ReferralPersonCreateSerializer(serializers.ModelSerializer):
             # Add the country code prefix
             data["phone_number"] = '+998' + cleaned_number
         return super().to_internal_value(data)
+
+
+class ReferralPersonShortListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ReferralPerson
+        fields = [
+            "id",
+            "full_name",
+        ]

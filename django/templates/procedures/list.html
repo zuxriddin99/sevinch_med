@@ -2,10 +2,6 @@
 {% load static %}
 {% block title %}Muolajalar ro'yxati.{% endblock %}
 {% block style %}
-
-
-    <script src="{% static 'vendors/select2/select2.min.css' %}"></script>
-    <script src="{% static 'vendors/select2-bootstrap-5-theme/select2-bootstrap-5-theme.min.css' %}"></script>
     <style>
         /* Loader styles */
         #loader {
@@ -16,6 +12,27 @@
             transform: translate(-50%, -50%);
             font-size: 20px;
             color: #000;
+        }
+    </style>
+    <link href="{% static 'vendors/flatpickr/flatpickr.min.css' %}" rel="stylesheet"/>
+    <script src="{% static 'vendors/flatpickr/flatpickr.min.js' %}"></script>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
+
+    <script src="{% static 'vendors/select2/select2.min.css' %}"></script>
+    <script src="{% static 'vendors/select2-bootstrap-5-theme/select2-bootstrap-5-theme.min.css' %}"></script>
+    <style>
+        /* Change the height of the Select2 input */
+        .select2-container .select2-selection--single {
+            height: 38px; /* Set the desired height */
+        }
+
+        /* Adjust the padding to center the text */
+        .select2-container .select2-selection--single .select2-selection__rendered {
+            line-height: 36px; /* Match this to the height for vertical alignment */
+        }
+
+        .select2-container .select2-selection--single .select2-selection__arrow {
+            height: 36px; /* Adjust for arrow height */
         }
     </style>
 {% endblock %}
@@ -46,17 +63,21 @@
                 </div>
                 <div class="col-8 col-sm-auto text-end ps-2">
                     <div id="table-customers-replace-element">
-
-{#                        <button class="btn btn-falcon-default btn-sm" type="button"><span class="fas fa-plus"#}
-{#                                                                                          data-fa-transform="shrink-3 down-2"></span><span#}
-{#                                class="d-none d-sm-inline-block ms-1">New</span></button>#}
-{##}
-{#                        <button class="btn btn-falcon-default btn-sm mx-2" type="button"><span class="fas fa-filter"#}
-{#                                                                                               data-fa-transform="shrink-3 down-2"></span><span#}
-{#                                class="d-none d-sm-inline-block ms-1">Filter</span></button>#}
-{#                        <button class="btn btn-falcon-default btn-sm" type="button"><span#}
-{#                                class="fas fa-external-link-alt" data-fa-transform="shrink-3 down-2"></span><span#}
-{#                                class="d-none d-sm-inline-block ms-1">Export</span></button>#}
+                        <button class="btn btn-falcon-success btn-sm" type="button" data-bs-toggle="modal"
+                                data-bs-target="#createProcedure">
+                            <span class="fas fa-plus" data-fa-transform="shrink-3 down-2"></span>
+                            <span class="d-none d-sm-inline-block ms-1">Muolaja qo'shish</span>
+                        </button>
+                        {#                        <button class="btn btn-falcon-default btn-sm" type="button"><span class="fas fa-plus"#}
+                        {#                                                                                          data-fa-transform="shrink-3 down-2"></span><span#}
+                        {#                                class="d-none d-sm-inline-block ms-1">New</span></button>#}
+                        {##}
+                        {#                        <button class="btn btn-falcon-default btn-sm mx-2" type="button"><span class="fas fa-filter"#}
+                        {#                                                                                               data-fa-transform="shrink-3 down-2"></span><span#}
+                        {#                                class="d-none d-sm-inline-block ms-1">Filter</span></button>#}
+                        {#                        <button class="btn btn-falcon-default btn-sm" type="button"><span#}
+                        {#                                class="fas fa-external-link-alt" data-fa-transform="shrink-3 down-2"></span><span#}
+                        {#                                class="d-none d-sm-inline-block ms-1">Export</span></button>#}
                     </div>
                 </div>
             </div>
@@ -73,14 +94,19 @@
                         <th class="text-900 no-sort pe-1 align-middle white-space-nowrap" data-sort="phone">Telefon
                             raqami
                         </th>
-                        <th class="text-900 no-sort pe-1 align-middle white-space-nowrap" data-sort="procedure_type">Muolaja turi.
+                        <th class="text-900 no-sort pe-1 align-middle white-space-nowrap" data-sort="procedure_type">
+                            Muolaja turi.
                         </th>
-                        <th class="text-900 no-sort pe-1 align-middle white-space-nowrap" data-sort="address" >Tavsiya etilgan<br>muolajalar soni
+                        <th class="text-900 no-sort pe-1 align-middle white-space-nowrap" data-sort="address">Tavsiya
+                            etilgan<br>muolajalar soni
                         </th>
-                        <th class="text-900 no-sort pe-1 align-middle white-space-nowrap" data-sort="address" >Qabul qilingan<br>muolajalar soni
-                        <th class="text-900 no-sort pe-1 align-middle white-space-nowrap" data-sort="address" >Muolaja<br>boshlangan vaht
+                        <th class="text-900 no-sort pe-1 align-middle white-space-nowrap" data-sort="address">Qabul
+                            qilingan<br>muolajalar soni
+                        <th class="text-900 no-sort pe-1 align-middle white-space-nowrap" data-sort="address">
+                            Muolaja<br>boshlangan vaht
                         </th>
-                        <th class="text-900 no-sort pe-1 align-middle white-space-nowrap" style="max-width: 60px" data-sort="joined">Muolaja holati.
+                        <th class="text-900 no-sort pe-1 align-middle white-space-nowrap" style="max-width: 60px"
+                            data-sort="joined">Muolaja holati.
                         </th>
                     </tr>
                     </thead>
@@ -123,11 +149,290 @@
 
 
     </div>
+
+
+    <div class="modal fade" id="createProcedure" data-bs-keyboard="false" data-bs-backdrop="static" tabindex="-1"
+         aria-labelledby="createProcedureLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg mt-6" role="document" style="width: 90%; max-width: 100%">
+            <div class="modal-content border-0">
+                <div class="position-absolute top-0 end-0 mt-3 me-3 z-1">
+                    <button class="btn-close btn btn-sm btn-circle d-flex flex-center transition-base"
+                            data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body p-0">
+
+                    {#                    <div class="rounded-top-3 bg-body-tertiary py-3 ps-4 pe-6">#}
+                    {#                        <h4 class="mb-1" id="createProcedureLabel">Muolaja qo'shish.</h4>#}
+                    {#                        <p class="fs-11 mb-0">Muaolaja to'g'risidagi ma'lumotarni to'ldirish.</p>#}
+                    {#                    </div>#}
+                    <div class="p-4">
+                        <div class="row">
+                            <div class="  h-100">
+                                <div class="d-flex mb-4"><span class="fa-stack me-2 ms-n1"><i
+                                        class="fas fa-circle fa-stack-2x text-300"></i><i
+                                        class="fa-inverse fa-stack-1x text-primary fas fa-spinner"></i></span>
+                                    <div class="col">
+                                        <h5 class="mb-0 text-primary position-relative"><span
+                                                class="bg-200 dark__bg-1100 pe-3">Muolaja qo'shish</span><span
+                                                class="border position-absolute top-50 translate-middle-y w-100 start-0 z-n1"></span>
+                                        </h5>
+                                        <p class="mb-0">Mijozni tanlang yoki yangidan yarating.</p>
+                                    </div>
+                                </div>
+                                <div class="card theme-wizard mb-5">
+                                    <div class="card-header bg-body-tertiary pt-3 pb-2">
+                                        <ul class="nav justify-content-between nav-wizard">
+                                            <li class="nav-item"><a class="nav-link active fw-semi-bold"
+                                                                    href="wizard.html#bootstrap-wizard-tab1"
+                                                                    data-bs-toggle="tab" data-wizard-step="1"><span
+                                                    class="nav-item-circle-parent"><span
+                                                    class="nav-item-circle"><span
+                                                    class="fas fa-user"></span></span></span><span
+                                                    class="d-none d-md-block mt-1 fs-10">Mijoz ma'lumotlari</span></a>
+                                            </li>
+                                            <li class="nav-item"><a class="nav-link fw-semi-bold"
+                                                                    href="wizard.html#bootstrap-wizard-tab2"
+                                                                    data-bs-toggle="tab" data-wizard-step="2"><span
+                                                    class="nav-item-circle-parent"><span
+                                                    class="nav-item-circle"><span
+                                                    class="fas fa-user"></span></span></span><span
+                                                    class="d-none d-md-block mt-1 fs-10">Personal</span></a></li>
+                                            <li class="nav-item"><a class="nav-link fw-semi-bold"
+                                                                    href="wizard.html#bootstrap-wizard-tab3"
+                                                                    data-bs-toggle="tab" data-wizard-step="3"><span
+                                                    class="nav-item-circle-parent"><span
+                                                    class="nav-item-circle"><span
+                                                    class="fas fa-dollar-sign"></span></span></span><span
+                                                    class="d-none d-md-block mt-1 fs-10">Billing</span></a></li>
+                                            <li class="nav-item"><a class="nav-link fw-semi-bold"
+                                                                    href="wizard.html#bootstrap-wizard-tab4"
+                                                                    data-bs-toggle="tab" data-wizard-step="4"><span
+                                                    class="nav-item-circle-parent"><span
+                                                    class="nav-item-circle"><span
+                                                    class="fas fa-thumbs-up"></span></span></span><span
+                                                    class="d-none d-md-block mt-1 fs-10">Done</span></a></li>
+                                        </ul>
+                                    </div>
+                                    <div class="card-body py-4">
+                                        <div class="tab-content">
+                                            <div class="tab-pane active px-sm-3 px-md-5" role="tabpanel"
+                                                 aria-labelledby="bootstrap-wizard-tab1" id="bootstrap-wizard-tab1">
+                                                <form novalidate="novalidate" data-wizard-form="1">
+                                                    <label class="form-label"
+                                                           for="bootstrap-wizard-wizard-select-name">Mijozni
+                                                        tanlash</label>
+                                                    <div class="mb-3 input-group" style="flex-wrap: nowrap">
+                                                        <select id="bootstrap-wizard-wizard-select-name"
+                                                                class="form-control js-data-example-ajax"></select>
+                                                        <button class="input-group-text" id="clear_client"><span
+                                                                class="fas fa-trash-alt fs-9"></span></button>
+                                                    </div>
+                                                    <div class="row g-2">
+                                                        <div class="col">
+                                                            <div class="mb-3">
+                                                                <label class="form-label" for="first_name">Mijozning
+                                                                    Ismi</label>
+                                                                <input class="form-control" placeholder="Ism"
+                                                                       type="text"
+                                                                       id="first_name"/>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col">
+                                                            <div class="mb-3">
+                                                                <label class="form-label" for="last_name">Mijozning
+                                                                    Familyasi</label>
+                                                                <input class="form-control"
+                                                                       placeholder="Familya"
+                                                                       name="cardName" type="text"
+                                                                       id="last_name"/>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row g-2">
+                                                        <div class="col">
+                                                            <label class="form-label" for="phone_number">Telefon
+                                                                raqam:</label>
+                                                            <div class="col-12 mb-3 input-group">
+                                                                <span class="input-group-text">+998</span>
+                                                                <input class="form-control" id="phone_number"
+                                                                       data-input-mask='{"mask":"(99) 999 99 99"}'
+                                                                       placeholder="(XX) XXX XX XX" type="tel"/>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col">
+                                                            <div class="mb-3">
+                                                                <label class="form-label" for="date_of_birth">Tug'ilgan
+                                                                    sana</label>
+                                                                <input class="form-control datetimepicker"
+                                                                       id="date_of_birth" type="text"
+                                                                       placeholder="dd/mm/yy"
+                                                                       data-options='{"disableMobile":true}'/>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label class="form-label" for="address">Manzil</label>
+                                                        <input
+                                                                class="form-control" type="text" name="name"
+                                                                placeholder="Manzil"
+                                                                id="address"/>
+                                                    </div>
+
+                                                    <div class="mb-3">
+                                                        <label class="form-label" for="workplace">Ish joyi</label>
+                                                        <input
+                                                                class="form-control" type="text" name="name"
+                                                                placeholder="Ish joyi"
+                                                                id="workplace"/>
+                                                    </div>
+
+                                                    <div class="mb-3">
+                                                        <label class="form-label" for="diagnosis">Tashxis</label>
+                                                        <textarea
+                                                                class="form-control" type="text" name="name"
+                                                                placeholder="Tashxis"
+                                                                id="diagnosis"></textarea>
+                                                    </div>
+
+
+                                                </form>
+                                            </div>
+                                            <div class="tab-pane px-sm-3 px-md-5" role="tabpanel"
+                                                 aria-labelledby="bootstrap-wizard-tab2" id="bootstrap-wizard-tab2">
+                                                <form data-wizard-form="2">
+                                                    <label class="form-label"
+                                                           for="referral_person">Hamkor shifokorni tanlash.</label>
+                                                    <div class="input-group mb-3" style="flex-wrap: nowrap">
+
+                                                        <select id="referral_person"
+                                                                class="form-control js-data-referral-persons"></select>
+                                                        <button class="input-group-text"><span
+                                                                class="fas fa-trash-alt fs-9"></span></button>
+                                                    </div>
+                                                    <div class="mb-3"><label class="form-label"
+                                                                             for="bootstrap-wizard-wizard-address">Address</label><textarea
+                                                            class="form-control" rows="4"
+                                                            id="bootstrap-wizard-wizard-address"></textarea></div>
+                                                </form>
+                                            </div>
+                                            <div class="tab-pane px-sm-3 px-md-5" role="tabpanel"
+                                                 aria-labelledby="bootstrap-wizard-tab3" id="bootstrap-wizard-tab3">
+                                                <form class="form-validation" data-wizard-form="2">
+                                                    <div class="row g-2">
+                                                        <div class="col">
+                                                            <div class="mb-3"><label class="form-label"
+                                                                                     for="bootstrap-wizard-card-number">Card
+                                                                Number</label><input class="form-control"
+                                                                                     placeholder="XXXX XXXX XXXX XXXX"
+                                                                                     type="text"
+                                                                                     id="bootstrap-wizard-card-number"/>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col">
+                                                            <div class="mb-3"><label class="form-label"
+                                                                                     for="bootstrap-wizard-card-name">Name
+                                                                on Card</label><input class="form-control"
+                                                                                      placeholder="John Doe"
+                                                                                      name="cardName" type="text"
+                                                                                      id="bootstrap-wizard-card-name"/>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row g-2">
+                                                        <div class="col-6">
+                                                            <div class="mb-3"><label class="form-label"
+                                                                                     for="bootstrap-wizard-card-holder-country">Country</label><select
+                                                                    class="form-select" name="customSelectCountry"
+                                                                    id="bootstrap-wizard-card-holder-country">
+                                                                <option value="">Select your country ...</option>
+                                                                <option value="Afghanistan">Afghanistan</option>
+                                                                <option value="Zimbabwe">Zimbabwe</option>
+                                                            </select></div>
+                                                        </div>
+                                                        <div class="col-6">
+                                                            <div class="mb-3"><label class="form-label"
+                                                                                     for="bootstrap-wizard-card-holder-zip-code">Zip
+                                                                Code</label><input class="form-control"
+                                                                                   placeholder="1234" name="zipCode"
+                                                                                   type="text"
+                                                                                   id="bootstrap-wizard-card-holder-zip-code"/>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-6">
+                                                            <div class="form-group mb-0"><label class="form-label"
+                                                                                                for="bootstrap-wizard-card-exp-date">Exp
+                                                                Date</label><input class="form-control"
+                                                                                   placeholder="15/2024"
+                                                                                   name="expDate" type="text"
+                                                                                   id="bootstrap-wizard-card-exp-date"/>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-6">
+                                                            <div class="form-group mb-0"><label class="form-label"
+                                                                                                for="bootstrap-wizard-card-cvv">CVV</label><span
+                                                                    class="ms-1" data-bs-toggle="tooltip"
+                                                                    data-bs-placement="top"
+                                                                    title="Card verification value"><span
+                                                                    class="fa fa-question-circle"></span></span><input
+                                                                    class="form-control" placeholder="123"
+                                                                    name="cvv" maxlength="3" pattern="[0-9]{3}"
+                                                                    type="text" id="bootstrap-wizard-card-cvv"/>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                            <div class="tab-pane text-center px-sm-3 px-md-5" role="tabpanel"
+                                                 aria-labelledby="bootstrap-wizard-tab4" id="bootstrap-wizard-tab4">
+                                                <div class="wizard-lottie-wrapper">
+                                                    <div class="lottie wizard-lottie mx-auto my-3"
+                                                         data-options='{"path":"../../assets/img/animated-icons/celebration.json"}'></div>
+                                                </div>
+                                                <h4 class="mb-1">Your account is all set!</h4>
+                                                <p>Now you can access to your account</p><a
+                                                    class="btn btn-primary px-5 my-3" href="wizard.html">Start
+                                                Over</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card-footer bg-body-tertiary">
+                                        <div class="px-sm-3 px-md-5">
+                                            <ul class="pager wizard list-inline mb-0">
+                                                <li class="previous">
+                                                    <button class="btn btn-link ps-0" type="button"><span
+                                                            class="fas fa-chevron-left me-2"
+                                                            data-fa-transform="shrink-3"></span>Oldingi
+                                                    </button>
+                                                </li>
+                                                <li class="next">
+                                                    <button class="btn btn-primary px-5 px-sm-6" type="submit">
+                                                        Keyingi<span class="fas fa-chevron-right ms-2"
+                                                                     data-fa-transform="shrink-3"> </span></button>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
 {% endblock %}
 {% block script %}
-
+    <script>
+        var csrfToken = '{{ csrf_token }}';  // Pass the CSRF token to JS
+        var getClientListUrl = "{% url 'web:clients:list-api' %}";  // Pass the URL to JS
+        var getReferralsListUrl = "{% url 'web:referrals:short-list-api' %}";  // Pass the URL to JS
+    </script>
     <script src="{% static 'vendors/jquery/jquery.min.js' %}"></script>
     <script src="{% static 'vendors/select2/select2.min.js' %}"></script>
     <script src="{% static 'vendors/select2/select2.full.min.js' %}"></script>
-    <script src="{% static 'assets/js/procedures_list.js' %}"></script>
+    <script src="{% static 'vendors/inputmask/inputmask.min.js' %}"></script>
+    <script src="{% static 'assets/js/custom/procedures/list.js' %}"></script>
+    <script src="{% static 'assets/js/custom/procedures/create.js' %}"></script>
 {% endblock %}
