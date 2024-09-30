@@ -306,13 +306,40 @@
 
                                                         <select id="referral_person"
                                                                 class="form-control js-data-referral-persons"></select>
-                                                        <button class="input-group-text"><span
+                                                        <button class="input-group-text" id="clear_referral"><span
                                                                 class="fas fa-trash-alt fs-9"></span></button>
                                                     </div>
+                                                    <div class="row g-2">
+                                                        <div class="col">
+                                                            <div class="mb-3">
+                                                                <label class="form-label"
+                                                                       for="number_of_recommended_treatments">Tavsiya
+                                                                    qilingan muolajalar soni.</label>
+                                                                <input class="form-control"
+                                                                       type="number" value="3"
+                                                                       id="number_of_recommended_treatments"/>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col">
+                                                            <div class="mb-3">
+                                                                <label class="form-label"
+                                                                       for="procedure-type-select">Muolaja turi</label>
+                                                                <div class="mb-3 input-group" style="flex-wrap: nowrap">
+                                                                    <select id="procedure-type-select"
+                                                                            class="form-control js-data-procedure-types"></select>
+                                                                    <button class="input-group-text"
+                                                                            id="clear-procedure-type"><span
+                                                                            class="fas fa-trash-alt fs-9"></span>
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                     <div class="mb-3"><label class="form-label"
-                                                                             for="bootstrap-wizard-wizard-address">Address</label><textarea
+                                                                             for="description">Qo'shimcha
+                                                        ma'lumot</label><textarea
                                                             class="form-control" rows="4"
-                                                            id="bootstrap-wizard-wizard-address"></textarea></div>
+                                                            id="description"></textarea></div>
                                                 </form>
                                             </div>
                                             <div class="tab-pane px-sm-3 px-md-5" role="tabpanel"
@@ -428,6 +455,7 @@
         var csrfToken = '{{ csrf_token }}';  // Pass the CSRF token to JS
         var getClientListUrl = "{% url 'web:clients:list-api' %}";  // Pass the URL to JS
         var getReferralsListUrl = "{% url 'web:referrals:short-list-api' %}";  // Pass the URL to JS
+        var getProcedureTypeList = "{% url 'web:procedures:type-list-api' %}";  // Pass the URL to JS
     </script>
     <script src="{% static 'vendors/jquery/jquery.min.js' %}"></script>
     <script src="{% static 'vendors/select2/select2.min.js' %}"></script>

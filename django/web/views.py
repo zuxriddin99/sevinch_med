@@ -1,4 +1,4 @@
-from rest_framework import mixins, viewsets
+from rest_framework import mixins, viewsets, generics
 from rest_framework.serializers import Serializer
 from django.views import generic
 from django.contrib.auth.mixins import AccessMixin
@@ -23,3 +23,14 @@ class LoginRequiredMixin(AccessMixin):
 class HomeView(LoginRequiredMixin, generic.TemplateView):
     template_name = 'index.html'
     login_url = 'web:auth:login'
+
+
+class CustomListView(generics.ListAPIView):
+
+    def get_response_data(self, serializer_class, instance, pagination=True, **kwargs) -> dict:
+        if "many" in kwargs and pagination:
+            page = self.paginate_queryset(instance)
+            if page is not None:
+                serializer = serializer_class(page, **kwargs)
+                return self.get_paginated_response(serializer.data)
+        return serializer_class(instance, **kwargs).data

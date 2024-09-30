@@ -108,6 +108,19 @@ $('.js-data-example-ajax').select2({
 $('#clear_client').on('click', function () {
     $('.js-data-example-ajax').val(null).trigger('change');
 });
+
+// Button click event to clear the selection
+$('#clear_referral').on('click', function () {
+    $('.js-data-referral-persons').val(null).trigger('change');
+});
+
+
+// Button click event to clear the selection
+$('#clear-procedure-type').on('click', function () {
+    $('.js-data-procedure-types').val(null).trigger('change');
+});
+
+
 document.addEventListener("DOMContentLoaded", function () {
     flatpickr("#date_of_birth", {
         maxDate: "today", // Customize month names (in Uzbek or any other language)
@@ -170,7 +183,6 @@ $('.js-data-referral-persons').select2({
         },
 
     }
-
 });
 
 function formatReferralOption(user) {
@@ -192,4 +204,69 @@ function formatReferralSelection(user) {
         return "Hamkor shifokorni tanlash."
     }
     return `${user.id} || ${user.full_name}` || user.id;
+}
+
+$('.js-data-procedure-types').select2({
+    ajax: {
+
+        url: getProcedureTypeList,  // Replace with the actual API URL
+        dataType: 'json',
+        delay: 250,  // Add a delay to prevent overwhelming the server with requests
+        data: function (params) {
+            return {
+                search: params.term,  // search term
+                page: params.page || 1,  // pagination
+                limit: 10  // results per page
+            };
+        }, processResults: function (data, params) {
+            params.page = params.page || 1;
+
+            return {
+                results: data.results.map(function (item) {
+                    return {
+                        id: item.id,
+                        name: item.name,
+                    };
+                }), pagination: {
+                    more: data.page < data.total_pages  // Enable pagination if more pages are available
+                }
+            };
+        },
+        cache: true
+    },
+    minimumInputLength: 1,  // Minimum characters to trigger the search
+    templateResult: formatProcedureTypeOption,  // Custom format for result items
+    templateSelection: formatProcedureTypeSelection,  // Custom format for selected items
+    placeholder: 'Select an option',
+    dropdownParent: $('#createProcedure'),
+    language: {
+        inputTooShort: function () {
+            return "Muolaja nomi bo'yicha izlash";  // Custom message
+        },
+        noResults: function () {
+            return "Ma'lumot topilmadi";  // Custom message
+        },
+
+    }
+});
+
+function formatProcedureTypeOption(option) {
+    if (!option.id) {
+        return option.name;  // Display the default text if no user
+    }
+    return $(`<div style="display: flex; align-items: center;">
+            <div style="flex-grow: 1;">
+                <strong style="color: #ff0062;">${option.name}</strong>
+            </div>
+            <div style="margin-left: auto; background-color: #eee; padding: 5px; border-radius: 4px;">
+            </div>
+        </div>`);
+}
+
+// Function to display formatted selection
+function formatProcedureTypeSelection(option) {
+    if (option.id === "") {
+        return "Muolaja turini tanlash."
+    }
+    return `${option.name}` || option.id;
 }

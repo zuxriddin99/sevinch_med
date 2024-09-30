@@ -1,7 +1,7 @@
 from rest_framework import serializers
 import re
 from apps.clients.models import Client
-from apps.main.models import ReferralPerson, Procedure
+from apps.main.models import ReferralPerson, Procedure, ProcedureType
 
 
 class ReferralPersonListSerializer(serializers.ModelSerializer):
@@ -114,3 +114,9 @@ class ProcedureListSerializer(serializers.ModelSerializer):
     @staticmethod
     def get_created_at(obj: Procedure) -> str:
         return obj.translated_created_at
+
+
+class ProcedureTypeListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ProcedureType
+        fields = ["id", "name"]

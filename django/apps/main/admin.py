@@ -1,7 +1,7 @@
 from django.contrib import admin
 
-from apps.main.models import ReferralPerson, ReferralItem, Department, ProcedureType, Procedure, PaymentProcedure, \
-    Transaction
+from apps.main.models import ReferralPerson, ReferralItem, Department, ProcedureType, Procedure, \
+    Transfer, Product, ExpenseItem
 
 
 # Register your models here.
@@ -31,6 +31,6 @@ class ProcedureTypeAdmin(admin.ModelAdmin):
     list_display = ["id", "department", "client", "was_completed", "number_of_recommended_treatments"]
 
 
-@admin.register(PaymentProcedure)
-class PaymentProcedureAdmin(admin.ModelAdmin):
-    list_display = ["id", "procedure", "total_amount", "paid_sum", "debt_sum"]
+@admin.register(Transfer)
+class TransferAdmin(admin.ModelAdmin):
+    list_display = ["id", "transfer_method", "transfer_type", "amount", ]

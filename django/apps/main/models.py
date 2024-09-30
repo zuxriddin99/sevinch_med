@@ -37,6 +37,7 @@ class Procedure(BaseModel):
     procedure_type = models.ForeignKey(
         ProcedureType, on_delete=models.CASCADE, related_name="procedures_for_type", blank=True)
     was_completed = models.BooleanField(default=False)
+    description = models.TextField(blank=True, default='')  # dop info
     number_of_recommended_treatments = models.IntegerField(default=0)
 
     def __str__(self):
@@ -58,6 +59,7 @@ class Procedure(BaseModel):
 class ProcedureItem(BaseModel):
     procedure = models.ForeignKey(Procedure, on_delete=models.CASCADE, related_name='items')
     n_th_treatment = models.IntegerField(default=0)
+    price = models.IntegerField(default=0)
 
     class Meta:
         verbose_name = "Procedure item"
@@ -65,36 +67,45 @@ class ProcedureItem(BaseModel):
         db_table = 'procedure_items'
 
 
-class PaymentProcedure(BaseModel):
-    procedure = models.ForeignKey(Procedure, on_delete=models.CASCADE, related_name='procedure_payments')
-    total_amount = models.IntegerField(default=0)  # use integer field because in sum use only integer number
-    paid_sum = models.IntegerField(default=0)  # use integer field because in sum use only integer number
-    debt_sum = models.IntegerField(default=0)  # use integer field because in sum use only integer number
+class Product(BaseModel):
+    name = models.CharField(max_length=255)
+    price = models.IntegerField(default=0)
+
+    def __str__(self):
+        return self.name
+
+
+class ExpenseItem(BaseModel):
+    procedure_item = models.ForeignKey(
+        ProcedureItem, on_delete=models.CASCADE, related_name='expenses', blank=True, null=True)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='product_expenses')
+    quantity = models.IntegerField(default=0)
+    amount = models.IntegerField(default=0)
 
     def __str__(self):
         return ""
 
-    class Meta:
-        verbose_name = 'Payment Procedure'
-        verbose_name_plural = 'Payment Procedures'
-        db_table = 'payment_procedures'
 
-    # 2 147 483 647
-
-
-class Transaction(BaseModel):
-    class TypeTransactionEnum(models.TextChoices):
+class Transfer(BaseModel):
+    class MethodTransferEnum(models.TextChoices):
         CARD = "card", "Card"
         CASH = "cash", "Cash"
+        TRANSFER_TO_CARD = "transfer_to_card", "Transfer to card"
 
-    payment_procedure = models.ForeignKey(
-        PaymentProcedure, on_delete=models.CASCADE, related_name='payment_transactions')
+    class TypeTransferEnum(models.TextChoices):
+        INCOME = "income", "Income"
+        EXPENSE = "expense", "Expense"
+
+    procedure = models.ForeignKey(
+        Procedure, on_delete=models.CASCADE, related_name='procedure_payments', blank=True, null=True)
+    transfer_method = models.CharField(choices=MethodTransferEnum.choices, max_length=20)
+    transfer_type = models.CharField(choices=TypeTransferEnum.choices, max_length=20)
     amount = models.IntegerField(default=0)
 
     class Meta:
-        verbose_name = 'Transaction'
-        verbose_name_plural = 'Transactions'
-        db_table = 'transactions'
+        verbose_name = 'Transfer'
+        verbose_name_plural = 'Transfers'
+        db_table = 'transfers'
 
 
 class ReferralPerson(BaseModel):
