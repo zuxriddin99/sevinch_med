@@ -45,6 +45,8 @@ BASE_APPS = [
 
 LIBS = [
     "rest_framework",
+    'nested_admin',
+
     # 'django_celery_beat',
     # "django_celery_results",
 ]

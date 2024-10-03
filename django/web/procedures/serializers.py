@@ -120,3 +120,38 @@ class ProcedureTypeListSerializer(serializers.ModelSerializer):
     class Meta:
         model = ProcedureType
         fields = ["id", "name"]
+
+
+class ProcedurePaymentDataSerializer(serializers.Serializer):
+    name = serializers.CharField()
+    price = serializers.IntegerField()
+
+
+class ProcedurePaymentMainSerializer(serializers.Serializer):
+    data = ProcedurePaymentDataSerializer(many=True)
+    total_price = serializers.IntegerField()
+    discount_price = serializers.IntegerField()
+
+
+class ProcedureCreateSerializer(serializers.Serializer):
+    exist_user_id = serializers.IntegerField(required=False)
+    first_name = serializers.CharField(required=False)
+    last_name = serializers.CharField(required=False)
+    phone_number = serializers.CharField(required=False)
+    date_of_birth = serializers.DateField(required=False, input_formats=["%d/%m/%Y"], )
+    address = serializers.CharField(required=False)
+    workplace = serializers.CharField(required=False)
+    diagnosis = serializers.CharField(required=False)
+    referral_person = serializers.IntegerField(required=False)
+    number_of_recommended_treatments = serializers.IntegerField(required=False)
+    procedure_type = serializers.IntegerField(required=False)
+    description = serializers.CharField(required=False)
+    cash_pay = serializers.IntegerField(required=False, default=0)
+    card_pay = serializers.IntegerField(required=False, default=0)
+    card_transfer_pay = serializers.IntegerField(required=False, default=0)
+    discount = serializers.IntegerField(required=False, default=0)
+
+    #
+    # def to_internal_value(self, data):
+    #     print(data)
+    #     return data

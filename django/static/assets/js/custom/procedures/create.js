@@ -270,3 +270,124 @@ function formatProcedureTypeSelection(option) {
     }
     return `${option.name}` || option.id;
 }
+
+function formatCurrency(amount) {
+    return amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") + " so'm";
+}
+
+function removeSpacesFromNumber(numberStr) {
+    return Number(numberStr.replace(/\s+/g, ''));
+}
+
+function getBillingData() {
+    const treatmentsCount = $("#number_of_recommended_treatments").val() || 0
+    const discount = removeSpacesFromNumber($("#discount-input").val()) || 0
+    const cashPay = removeSpacesFromNumber($("#cash-pay").val()) || 0
+    const cardPay = removeSpacesFromNumber($("#card-pay").val()) || 0
+    const cardTransferPay = removeSpacesFromNumber($("#card-transfer-pay").val()) || 0
+    const paid = cashPay + cardPay + cardTransferPay
+    const apiUrl = `${getBillingDataUrl}?treatments_count=${treatmentsCount}&discount=${discount}&paid=${paid}`
+    console.log(discount)
+    // Fetch data from API
+    $.getJSON(apiUrl, function (response) {
+        // Clear table body and footers
+        const tableBody = $('#payment-table');
+        tableBody.empty();  // Clear any existing rows
+        // Loop through the data and append rows
+        $.each(response.data, function (index, item) {
+            const row = `<tr class="border-200">
+                                <td class="align-middle">
+                                    <h6 class="mb-0 text-nowrap">${item.name}</h6>
+                                </td>
+                                <td class="align-middle text-end">${formatCurrency(item.price)}</td>
+                             </tr>`
+
+            tableBody.append(row);
+        });
+        // Set the footer values using formatted prices
+        $("#total-price").text(formatCurrency(response.total_price));
+        $("#billing-discount").text(formatCurrency(response.discount));
+        $("#paid").text(formatCurrency(response.paid));
+        $("#need-paid").text(formatCurrency(response.need_paid));
+        $("#need-paid-hidden").val(response.need_paid);
+    }).fail(function () {
+        alert("Failed to fetch data from the API");
+    });
+}
+
+function switchTab(tabIndex) {
+    $('.tab-pane').removeClass('active'); // Hide all tabs
+    $('#form-wizard-progress-tab' + tabIndex).addClass('active'); // Show the selected tab
+
+    $('.nav-link').removeClass('active'); // Hide all tabs
+    $('#navbar-button-' + tabIndex).addClass('active'); // Show the selected tab
+
+
+}
+
+function changeTab(numberTab) {
+    switchTab(numberTab);
+}
+
+function saveProcedure() {
+    const firstForm = $("#first-form").serialize()
+    const secondForm = $("#second-form").serialize()
+    const thirdForm = $("#third-form").serialize()
+    if (!isValid()) {
+        return
+    }
+    let allData = firstForm + '&' + secondForm + '&' + thirdForm;
+    console.log(allData)
+    $.ajax({
+        url: createProcedureUrl,
+        type: 'POST',
+        data: allData,
+        headers: {
+                'X-CSRFToken': csrfToken  // Set CSRF token in headers (important for JSON requests)
+            },
+        success: function(response) {
+            // Handle success response from the API
+            console.log('Data saved successfully:', response.message);
+            alert(response.message);
+            if (response.is_created){
+                location.reload();
+            }
+        },
+        error: function(xhr, status, error) {
+            // Handle error response from the API
+            alert("Muolaja yaratishda xatolik yuz berdi dasturchi bilan bog'laning");
+        }
+    });
+}
+
+function isValid() {
+    const firstName = $("#first_name").val();
+    const lastName = $("#last_name").val();
+    const needPaidHidden = Number($("#need-paid-hidden").val());
+    const errorDiv = $("#errorDiv")
+    let hasError = false
+    let row = ""
+    if (!firstName) {
+        row += "<strong> - Mijozni Ismi</strong> maydonini to'ldirish shart.<br>"
+        hasError = true
+    }
+    if (!lastName) {
+        row += "<strong> - Mijozni Familyasi</strong> maydonini to'ldirish shart.<br>"
+        hasError = true
+    }
+    if (needPaidHidden < 0) {
+        row += " - To'lovlar yoki chegirma noto'gri kiritilgan.<br>"
+        hasError = true
+    }
+    if (hasError) {
+        const e = `<div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                       ${row}
+                        <button class="btn-close" type="button" data-bs-dismiss="alert"
+                                aria-label="Close"></button>
+                    </div>`
+        errorDiv.empty();
+        errorDiv.append(e);
+        return false
+    }
+    return true
+}

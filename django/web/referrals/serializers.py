@@ -2,6 +2,7 @@ from rest_framework import serializers
 import re
 from apps.clients.models import Client
 from apps.main.models import ReferralPerson
+from web.logics import phone_number_input_update
 
 
 class ReferralPersonListSerializer(serializers.ModelSerializer):
@@ -59,11 +60,7 @@ class ReferralPersonCreateSerializer(serializers.ModelSerializer):
     def to_internal_value(self, data):
         phone_number = data.get("phone_number")
         if phone_number:
-            # Remove parentheses, spaces, and other non-numeric characters
-            cleaned_number = re.sub(r'\D', '', phone_number)
-
-            # Add the country code prefix
-            data["phone_number"] = '+998' + cleaned_number
+            data["phone_number"] = phone_number_input_update(phone_number)
         return super().to_internal_value(data)
 
 

@@ -88,13 +88,13 @@ class ExpenseItem(BaseModel):
 
 class Transfer(BaseModel):
     class MethodTransferEnum(models.TextChoices):
-        CARD = "card", "Card"
-        CASH = "cash", "Cash"
-        TRANSFER_TO_CARD = "transfer_to_card", "Transfer to card"
+        CARD = "card", "Terminal orqali to'lov"
+        CASH = "cash", "Naqd"
+        TRANSFER_TO_CARD = "transfer_to_card", "Karta orqali o'tkazma"
 
     class TypeTransferEnum(models.TextChoices):
-        INCOME = "income", "Income"
-        EXPENSE = "expense", "Expense"
+        INCOME = "income", "Kirim"
+        EXPENSE = "expense", "Chiqim"
 
     procedure = models.ForeignKey(
         Procedure, on_delete=models.CASCADE, related_name='procedure_payments', blank=True, null=True)
@@ -145,3 +145,14 @@ class ReferralItem(BaseModel):
         verbose_name = 'Referral Item'
         verbose_name_plural = 'Referral Items'
         db_table = 'referral_items'
+
+
+class ProcedurePrice(BaseModel):
+    start_quantity = models.IntegerField(default=0)
+    end_quantity = models.IntegerField(default=0)
+    price = models.IntegerField(default=0)
+
+    class Meta:
+        verbose_name = 'Procedure Price'
+        verbose_name_plural = 'Procedure Prices'
+        db_table = 'procedure_prices'
