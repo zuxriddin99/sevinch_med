@@ -39,6 +39,7 @@ class Procedure(BaseModel):
     was_completed = models.BooleanField(default=False)
     description = models.TextField(blank=True, default='')  # dop info
     number_of_recommended_treatments = models.IntegerField(default=0)
+    discount = models.IntegerField(default=0)
 
     def __str__(self):
         return ""

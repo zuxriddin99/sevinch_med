@@ -150,8 +150,3 @@ class ProcedureCreateSerializer(serializers.Serializer):
     card_pay = serializers.IntegerField(required=False, default=0)
     card_transfer_pay = serializers.IntegerField(required=False, default=0)
     discount = serializers.IntegerField(required=False, default=0)
-
-    #
-    # def to_internal_value(self, data):
-    #     print(data)
-    #     return data

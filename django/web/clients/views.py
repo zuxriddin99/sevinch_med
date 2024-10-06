@@ -1,6 +1,7 @@
 from django.contrib import messages
 from django.contrib.auth import authenticate, login
 from django.db.models import Q
+from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from django.views import generic
 from gunicorn.config import User
@@ -10,10 +11,12 @@ from rest_framework.response import Response
 from apps.clients.models import Client
 from apps.main.models import ReferralPerson
 from conf.pagination import CustomPagination
+from services.clients import ClientCreateService
 from web.auth import forms
-from web.clients.serializers import ClientSerializer
+from web.clients.serializers import ClientSerializer, ClientCreateOrUpdateSerializer
 from rest_framework import generics
 
+from web.logics import phone_number_input_update
 from web.views import LoginRequiredMixin
 
 
@@ -45,3 +48,27 @@ class ClientsListAPIView(generics.ListAPIView):
 
 class ClientListView(LoginRequiredMixin, generic.TemplateView):
     template_name = 'clients/clients_list.html'
+
+
+
+class ClientCreateAPIView(generics.GenericAPIView):
+    serializer_class = ClientCreateOrUpdateSerializer
+    service = ClientCreateService()
+
+    def post(self, request, *args, **kwargs):
+        data = self.update_price_fields(request.data.copy())
+        serializer = self.get_serializer(data=data)
+        serializer.is_valid(raise_exception=True)
+        client = self.service.create_or_update_client(val_date=serializer.validated_data)
+        data = {
+            "client_id": client.id,
+            "message": f"ID-raqam: {client.id}, {client.last_name} {client.first_name} yangilandi."
+        }
+        return JsonResponse(status=status.HTTP_200_OK, data=data)
+
+    @staticmethod
+    def update_price_fields(data):
+        if data.get("phone_number"):
+            data["phone_number"] = phone_number_input_update(data.get("phone_number"))
+        return data
+

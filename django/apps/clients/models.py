@@ -39,3 +39,8 @@ class Client(BaseModel):
             return f"{self.phone_number[:4]} ({self.phone_number[4:6]}) {self.phone_number[6:9]} {self.phone_number[9:11]} {self.phone_number[11:]}"
         else:
             return self.phone_number if self.phone_number else "-"
+
+    @property
+    def phone_number_without_suffix(self):
+        if self.phone_number.startswith("+998") and len(self.phone_number) == 13:
+            return self.phone_number.replace("+998", "")

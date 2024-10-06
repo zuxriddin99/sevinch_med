@@ -1,0 +1,291 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} {% endblock %}
+{% block style %}
+
+    <script src="{% static 'vendors/select2/select2.min.css' %}"></script>
+    <script src="{% static 'vendors/select2-bootstrap-5-theme/select2-bootstrap-5-theme.min.css' %}"></script>
+    <link href="{% static 'vendors/flatpickr/flatpickr.min.css' %}" rel="stylesheet"/>
+    <script src="{% static 'vendors/flatpickr/flatpickr.min.js' %}"></script>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
+
+{% endblock %}
+{% block main %}
+    <div class="card mb-3">
+        <div class="card-body">
+            <div class="row flex-between-center">
+                <div class="col-md">
+                    <h5 class="mb-2 mb-md-0">Add a product</h5>
+                </div>
+                <div class="col-auto">
+                    <button class="btn btn-link text-success p-0 me-3 fw-medium" role="button">Muolajani tugatish.
+                    </button>
+                    <button class="btn btn-primary" role="button">Ma'lumotlarni saqlash.</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row g-0">
+        <div class="col-lg-8 pe-lg-2">
+            <div class="card mb-3">
+                <div class="card-header bg-body-tertiary">
+                    <h6 class="mb-0">Muolaja ma'lumotlari.</h6>
+                </div>
+                <div class="card-body">
+                    <form>
+                        <div class="row">
+                            <div class="row col-12 mb-3">
+                                <div class="col-6">
+                                    <label class="form-label" for="procedure_type">Muolaja turi:</label>
+                                    <input class="form-control" placeholder="Muolaja turi:"
+                                           value="{{ procedure.procedure_type.name }}"
+                                           type="text" name="procedure_type" disabled
+                                           id="procedure_type"/>
+                                </div>
+                                <div class="col-6">
+                                    <label class="form-label" for="number_of_recommended_treatments">Tavsiya etilgan
+                                        muolajalar soni:</label>
+                                    <input class="form-control"
+                                           placeholder="Tavsiya etilgan muolajalar soni:"
+                                           value="{{ procedure.number_of_recommended_treatments }}"
+                                           name="number_of_recommended_treatments" type="number"
+                                           id="number_of_recommended_treatments"/>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <label class="form-label" for="description">Qo'shimcha ma'lumotlar:</label>
+                                <textarea class="form-control" id="description" placeholder="Qo'shimcha ma'lumotlar."
+                                          rows="8">{{ procedure.description }}</textarea>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+            <div class="card mb-3 mb-lg-0">
+                <div class="card-header bg-body-tertiary">
+                    <h6 class="mb-0">Specifications</h6>
+                </div>
+                <div class="card-body">
+                    <div class="row gx-2 flex-between-center mb-3">
+                        <div class="col-sm-3">
+                            <h6 class="mb-0 text-600">Processor</h6>
+                        </div>
+                        <div class="col-sm-9">
+                            <div class="d-flex flex-between-center">
+                                <h6 class="mb-0 text-700">2.3GHz quad-core Intel Core i5</h6><a
+                                    class="btn btn-sm btn-link text-danger" href="add-product.html#!"
+                                    data-bs-toggle="tooltip" data-bs-placement="top" title="Remove"><span
+                                    class="fs-10 fas fa-trash-alt"></span></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row gx-2 flex-between-center mb-3">
+                        <div class="col-sm-3">
+                            <h6 class="mb-0 text-600">Memory</h6>
+                        </div>
+                        <div class="col-sm-9">
+                            <div class="d-flex flex-between-center">
+                                <h6 class="mb-0 text-700">8GB of 2133MHz LPDDR3 onboard memory</h6><a
+                                    class="btn btn-sm btn-link text-danger" href="add-product.html#!"
+                                    data-bs-toggle="tooltip" data-bs-placement="top" title="Remove"><span
+                                    class="fs-10 fas fa-trash-alt"></span></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row gx-2 flex-between-center mb-3">
+                        <div class="col-sm-3">
+                            <h6 class="mb-0 text-600">Brand name</h6>
+                        </div>
+                        <div class="col-sm-9">
+                            <div class="d-flex flex-between-center">
+                                <h6 class="mb-0 text-700">Apple</h6><a class="btn btn-sm btn-link text-danger"
+                                                                       href="add-product.html#!"
+                                                                       data-bs-toggle="tooltip" data-bs-placement="top"
+                                                                       title="Remove"><span
+                                    class="fs-10 fas fa-trash-alt"></span></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row gy-3 gx-2">
+                        <div class="col-sm-3"><input class="form-control form-control-sm" id="specification-label"
+                                                     type="text" placeholder="Label"/></div>
+                        <div class="col-sm-9">
+                            <div class="d-flex gap-2 flex-between-center"><input class="form-control form-control-sm"
+                                                                                 id="specification-property" type="text"
+                                                                                 placeholder="Property"/>
+                                <button class="btn btn-sm btn-falcon-default">Add</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 ps-lg-2">
+            <div class="sticky-sidebar">
+                <div class="card mb-3">
+                    <div class="card-header bg-body-tertiary">
+                        <h6 class="mb-0">Mijozni shaxsiy ma'lumotlari.</h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="row gx-2">
+                            <div class="col-12 mb-3">
+                                <div class="col-12 mb-3">
+                                    <div class="mb-3">
+                                        <label class="form-label" for="first_name">Ism:</label>
+                                        <input class="form-control" placeholder="Ism"
+                                               type="text" name="first_name" value="{{ procedure.client.first_name }}"
+                                               id="first_name"/>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label" for="last_name">Familiya:</label>
+                                        <input class="form-control" value="{{ procedure.client.last_name }}"
+                                               placeholder="Familya"
+                                               name="last_name" type="text"
+                                               id="last_name"/>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label" for="phone_number">Telefon
+                                        raqam:</label>
+                                    <div class="col-12  input-group">
+                                        <span class="input-group-text">+998</span>
+                                        <input class="form-control" id="phone_number"
+                                               value="{{ procedure.client.phone_number_without_suffix }}"
+                                               required="required" name="phone_number"
+                                               data-input-mask='{"mask":"(99) 999 99 99"}'
+                                               placeholder="(XX) XXX XX XX" type="tel"/>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label" for="date_of_birth">Tug'ilgan
+                                        sana</label>
+                                    <input class="form-control datetimepicker"
+                                           id="date_of_birth" type="text" value="{{ procedure.client.date_of_birth }}"
+                                           placeholder="dd/mm/yy" name="date_of_birth"
+                                           data-options='{"disableMobile":true}'/>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label" for="address">Manzil</label>
+                                    <input
+                                            class="form-control" type="text" name="address"
+                                            placeholder="Manzil" value="{{ procedure.client.address }}"
+                                            id="address"/>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label" for="workplace">Ish joyi</label>
+                                    <input
+                                            class="form-control" type="text" name="workplace"
+                                            placeholder="Ish joyi" value="{{ procedure.client.workplace }}"
+                                            id="workplace"/>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label" for="diagnosis">Tashxis</label>
+                                    <textarea
+                                            class="form-control" type="text" name="diagnosis"
+                                            placeholder="Tashxis"
+                                            id="diagnosis">{{ procedure.client.diagnosis }}</textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card mb-3">
+                    <div class="card-header bg-body-tertiary">
+                        <h6 class="mb-0">Tags</h6>
+                    </div>
+                    <div class="card-body"><label class="form-label" for="product-tags">Add a keyword:</label><input
+                            class="form-control js-choice" id="product-tags" type="text" name="tags" required="required"
+                            size="1" data-options='{"removeItemButton":true,"placeholder":false}'/></div>
+                </div>
+                <div class="card mb-3">
+                    <div class="card-header bg-body-tertiary">
+                        <h6 class="mb-0">Pricing</h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="row gx-2">
+                            <div class="col-8 mb-3"><label class="form-label" for="base-price">Base Price: <span
+                                    data-bs-toggle="tooltip" data-bs-placement="top" title="Product regular price"><span
+                                    class="fas fa-question-circle text-primary fs-10 ms-1"></span></span></label><input
+                                    class="form-control" id="base-price" type="text"/></div>
+                            <div class="col-4"><label class="form-label" for="price-currency">Currency:</label><select
+                                    class="form-select" id="price-currency" name="price-currency">
+                                <option value="usd">USD</option>
+                                <option value="eur">EUR</option>
+                                <option value="gbp">GBP</option>
+                                <option value="cad">CAD</option>
+                            </select></div>
+                            <div class="col-12 mb-4"><label class="form-label" for="discount-percentage">Discount in
+                                percentage:</label><input class="form-control" id="discount-percentage" type="text"/>
+                            </div>
+                            <div class="col-12"><label class="form-label" for="final-price">Final price:<span
+                                    data-bs-toggle="tooltip" data-bs-placement="top" title="Product final price"><span
+                                    class="fas fa-question-circle text-primary fs-10 ms-1"></span></span></label><input
+                                    class="form-control" id="final-price" disabled="disabled" type="text"/></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card mb-3">
+                    <div class="card-header bg-body-tertiary">
+                        <h6 class="mb-0">Shipping</h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-check"><input class="form-check-input p-2" id="vendor-delivery" type="radio"
+                                                       name="product-shipping"/><label
+                                class="form-check-label fs-9 fw-normal text-700" for="vendor-delivery">Delivered by
+                            vendor (you)</label></div>
+                        <div class="form-check"><input class="form-check-input p-2" id="falcon-delivery" type="radio"
+                                                       name="product-shipping"/><label
+                                class="form-check-label fs-9 fw-normal text-700" for="falcon-delivery">Delivered by
+                            FALCON <span class="badge badge-subtle-warning rounded-pill ms-2">Recommended</span></label>
+                        </div>
+                    </div>
+                </div>
+                <div class="card mb-3">
+                    <div class="card-header bg-body-tertiary">
+                        <h6 class="mb-0">Stock status</h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-check"><input class="form-check-input p-2" id="in-stock" type="radio"
+                                                       name="stock-status"/><label
+                                class="form-check-label fs-9 fw-normal text-700" for="in-stock">In stock</label></div>
+                        <div class="form-check"><input class="form-check-input p-2" id="unavailable" type="radio"
+                                                       name="stock-status"/><label
+                                class="form-check-label fs-9 fw-normal text-700" for="unavailable">Unavailable</label>
+                        </div>
+                        <div class="form-check"><input class="form-check-input p-2" id="to-be-announced" type="radio"
+                                                       name="stock-status"/><label
+                                class="form-check-label fs-9 fw-normal text-700" for="to-be-announced">To be
+                            announced</label></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {#    <div class="card mt-3">#}
+    {#        <div class="card-body">#}
+    {#            <div class="row justify-content-between align-items-center">#}
+    {#                <div class="col-md">#}
+    {#                    <h5 class="mb-2 mb-md-0">You're almost done!</h5>#}
+    {#                </div>#}
+    {#                <div class="col-auto">#}
+    {#                    <button class="btn btn-link text-secondary p-0 me-3 fw-medium" role="button">Discard</button>#}
+    {#                    <button class="btn btn-primary" role="button">Add product</button>#}
+    {#                </div>#}
+    {#            </div>#}
+    {#        </div>#}
+    {#    </div>#}
+{% endblock %}
+{% block script %}
+    <script>
+        var csrfToken = '{{ csrf_token }}';  // Pass the CSRF token to JS
+        var getClientListUrl = "{% url 'web:clients:list-api' %}";  // Pass the URL to JS
+        var createClientUrl = "{% url 'web:clients:create-api' %}";  // Pass the URL to JS
+    </script>
+    <script src="{% static 'vendors/jquery/jquery.min.js' %}"></script>
+    <script src="{% static 'vendors/select2/select2.min.js' %}"></script>
+    <script src="{% static 'vendors/select2/select2.full.min.js' %}"></script>
+    <script src="{% static 'vendors/inputmask/inputmask.min.js' %}"></script>
+    <script src="{% static 'assets/js/custom/base/datepicker.js' %}"></script>
+{% endblock %}

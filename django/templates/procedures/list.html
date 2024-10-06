@@ -14,9 +14,17 @@
             color: #000;
         }
     </style>
+    <script src="{% static 'vendors/select2/select2.min.css' %}"></script>
+    <script src="{% static 'vendors/select2-bootstrap-5-theme/select2-bootstrap-5-theme.min.css' %}"></script>
     <link href="{% static 'vendors/flatpickr/flatpickr.min.css' %}" rel="stylesheet"/>
     <script src="{% static 'vendors/flatpickr/flatpickr.min.js' %}"></script>
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
+
+    <script src="{% static 'vendors/select2/select2.min.css' %}"></script>
+    <script src="{% static 'vendors/select2-bootstrap-5-theme/select2-bootstrap-5-theme.min.css' %}"></script>
+    <script src="https://jsuites.net/v5/jsuites.js"></script>
+    <link href="{% static 'vendors/flatpickr/flatpickr.min.css' %}" rel="stylesheet"/>
+    <script src="{% static 'vendors/flatpickr/flatpickr.min.js' %}"></script>
 
     <script src="{% static 'vendors/select2/select2.min.css' %}"></script>
     <script src="{% static 'vendors/select2-bootstrap-5-theme/select2-bootstrap-5-theme.min.css' %}"></script>
@@ -66,7 +74,7 @@
                 <div class="col-8 col-sm-auto text-end ps-2">
                     <div id="table-customers-replace-element">
                         <button class="btn btn-falcon-success btn-sm" type="button" data-bs-toggle="modal"
-                                data-bs-target="#createProcedure" onclick="getBillingData()">
+                                data-bs-target="#createObject" onclick="getBillingData()">
                             <span class="fas fa-plus" data-fa-transform="shrink-3 down-2"></span>
                             <span class="d-none d-sm-inline-block ms-1">Muolaja qo'shish</span>
                         </button>
@@ -138,8 +146,8 @@
     </div>
 
 
-    <div class="modal fade" id="createProcedure" data-bs-keyboard="false" data-bs-backdrop="static" tabindex="-1"
-         aria-labelledby="createProcedureLabel" aria-hidden="true">
+    <div class="modal fade" id="createObject" data-bs-keyboard="false" data-bs-backdrop="static" tabindex="-1"
+         aria-labelledby="createObjectLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg mt-6" role="document" style="width: 90%; max-width: 100%">
             <div class="modal-content border-0">
                 <div class="position-absolute top-0 end-0 mt-3 me-3 z-1">
@@ -149,7 +157,7 @@
                 <div class="modal-body p-0">
 
                     {#                    <div class="rounded-top-3 bg-body-tertiary py-3 ps-4 pe-6">#}
-                    {#                        <h4 class="mb-1" id="createProcedureLabel">Muolaja qo'shish.</h4>#}
+                    {#                        <h4 class="mb-1" id="createObjectLabel">Muolaja qo'shish.</h4>#}
                     {#                        <p class="fs-11 mb-0">Muaolaja to'g'risidagi ma'lumotarni to'ldirish.</p>#}
                     {#                    </div>#}
                     <div class="p-4">
@@ -232,8 +240,9 @@
                                                     <div class="mb-3 input-group" style="flex-wrap: nowrap">
                                                         <select id="bootstrap-wizard-wizard-select-name"
                                                                 name="exist_user_id"
-                                                                class="form-control js-data-example-ajax"></select>
-                                                        <button class="input-group-text" id="clear_client"><span
+                                                                class="form-control client-select-generator"></select>
+                                                        <button class="input-group-text" id="clear_client"
+                                                                type="button"><span
                                                                 class="fas fa-trash-alt fs-9"></span></button>
                                                     </div>
                                                     <div class="row g-2">
@@ -338,7 +347,8 @@
 
                                                         <select id="referral_person" name="referral_person"
                                                                 class="form-control js-data-referral-persons"></select>
-                                                        <button class="input-group-text" id="clear_referral"><span
+                                                        <button class="input-group-text" id="clear_referral"
+                                                                type="button"><span
                                                                 class="fas fa-trash-alt fs-9"></span></button>
                                                     </div>
                                                     <div class="row g-2" style="margin-top: 0">
@@ -366,7 +376,7 @@
                                                                     <select id="procedure-type-select"
                                                                             required="required" name="procedure_type"
                                                                             class="form-control js-data-procedure-types"></select>
-                                                                    <button class="input-group-text"
+                                                                    <button class="input-group-text" type="button"
                                                                             id="clear-procedure-type"><span
                                                                             class="fas fa-trash-alt fs-9"></span>
                                                                     </button>
@@ -574,4 +584,6 @@
     <script src="{% static 'vendors/inputmask/inputmask.min.js' %}"></script>
     <script src="{% static 'assets/js/custom/procedures/list.js' %}"></script>
     <script src="{% static 'assets/js/custom/procedures/create.js' %}"></script>
+    <script src="{% static 'assets/js/custom/base/get_client_select.js' %}"></script>
+    <script src="{% static 'assets/js/custom/base/datepicker.js' %}"></script>
 {% endblock %}
