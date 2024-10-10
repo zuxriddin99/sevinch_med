@@ -42,7 +42,7 @@ class Procedure(BaseModel):
     discount = models.IntegerField(default=0)
 
     def __str__(self):
-        return ""
+        return f"{self.id}"
 
     class Meta:
         verbose_name = 'Procedure'
@@ -56,21 +56,35 @@ class Procedure(BaseModel):
             return self.created_at.strftime('%Y-yil %-d-%b %H:%M')
         return ""
 
+    @property
+    def discount_str(self):
+        # Format the number with comma separators and replace commas with spaces
+        return "{:,}".format(self.discount).replace(',', ' ')
+
 
 class ProcedureItem(BaseModel):
     procedure = models.ForeignKey(Procedure, on_delete=models.CASCADE, related_name='items')
     n_th_treatment = models.IntegerField(default=0)
     price = models.IntegerField(default=0)
+    is_received = models.BooleanField(default=False)
+    received_dt = models.DateTimeField(blank=True, null=True)
 
     class Meta:
         verbose_name = "Procedure item"
         verbose_name_plural = "Procedure items"
         db_table = 'procedure_items'
 
+    @property
+    def price_str(self):
+        # Format the number with comma separators and replace commas with spaces
+        return "{:,}".format(self.price).replace(',', ' ')
+
 
 class Product(BaseModel):
     name = models.CharField(max_length=255)
     price = models.IntegerField(default=0)
+    default = models.BooleanField(default=False)
+    default_quantity = models.IntegerField(default=1)
 
     def __str__(self):
         return self.name
@@ -84,14 +98,19 @@ class ExpenseItem(BaseModel):
     amount = models.IntegerField(default=0)
 
     def __str__(self):
-        return ""
+        return f"{self.id}"
+
+    @property
+    def amount_str(self):
+        # Format the number with comma separators and replace commas with spaces
+        return "{:,}".format(self.amount).replace(',', ' ')
 
 
 class Transfer(BaseModel):
     class MethodTransferEnum(models.TextChoices):
-        CARD = "card", "Terminal orqali to'lov"
+        CARD = "card", "Terminal orqali."
         CASH = "cash", "Naqd"
-        TRANSFER_TO_CARD = "transfer_to_card", "Karta orqali o'tkazma"
+        TRANSFER_TO_CARD = "transfer_to_card", "Kartadan kartaga"
 
     class TypeTransferEnum(models.TextChoices):
         INCOME = "income", "Kirim"
@@ -107,6 +126,18 @@ class Transfer(BaseModel):
         verbose_name = 'Transfer'
         verbose_name_plural = 'Transfers'
         db_table = 'transfers'
+
+    @property
+    def amount_str(self):
+        # Format the number with comma separators and replace commas with spaces
+        return "{:,}".format(self.amount).replace(',', ' ')
+
+    @property
+    def translated_created_at(self):
+        if self.created_at:
+            locale.setlocale(locale.LC_TIME, 'uz_UZ.UTF-8')
+            return self.created_at.strftime('%Y/%-d/%m %H:%M')
+        return ""
 
 
 class ReferralPerson(BaseModel):

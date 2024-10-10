@@ -40,7 +40,7 @@ $('.js-data-referral-persons').select2({
     templateResult: formatReferralOption,  // Custom format for result items
     templateSelection: formatReferralSelection,  // Custom format for selected items
     placeholder: 'Select an option',
-    dropdownParent: $('#createProcedure'),
+    dropdownParent: $('#createObject'),
     language: {
         inputTooShort: function () {
             return "Mijozni ismi, familyasi yoki id raqami bo'yicha izlash";  // Custom message
@@ -105,7 +105,7 @@ $('.js-data-procedure-types').select2({
     templateResult: formatProcedureTypeOption,  // Custom format for result items
     templateSelection: formatProcedureTypeSelection,  // Custom format for selected items
     placeholder: 'Select an option',
-    dropdownParent: $('#createProcedure'),
+    dropdownParent: $('#createObject'),
     language: {
         inputTooShort: function () {
             return "Muolaja nomi bo'yicha izlash";  // Custom message
@@ -136,14 +136,6 @@ function formatProcedureTypeSelection(option) {
         return "Muolaja turini tanlash."
     }
     return `${option.name}` || option.id;
-}
-
-function formatCurrency(amount) {
-    return amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") + " so'm";
-}
-
-function removeSpacesFromNumber(numberStr) {
-    return Number(numberStr.replace(/\s+/g, ''));
 }
 
 function getBillingData() {
@@ -216,7 +208,9 @@ function saveProcedure() {
             // Handle success response from the API
             console.log('Data saved successfully:', response.message);
             if (response.is_created) {
-                location.reload();
+
+                window.open(response.url, '_blank');
+                window.location.reload();
             } else {
                 const e = `<div class="alert alert-primary alert-dismissible fade show" role="alert">
                                         Bu mijozda tugallanmagan muolaja mavjud oldin uni tugating.

@@ -13,7 +13,7 @@ from rest_framework import permissions, status
 from rest_framework.response import Response
 
 from apps.clients.models import Client
-from apps.main.models import ReferralPerson, Procedure, ProcedureType, ProcedurePrice
+from apps.main.models import ReferralPerson, Procedure, ProcedureType, ProcedurePrice, Product
 from conf.pagination import CustomPagination
 from services.procedures import ProcedureCreateService
 from web.auth import forms
@@ -61,10 +61,10 @@ class ProcedureCreateAPIView(generics.GenericAPIView):
         is_created, procedure_id = self.service.create_procedure(department_id=department_id,
                                                                  val_data=serializer.validated_data)
         if is_created:
-            data = {"message": "Mijoz uchun muolaja yaratildi", "is_created": is_created}
+            data = {"message": "Mijoz uchun muolaja yaratildi", "is_created": is_created, "url": reverse("web:procedures:update", kwargs={"pk": procedure_id})}
         else:
             domain = request.scheme + "://" + request.get_host()
-            url = domain + reverse('web:procedures:list')
+            url = domain + reverse("web:procedures:update", kwargs={"pk": procedure_id})
             data = {'message': f"Ushbu mijozda yakunlanmagan muolaja bor oldin shuni yakunlang.",
                     "is_created": is_created, "url": url}
         return JsonResponse(status=status.HTTP_200_OK, data=data)
@@ -144,3 +144,11 @@ class ProcedureUpdateView(LoginRequiredMixin, generic.UpdateView):
     form_class = ProcedureForm
     context_object_name = 'procedure'
     login_url = 'web:auth:login'
+
+    def get_context_data(self, **kwargs):
+        import json
+        context = super().get_context_data(**kwargs)
+        context["products"] = Product.objects.all()
+        context["products_list"] = json.dumps(list(Product.objects.all().values("id", "name", "price", "default", "default_quantity")))
+        context["prices_list"] = list(ProcedurePrice.objects.all().values("start_quantity", "end_quantity", "price"))
+        return context
