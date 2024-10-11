@@ -150,3 +150,48 @@ class ProcedureCreateSerializer(serializers.Serializer):
     card_pay = serializers.IntegerField(required=False, default=0)
     card_transfer_pay = serializers.IntegerField(required=False, default=0)
     discount = serializers.IntegerField(required=False, default=0)
+
+
+# Serializer for Expanses
+class ExpanseSerializer(serializers.Serializer):
+    expanse_id = serializers.IntegerField(default=0)
+    product = serializers.IntegerField(default=0)
+    quantity = serializers.IntegerField(default=0)
+    price = serializers.IntegerField(default=0)
+
+
+# Serializer for Procedure Items
+class ProcedureItemSerializer(serializers.Serializer):
+    price = serializers.IntegerField(default=0)
+    received = serializers.BooleanField()
+    treatment_count = serializers.IntegerField(default=0)
+    procedure_item_id = serializers.IntegerField(default=0)
+    expanses = ExpanseSerializer(many=True, required=False)  # Nested list of expanses
+
+
+# Serializer for Client Information
+class ClientSerializer(serializers.Serializer):
+    first_name = serializers.CharField(max_length=100, required=False)
+    last_name = serializers.CharField(max_length=100, required=False)
+    phone_number = serializers.CharField(max_length=20, required=False)
+    date_of_birth = serializers.DateField(input_formats=["%d/%m/%Y"], )  # Expecting date in "dd/mm/yyyy" format
+    address = serializers.CharField(default="", required=False)
+    workplace = serializers.CharField(allow_blank=True, required=False)
+    diagnosis = serializers.CharField(allow_blank=True, required=False)
+
+
+# Serializer for Billing Data
+class BillingDataSerializer(serializers.Serializer):
+    cash_pay = serializers.IntegerField(default=0, required=False)
+    card_pay = serializers.IntegerField(default=0, required=False)
+    card_transfer_pay = serializers.IntegerField(default=0, required=False)
+
+
+# Serializer for the entire Procedure Data
+class ProcedureUpdateSerializer(serializers.Serializer):
+    procedure_items = ProcedureItemSerializer(many=True, required=False)  # Nested list of procedure items
+    client = ClientSerializer(required=False)  # Nested client data
+    description = serializers.CharField(allow_blank=True, required=False)
+    discount = serializers.IntegerField(default=0, required=False)
+    billing_data = BillingDataSerializer(required=False)  # Nested billing data
+    deleted_procedure_items = serializers.ListSerializer(child=serializers.IntegerField(), required=False)

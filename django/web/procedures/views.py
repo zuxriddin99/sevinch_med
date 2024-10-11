@@ -15,7 +15,7 @@ from rest_framework.response import Response
 from apps.clients.models import Client
 from apps.main.models import ReferralPerson, Procedure, ProcedureType, ProcedurePrice, Product
 from conf.pagination import CustomPagination
-from services.procedures import ProcedureCreateService
+from services.procedures import ProcedureCreateService, ProcedureUpdateService
 from web.auth import forms
 from web.clients.serializers import ClientSerializer
 from rest_framework import generics
@@ -23,7 +23,8 @@ from rest_framework import generics
 from web.logics import convert_to_int, phone_number_input_update, calculate_price
 from web.procedures.forms import ProcedureForm
 from web.procedures.serializers import ReferralPersonListSerializer, ReferralPersonCreateSerializer, \
-    ProcedureListSerializer, ProcedureTypeListSerializer, ProcedurePaymentMainSerializer, ProcedureCreateSerializer
+    ProcedureListSerializer, ProcedureTypeListSerializer, ProcedurePaymentMainSerializer, ProcedureCreateSerializer, \
+    ProcedureUpdateSerializer
 from web.views import LoginRequiredMixin, CustomListView
 
 
@@ -61,7 +62,8 @@ class ProcedureCreateAPIView(generics.GenericAPIView):
         is_created, procedure_id = self.service.create_procedure(department_id=department_id,
                                                                  val_data=serializer.validated_data)
         if is_created:
-            data = {"message": "Mijoz uchun muolaja yaratildi", "is_created": is_created, "url": reverse("web:procedures:update", kwargs={"pk": procedure_id})}
+            data = {"message": "Mijoz uchun muolaja yaratildi", "is_created": is_created,
+                    "url": reverse("web:procedures:update", kwargs={"pk": procedure_id})}
         else:
             domain = request.scheme + "://" + request.get_host()
             url = domain + reverse("web:procedures:update", kwargs={"pk": procedure_id})
@@ -149,6 +151,18 @@ class ProcedureUpdateView(LoginRequiredMixin, generic.UpdateView):
         import json
         context = super().get_context_data(**kwargs)
         context["products"] = Product.objects.all()
-        context["products_list"] = json.dumps(list(Product.objects.all().values("id", "name", "price", "default", "default_quantity")))
+        context["products_list"] = json.dumps(
+            list(Product.objects.all().values("id", "name", "price", "default", "default_quantity")))
         context["prices_list"] = list(ProcedurePrice.objects.all().values("start_quantity", "end_quantity", "price"))
         return context
+
+
+class ProcedureUpdateAPIView(generics.GenericAPIView):
+    serializer_class = ProcedureUpdateSerializer
+    service = ProcedureUpdateService()
+
+    def post(self, request, *args, **kwargs):
+        serializer = ProcedureUpdateSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        self.service.perform(procedure_id=kwargs.get("pk"), val_data=serializer.validated_data)
+        return JsonResponse(status=status.HTTP_200_OK, data={})

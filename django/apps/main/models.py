@@ -188,3 +188,56 @@ class ProcedurePrice(BaseModel):
         verbose_name = 'Procedure Price'
         verbose_name_plural = 'Procedure Prices'
         db_table = 'procedure_prices'
+
+
+a = {
+    "procedure_items":[
+        {
+            "price":150000,
+            "received":False,
+            "treatment_count":1,
+            "procedure_item_id":501,
+            "expanses":[
+                {
+                    "expanse_id":516,
+                    "product":1,
+                    "quantity":1,
+                    "price":11000
+                },
+                {
+                    "expanse_id":517,
+                    "product":3,
+                    "quantity":2,
+                    "price":14000
+                }
+            ]
+        },
+        {
+            "price":150000,
+            "received":False,
+            "treatment_count":2,
+            "procedure_item_id":502,
+            "expanses":[
+                {
+                    "expanse_id":518,
+                    "product":1,
+                    "quantity":1,
+                    "price":11000
+                },
+                {
+                    "expanse_id":519,
+                    "product":3,
+                    "quantity":2,
+                    "price":14000
+                }
+            ]
+        }
+    ],
+    "description":"",
+    "discount":0,
+    "billing_data":{
+        "cash_pay":0,
+        "card_pay":0,
+        "card_transfer_pay":0
+    }
+}

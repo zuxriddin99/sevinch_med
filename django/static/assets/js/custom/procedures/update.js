@@ -250,8 +250,7 @@ function removeProcedureItem(divProcedureId) {
         $("#number_of_recommended_treatments").val(lasProcedureTreatmentCount)
     }
     updateDataCacher()
-    deletedProcedureItems.push(divProcedureId)
-    console.log(deletedProcedureItems)
+    deletedProcedureItems.push(Number(divProcedureId))
 }
 
 
@@ -264,7 +263,7 @@ function getTransfersTotalPrice() {
     return totalPrice
 }
 
-function updateBillingData() {
+function getBillingData() {
     const discount = removeSpacesFromNumber($("#discount-input").val()) || 0
     const cashPay = removeSpacesFromNumber($("#cash-pay").val()) || 0
     const cardPay = removeSpacesFromNumber($("#card-pay").val()) || 0
@@ -273,12 +272,16 @@ function updateBillingData() {
     const transferPaid = getTransfersTotalPrice()
     const totalPaid = newPaid + transferPaid
     const totalPrice = getTotalPrice()
-    const billingData = {
-        "totalPrice": Math.max(totalPrice, 0),
-        "discount": Math.max(discount, 0),
-        "paid": Math.max(totalPaid, 0),
-        "needPaid": Math.max((totalPrice - totalPaid - discount), 0)
+    return {
+        "totalPrice": totalPrice,
+        "discount": discount,
+        "paid": totalPaid,
+        "needPaid": (totalPrice - totalPaid - discount)
     }
+}
+
+function updateBillingData() {
+    const billingData = getBillingData()
     $('#billing-total-price').text(formatCurrency(billingData['totalPrice']));
     $('#billing-discount').text(formatCurrency(billingData['discount']));
     $('#billing-paid').text(formatCurrency(billingData['paid']));
@@ -313,7 +316,7 @@ function printCheck() {
     window.print();
 }
 
-function getFormExpanses(procedureItemId) {
+function getFormDataExpanses(procedureItemId) {
 // expanses-pr-item-${tempExpanseId}
     const procedureExpansesForms = $(`.expanses-pr-item-${procedureItemId}`);
 
@@ -346,7 +349,7 @@ function getFormExpanses(procedureItemId) {
     return formsData
 }
 
-function updateProcedure() {
+function getFormDataProcedureItems() {
     const proceduresForms = $(".procedures-form");
 
     const formsData = [];
@@ -376,12 +379,80 @@ function updateProcedure() {
                 formData[inputName] = inputValue;
             }
         });
-        formData["expanses"] = getFormExpanses(form.dataset.realId)
+        formData["expanses"] = getFormDataExpanses(form.dataset.realId)
         formsData.push(formData);
     });
+    return formsData;
+}
 
-    console.log(formsData);
+function getFormClientData() {
+    const clientForm = $(`#client-form-data`);
+    const formData = {};
+    clientForm.find("input, select, textarea").each(function () {
+        const inputName = $(this).attr("name");
+        let inputValue;
 
+        if (inputName === "phone_number") {
+            inputValue = phoneNumberInputUpdate($(this).val())
+        } else {
+            inputValue = $(this).val();
+        }
+
+        if (inputName) {
+            formData[inputName] = inputValue;
+        }
+    });
+    return formData
+}
+
+function getBillingForUpdate() {
+    return {
+        "cash_pay": removeSpacesFromNumber($("#cash-pay").val() || 0),
+        "card_pay": removeSpacesFromNumber($("#card-pay").val() || 0),
+        "card_transfer_pay": removeSpacesFromNumber($("#card-transfer-pay").val() || 0),
+    }
+}
+
+function updateProcedure() {
+    if (checkBillingData()) {
+        alert("To'lov uchun kiritilgan ma'lumotlarda xatolik bor tekshirib keyin ma'lumotlarni saqlang.")
+        return
+    }
+    const procedureItems = getFormDataProcedureItems()
+    const client = getFormClientData()
+    const procedureDescription = $("#procedure-description").val()
+    const billingData = getBillingForUpdate()
+    const data = {
+        "procedure_items": procedureItems,
+        "client": client,
+        "deleted_procedure_items": deletedProcedureItems,
+        "description": procedureDescription,
+        "discount": removeSpacesFromNumber($("#discount-input").val() || 0),
+        "billing_data": billingData,
+    }
+    console.log(data)
+    $.ajax({
+        url: updateProcedureUrl,
+        type: 'POST',
+        data: JSON.stringify(data),
+        contentType: "application/json; charset=utf-8",
+        headers: {
+            'X-CSRFToken': csrfToken  // Set CSRF token in headers (important for JSON requests)
+        },
+        success: function (response) {
+            // Handle success response from the API
+            console.log('Data saved successfully:', response.message);
+        },
+        error: function (xhr, status, error) {
+            // Handle error response from the API
+            alert("Muolaja yaratishda xatolik yuz berdi dasturchi bilan bog'laning");
+        }
+    });
+}
+
+function checkBillingData() {
+    const billingData = getBillingData()
+    return billingData["needPaid"] < 0
 }
 
 window.onload = updateBillingData;
