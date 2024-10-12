@@ -1,8 +1,6 @@
 import re
 from typing import List
 
-from apps.main.models import ProcedurePrice
-
 
 def convert_to_int(num_str):
     try:
@@ -19,8 +17,8 @@ def phone_number_input_update(phone_number:str):
     # Add the country code prefix
     return '+998' + cleaned_number
 
-def calculate_price(treatments_count:int, paid: int, discount: int):
-    prices = list(ProcedurePrice.objects.all().values("start_quantity", "end_quantity", "price"))
+def calculate_price(prices: List, treatments_count:int, paid: int, discount: int):
+
 
     # Initialize result data
     data = []
@@ -50,3 +48,7 @@ def get_price(prices: List[dict], quantity: int):
     price = next(filter(lambda x: x['start_quantity'] <= quantity <= x['end_quantity'], prices), None)
     # Return the matched price, or fallback to the last price in the list
     return price['price'] if price else prices[-1]['price']
+
+def format_price(price: int):
+    # Format the number with comma separators and replace commas with spaces
+    return "{:,}".format(price).replace(',', ' ')

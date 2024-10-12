@@ -5,6 +5,7 @@ $(document).ready(function () {
     console.log(apiUrl)
     let searchTerm = '';  // Initialize search term
     let debounceTimeout;  // For debouncing input
+    console.log(updateProcedureUrl)
 
     // Function to show loader
     function showLoader() {
@@ -56,7 +57,7 @@ $(document).ready(function () {
             const row = `
                         <tr class="btn-reveal-trigger">
                             <td class="align-middle white-space-nowrap py-2"><span class="badge fs-10 w-100 badge-subtle-info">${item.id}</span></td>
-                            <td class="name align-middle white-space-nowrap py-2"><a href="customer-details.html">
+                            <td class="name align-middle white-space-nowrap py-2"><a href="/procedures/${item.id}/update/" target="_blank">
                                 <div class="d-flex d-flex align-items-center">
                                     <div class="avatar avatar-xl me-2">
                                         <div class="avatar-name rounded-circle"><span>${item.client.trunc_name}</span></div>

@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hotel Receipt</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ddd;
+            background-color: #f5f5f5;
+        }
+        h1, h2 {
+            text-align: center;
+        }
+        .header, .footer {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .client-info, .room-info {
+            margin-bottom: 20px;
+        }
+        .client-info p, .room-info p {
+            margin: 5px 0;
+        }
+        .receipt-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        .receipt-table th, .receipt-table td {
+            border: 1px solid #ccc;
+            padding: 8px;
+            text-align: left;
+        }
+        .receipt-table th {
+            background-color: #eee;
+        }
+        .total {
+            margin-top: 20px;
+        }
+        .total p {
+            margin: 5px 0;
+            font-weight: bold;
+        }
+        .signature {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Hotel Name</h1>
+        <p>Address Line<br>Lorem Ipsum Dolor<br>Asset 01-234</p>
+    </div>
+
+    <div class="client-info">
+        <p><strong>Client Name</strong></p>
+    </div>
+
+    <div class="room-info">
+        <p>Room: 123</p>
+        <p>Room Type: ONBR</p>
+        <p>No. of Guests: 2</p>
+        <p>Rate: 123.00</p>
+    </div>
+
+    <div class="stay-info">
+        <p>Arrive 12May17 Time 09:00</p>
+        <p>Depart 15May17 Time 00:00</p>
+    </div>
+
+    <table class="receipt-table">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>RefNumber</th>
+                <th>Description</th>
+                <th>Charges</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>12May17</td>
+                <td>J1234</td>
+                <td>Lorem ipsum</td>
+                <td>$135.10</td>
+            </tr>
+            <tr>
+                <td>13May17</td>
+                <td>N2934</td>
+                <td>Euod tempor</td>
+                <td>$42.00</td>
+            </tr>
+            <tr>
+                <td>13May17</td>
+                <td>M8433</td>
+                <td>Duis aute irure</td>
+                <td>$17.50</td>
+            </tr>
+            <tr>
+                <td>14May17</td>
+                <td>T3742</td>
+                <td>Ut enim ad</td>
+                <td>$19.50</td>
+            </tr>
+            <tr>
+                <td>14May17</td>
+                <td>R4792</td>
+                <td>Nacilluntedi</td>
+                <td>$8.00</td>
+            </tr>
+            <tr>
+                <td>14May17</td>
+                <td>C3782</td>
+                <td>Laboris nisi</td>
+                <td>$5.40</td>
+            </tr>
+            <tr>
+                <td>14May17</td>
+                <td>U9517</td>
+                <td>Cillum dolore</td>
+                <td>$9.20</td>
+            </tr>
+            <tr>
+                <td>14May17</td>
+                <td>T3943</td>
+                <td>Magna aliquaty</td>
+                <td>$13.60</td>
+            </tr>
+            <tr>
+                <td>15May17</td>
+                <td>J1233</td>
+                <td>Euod tempor</td>
+                <td>$15.30</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="total">
+        <p>Total: $263.50</p>
+        <p>Card #: XXXX XXXX XXXX 1234</p>
+        <p>Amount: 263.50</p>
+        <p>Auth: 012345</p>
+    </div>
+
+    <div class="signature">
+        *** Signature on File ***
+    </div>
+
+    <div class="footer">
+        <p>Thank You for Choosing Our Hotel!</p>
+    </div>
+</body>
+</html>

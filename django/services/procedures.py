@@ -98,6 +98,7 @@ class ProcedureUpdateService(ProcedureBaseService):
         procedure.discount = val_data.get("discount", procedure.discount)
         procedure.number_of_recommended_treatments = procedure.items.all().count()
         procedure.description = val_data.get("description", procedure.description)
+        procedure.was_completed = val_data.get("was_completed", procedure.was_completed)
         procedure.save()
 
     @staticmethod

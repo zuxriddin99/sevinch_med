@@ -4,7 +4,7 @@ from django.urls import reverse
 
 from django.contrib import messages
 from django.contrib.auth import authenticate, login
-from django.db.models import Q, Count
+from django.db.models import Q, Count, Sum
 from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from django.views import generic
@@ -13,14 +13,14 @@ from rest_framework import permissions, status
 from rest_framework.response import Response
 
 from apps.clients.models import Client
-from apps.main.models import ReferralPerson, Procedure, ProcedureType, ProcedurePrice, Product
+from apps.main.models import ReferralPerson, Procedure, ProcedureType, ProcedurePrice, Product, Transfer
 from conf.pagination import CustomPagination
 from services.procedures import ProcedureCreateService, ProcedureUpdateService
 from web.auth import forms
 from web.clients.serializers import ClientSerializer
 from rest_framework import generics
 
-from web.logics import convert_to_int, phone_number_input_update, calculate_price
+from web.logics import convert_to_int, phone_number_input_update, calculate_price, format_price
 from web.procedures.forms import ProcedureForm
 from web.procedures.serializers import ReferralPersonListSerializer, ReferralPersonCreateSerializer, \
     ProcedureListSerializer, ProcedureTypeListSerializer, ProcedurePaymentMainSerializer, ProcedureCreateSerializer, \
@@ -119,7 +119,8 @@ class GeneratePaymentDataAPIView(generics.GenericAPIView):
             return JsonResponse({"error": "Invalid input for treatments_count or discount_price"}, status=400)
 
         # Get prices from the database
-        result = calculate_price(treatments_count, paid, discount)
+        prices = list(ProcedurePrice.objects.all().values("start_quantity", "end_quantity", "price"))
+        result = calculate_price(prices, treatments_count, paid, discount)
         return JsonResponse(result)
 
 
@@ -166,3 +167,33 @@ class ProcedureUpdateAPIView(generics.GenericAPIView):
         serializer.is_valid(raise_exception=True)
         self.service.perform(procedure_id=kwargs.get("pk"), val_data=serializer.validated_data)
         return JsonResponse(status=status.HTTP_200_OK, data={})
+
+
+class ProcedurePrintView(generic.TemplateView):
+    template_name = "printable_pages/payment_check.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        procedure = Procedure.objects.get(pk=self.kwargs['pk'])
+        billing_data = self.get_procedure_billing_data(procedure)
+        context['transfers'] = Transfer.objects.filter(procedure_id=kwargs.get("pk"))
+        context['procedure_type'] = procedure.procedure_type.name
+        context['treatment_count'] = procedure.number_of_recommended_treatments
+        context['total_need_paid'] = billing_data.get("total_need_paid")
+        context['paid'] = billing_data.get("paid")
+        context['discount'] = billing_data.get("discount")
+        context['need_paid'] = billing_data.get("need_paid")
+        return context
+
+    @staticmethod
+    def get_procedure_billing_data(procedure: Procedure):
+        total_need_paid = procedure.items.all().aggregate(Sum('price')).get("price__sum", 0) or 0
+        paid = procedure.procedure_payments.all().aggregate(Sum('amount')).get("amount__sum") or 0
+        discount = procedure.discount or 0
+        need_paid = total_need_paid - paid - discount
+        return {
+            "total_need_paid": f"{format_price(total_need_paid)} so'm" if total_need_paid else 0,
+            "paid": f"{format_price(paid)} so'm" if paid else 0,
+            "discount": f"{format_price(discount)} so'm" if discount else None,
+            "need_paid": f"{format_price(need_paid)} so'm" if need_paid else 0
+        }

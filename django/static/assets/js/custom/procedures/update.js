@@ -1,3 +1,5 @@
+window.onload = updateBillingData;
+
 function getSelectOption(needSelectId = 1) {
     let options = ``
     let selectedProductId = 1
@@ -106,7 +108,7 @@ function addProcedureItem() {
                                             <label class="form-check" for="received">Qabul
                                                 qildi:</label>
                                             <div style="width: 100%" class="ps-4 justify-content-center">
-                                                <input class="form-control  form-check-input"
+                                                <input class="form-control  form-check-input received-input"
                                                        style="padding-left: 30px; padding-top: 18px;  "
                                                        name="received" type="checkbox"
                                                        id="received-${procedureId}"/>
@@ -307,13 +309,23 @@ function updateDataCacher() {
     disablePrintButton()
 }
 
-function printCheck() {
+function printCheck(printUrl) {
     const canPrint = document.getElementById('print-check-button').dataset.canPrint;
     if (canPrint === 'no') {
         alert("Chek chiqarishdan oldin ma'lumotlarni saqlang.")
         return
     }
-    window.print();
+    window.open(printUrl, '_blank');
+}
+
+function savePrintCheck(printUrl) {
+    if (checkBillingData()) {
+        alert("To'lov uchun kiritilgan ma'lumotlarda xatolik bor tekshirib keyin ma'lumotlarni saqlang.")
+        return
+    }
+    updateProcedure(false)
+    window.open(printUrl, '_blank');
+    location.reload();
 }
 
 function getFormDataExpanses(procedureItemId) {
@@ -413,7 +425,7 @@ function getBillingForUpdate() {
     }
 }
 
-function updateProcedure() {
+function updateProcedure(needReload = true, was_completed = false) {
     if (checkBillingData()) {
         alert("To'lov uchun kiritilgan ma'lumotlarda xatolik bor tekshirib keyin ma'lumotlarni saqlang.")
         return
@@ -425,12 +437,12 @@ function updateProcedure() {
     const data = {
         "procedure_items": procedureItems,
         "client": client,
+        "was_completed": was_completed,
         "deleted_procedure_items": deletedProcedureItems,
         "description": procedureDescription,
         "discount": removeSpacesFromNumber($("#discount-input").val() || 0),
         "billing_data": billingData,
     }
-    console.log(data)
     $.ajax({
         url: updateProcedureUrl,
         type: 'POST',
@@ -441,7 +453,9 @@ function updateProcedure() {
         },
         success: function (response) {
             // Handle success response from the API
-            console.log('Data saved successfully:', response.message);
+            if (needReload) {
+                location.reload()
+            }
         },
         error: function (xhr, status, error) {
             // Handle error response from the API
@@ -455,4 +469,17 @@ function checkBillingData() {
     return billingData["needPaid"] < 0
 }
 
-window.onload = updateBillingData;
+function completeProcedure() {
+    const allChecked = $('.received-input').length === $('.received-input:checked').length;
+    const billingRight = $('#billing-need-paid').text() === "0 so'm"
+    if (!allChecked) {
+        alert("Barcha muolajalar qabul qilinmagan shu sababli yakunlay olmaysiz.")
+        return
+    }
+    if (!billingRight) {
+        alert("To'lanishi kerag bo'lgan mablag to'liq to'lanmagan(Yoki shu yerda xatolik mavjud)")
+        return
+    }
+    updateProcedure(true, true)
+
+}

@@ -25,6 +25,10 @@ class HomeView(LoginRequiredMixin, generic.TemplateView):
     login_url = 'web:auth:login'
 
 
+class TestView(generic.TemplateView):
+    template_name = 'test.html'
+
+
 class CustomListView(generics.ListAPIView):
 
     def get_response_data(self, serializer_class, instance, pagination=True, **kwargs) -> dict:

@@ -191,6 +191,7 @@ class BillingDataSerializer(serializers.Serializer):
 class ProcedureUpdateSerializer(serializers.Serializer):
     procedure_items = ProcedureItemSerializer(many=True, required=False)  # Nested list of procedure items
     client = ClientSerializer(required=False)  # Nested client data
+    was_completed = serializers.BooleanField(default=False)
     description = serializers.CharField(allow_blank=True, required=False)
     discount = serializers.IntegerField(default=0, required=False)
     billing_data = BillingDataSerializer(required=False)  # Nested billing data
