@@ -96,6 +96,7 @@ class ProcedureUpdateService(ProcedureBaseService):
         self.procedure_item_perform(procedure=procedure, val_data=val_data.get("procedure_items", []))
         self.delete_procedure_items(deleted_procedure_items=val_data.get("deleted_procedure_items"))
         procedure.discount = val_data.get("discount", procedure.discount)
+        procedure.number_of_recommended_treatments = procedure.items.all().count()
         procedure.description = val_data.get("description", procedure.description)
         procedure.save()
 

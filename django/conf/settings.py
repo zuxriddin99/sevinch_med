@@ -127,7 +127,7 @@ REST_FRAMEWORK = {
 LANGUAGE_CODE = 'uz-UZ'
 TIME_ZONE = 'Asia/Tashkent'
 
-USE_TZ = True
+USE_TZ: bool = False
 
 USE_I18N = True
 

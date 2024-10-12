@@ -84,7 +84,7 @@ function addProcedureItem() {
     const procedureId = getRandomNumber()
     const procedureDivId = `procedureDivId-${procedureId}`
     const row = `<div class="position-relative rounded-1 border bg-body-emphasis p-3 mb-3" id=${procedureDivId}>
-                            <div class="position-absolute end-0 top-0 mt-2 me-3 z-1" id="removeButtonDivId-${procedureId}">
+                            <div class="position-absolute end-0 top-0 mt-2 me-3 z-1 remove-procedure-div" id="removeButtonDivId-${procedureId}">
                                 <button class="btn btn-link btn-sm p-0" type="button" onclick="removeProcedureItem('${procedureId}')"><span
                                         class="fas fa-times-circle text-danger" data-fa-transform="shrink-1"></span>
                                 </button>
