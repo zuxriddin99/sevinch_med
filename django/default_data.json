@@ -1,0 +1,382 @@
+[
+  {
+    "model": "main.department",
+    "pk": 1,
+    "fields": {
+      "created_at": "2024-10-13T04:09:48.184",
+      "updated_at": "2024-10-13T04:09:48.184",
+      "name": "Urganch"
+    }
+  },
+  {
+    "model": "main.proceduretype",
+    "pk": 500,
+    "fields": {
+      "created_at": "2024-10-13T04:07:18.497",
+      "updated_at": "2024-10-13T04:07:18.497",
+      "name": "Davolash"
+    }
+  },
+  {
+    "model": "main.procedure",
+    "pk": 501,
+    "fields": {
+      "created_at": "2024-10-13T04:25:59.729",
+      "updated_at": "2024-10-13T04:31:04.582",
+      "department": 1,
+      "client": 1000,
+      "procedure_type": 500,
+      "was_completed": true,
+      "description": "",
+      "number_of_recommended_treatments": 3,
+      "discount": 60000
+    }
+  },
+  {
+    "model": "main.procedureitem",
+    "pk": 501,
+    "fields": {
+      "created_at": "2024-10-13T04:25:59.763",
+      "updated_at": "2024-10-13T04:31:04.525",
+      "procedure": 501,
+      "n_th_treatment": 1,
+      "price": 200000,
+      "is_received": true,
+      "received_dt": "2024-10-13T04:31:04.525"
+    }
+  },
+  {
+    "model": "main.procedureitem",
+    "pk": 502,
+    "fields": {
+      "created_at": "2024-10-13T04:25:59.791",
+      "updated_at": "2024-10-13T04:31:04.553",
+      "procedure": 501,
+      "n_th_treatment": 2,
+      "price": 200000,
+      "is_received": true,
+      "received_dt": "2024-10-13T04:31:04.553"
+    }
+  },
+  {
+    "model": "main.procedureitem",
+    "pk": 503,
+    "fields": {
+      "created_at": "2024-10-13T04:25:59.809",
+      "updated_at": "2024-10-13T04:31:04.565",
+      "procedure": 501,
+      "n_th_treatment": 3,
+      "price": 200000,
+      "is_received": true,
+      "received_dt": "2024-10-13T04:31:04.565"
+    }
+  },
+  {
+    "model": "main.product",
+    "pk": 500,
+    "fields": {
+      "created_at": "2024-10-13T04:03:00.700",
+      "updated_at": "2024-10-13T04:03:47.005",
+      "name": "shprits",
+      "price": 1000,
+      "default": true,
+      "default_quantity": 2
+    }
+  },
+  {
+    "model": "main.product",
+    "pk": 501,
+    "fields": {
+      "created_at": "2024-10-13T04:06:42.618",
+      "updated_at": "2024-10-13T04:12:32.145",
+      "name": "Tibbiy niqob",
+      "price": 800,
+      "default": true,
+      "default_quantity": 1
+    }
+  },
+  {
+    "model": "main.expenseitem",
+    "pk": 500,
+    "fields": {
+      "created_at": "2024-10-13T04:19:24.815",
+      "updated_at": "2024-10-13T04:19:24.815",
+      "procedure_item": null,
+      "product": 500,
+      "quantity": 0,
+      "amount": 0
+    }
+  },
+  {
+    "model": "main.expenseitem",
+    "pk": 501,
+    "fields": {
+      "created_at": "2024-10-13T04:25:59.773",
+      "updated_at": "2024-10-13T04:31:04.539",
+      "procedure_item": 501,
+      "product": 500,
+      "quantity": 2,
+      "amount": 1000
+    }
+  },
+  {
+    "model": "main.expenseitem",
+    "pk": 502,
+    "fields": {
+      "created_at": "2024-10-13T04:25:59.778",
+      "updated_at": "2024-10-13T04:31:04.547",
+      "procedure_item": 501,
+      "product": 501,
+      "quantity": 1,
+      "amount": 800
+    }
+  },
+  {
+    "model": "main.expenseitem",
+    "pk": 503,
+    "fields": {
+      "created_at": "2024-10-13T04:25:59.801",
+      "updated_at": "2024-10-13T04:31:04.557",
+      "procedure_item": 502,
+      "product": 500,
+      "quantity": 2,
+      "amount": 1000
+    }
+  },
+  {
+    "model": "main.expenseitem",
+    "pk": 504,
+    "fields": {
+      "created_at": "2024-10-13T04:25:59.805",
+      "updated_at": "2024-10-13T04:31:04.561",
+      "procedure_item": 502,
+      "product": 501,
+      "quantity": 1,
+      "amount": 800
+    }
+  },
+  {
+    "model": "main.expenseitem",
+    "pk": 505,
+    "fields": {
+      "created_at": "2024-10-13T04:25:59.822",
+      "updated_at": "2024-10-13T04:31:04.569",
+      "procedure_item": 503,
+      "product": 500,
+      "quantity": 2,
+      "amount": 1000
+    }
+  },
+  {
+    "model": "main.expenseitem",
+    "pk": 506,
+    "fields": {
+      "created_at": "2024-10-13T04:25:59.826",
+      "updated_at": "2024-10-13T04:31:04.577",
+      "procedure_item": 503,
+      "product": 501,
+      "quantity": 1,
+      "amount": 800
+    }
+  },
+  {
+    "model": "main.transfer",
+    "pk": 1,
+    "fields": {
+      "created_at": "2024-10-13T04:25:59.749",
+      "updated_at": "2024-10-13T04:25:59.749",
+      "procedure": 501,
+      "transfer_method": "cash",
+      "transfer_type": "income",
+      "amount": 20000
+    }
+  },
+  {
+    "model": "main.transfer",
+    "pk": 2,
+    "fields": {
+      "created_at": "2024-10-13T04:25:59.756",
+      "updated_at": "2024-10-13T04:25:59.756",
+      "procedure": 501,
+      "transfer_method": "card",
+      "transfer_type": "income",
+      "amount": 90000
+    }
+  },
+  {
+    "model": "main.transfer",
+    "pk": 3,
+    "fields": {
+      "created_at": "2024-10-13T04:30:00.277",
+      "updated_at": "2024-10-13T04:30:00.277",
+      "procedure": 501,
+      "transfer_method": "cash",
+      "transfer_type": "income",
+      "amount": 300000
+    }
+  },
+  {
+    "model": "main.transfer",
+    "pk": 4,
+    "fields": {
+      "created_at": "2024-10-13T04:30:00.293",
+      "updated_at": "2024-10-13T04:30:00.293",
+      "procedure": 501,
+      "transfer_method": "card",
+      "transfer_type": "income",
+      "amount": 100000
+    }
+  },
+  {
+    "model": "main.transfer",
+    "pk": 5,
+    "fields": {
+      "created_at": "2024-10-13T04:30:00.304",
+      "updated_at": "2024-10-13T04:30:00.304",
+      "procedure": 501,
+      "transfer_method": "transfer_to_card",
+      "transfer_type": "income",
+      "amount": 30000
+    }
+  },
+  {
+    "model": "main.referralperson",
+    "pk": 500,
+    "fields": {
+      "created_at": "2024-10-13T04:08:14.370",
+      "updated_at": "2024-10-13T04:24:10.334",
+      "full_name": "Axmedov Foziljon Xalimovich",
+      "phone_number": "+998992342342",
+      "additional_information": ""
+    }
+  },
+  {
+    "model": "main.referralperson",
+    "pk": 501,
+    "fields": {
+      "created_at": "2024-10-13T04:23:28.185",
+      "updated_at": "2024-10-13T04:23:28.185",
+      "full_name": "Navro'zov Behzod Sunnatovich",
+      "phone_number": "+998992342342",
+      "additional_information": ""
+    }
+  },
+  {
+    "model": "main.referralitem",
+    "pk": 1,
+    "fields": {
+      "created_at": "2024-10-13T04:25:59.741",
+      "updated_at": "2024-10-13T04:25:59.741",
+      "referral": 501,
+      "was_paid": false
+    }
+  },
+  {
+    "model": "main.procedureprice",
+    "pk": 500,
+    "fields": {
+      "created_at": "2024-10-13T04:07:28.527",
+      "updated_at": "2024-10-13T04:14:30.321",
+      "start_quantity": 0,
+      "end_quantity": 3,
+      "price": 200000
+    }
+  },
+  {
+    "model": "main.procedureprice",
+    "pk": 501,
+    "fields": {
+      "created_at": "2024-10-13T04:14:43.824",
+      "updated_at": "2024-10-13T04:14:43.824",
+      "start_quantity": 4,
+      "end_quantity": 5,
+      "price": 180000
+    }
+  },
+  {
+    "model": "main.procedureprice",
+    "pk": 502,
+    "fields": {
+      "created_at": "2024-10-13T04:15:01.554",
+      "updated_at": "2024-10-13T04:15:01.554",
+      "start_quantity": 6,
+      "end_quantity": 10,
+      "price": 150000
+    }
+  },
+  {
+    "model": "main.procedureprice",
+    "pk": 503,
+    "fields": {
+      "created_at": "2024-10-13T04:15:20.617",
+      "updated_at": "2024-10-13T04:15:20.617",
+      "start_quantity": 11,
+      "end_quantity": 100000,
+      "price": 120000
+    }
+  },
+  {
+    "model": "clients.client",
+    "pk": 1000,
+    "fields": {
+      "created_at": "2024-10-13T04:17:11.088",
+      "updated_at": "2024-10-13T04:31:04.504",
+      "first_name": "Erkin",
+      "last_name": "Hamidov",
+      "phone_number": "+998882345234",
+      "date_of_birth": "2024-04-20",
+      "address": "",
+      "workplace": "",
+      "diagnosis": ""
+    }
+  },
+  {
+    "model": "clients.client",
+    "pk": 1001,
+    "fields": {
+      "created_at": "2024-10-13T04:21:29.046",
+      "updated_at": "2024-10-13T04:21:29.046",
+      "first_name": "Farxod",
+      "last_name": "Berdiyev",
+      "phone_number": "+998922345893",
+      "date_of_birth": "2007-10-11",
+      "address": "",
+      "workplace": "",
+      "diagnosis": ""
+    }
+  },
+  {
+    "model": "users.customuser",
+    "pk": 1,
+    "fields": {
+      "password": "pbkdf2_sha256$870000$lcghzHCe9WTWmtbkZnek7P$jQ8UwINr63/ItkXy88vgRmOJM+bIQROR0VC9bisETKE=",
+      "last_login": "2024-10-13T04:24:58.568",
+      "is_superuser": true,
+      "username": "admin",
+      "email": "",
+      "is_staff": true,
+      "is_active": true,
+      "date_joined": "2024-10-13T04:00:45.643",
+      "department": null,
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "users.customuser",
+    "pk": 2,
+    "fields": {
+      "password": "pbkdf2_sha256$870000$LzPP6ZdReSTLJMB9GP50Vc$YSyWFwg5tUKIBKjS74Gvdu/qF7RH6OB9GkFYkZfUZQI=",
+      "last_login": "2024-10-13T04:20:36.512",
+      "is_superuser": false,
+      "username": "doctor",
+      "email": "",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2024-10-13T04:10:06.838",
+      "department": 1,
+      "groups": [],
+      "user_permissions": []
+    }
+  }
+]

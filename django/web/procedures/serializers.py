@@ -175,7 +175,7 @@ class ClientSerializer(serializers.Serializer):
     last_name = serializers.CharField(max_length=100, required=False)
     phone_number = serializers.CharField(max_length=20, required=False)
     date_of_birth = serializers.DateField(input_formats=["%d/%m/%Y"], )  # Expecting date in "dd/mm/yyyy" format
-    address = serializers.CharField(default="", required=False)
+    address = serializers.CharField(default="", required=False, allow_blank=True)
     workplace = serializers.CharField(allow_blank=True, required=False)
     diagnosis = serializers.CharField(allow_blank=True, required=False)
 
