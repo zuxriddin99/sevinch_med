@@ -8,7 +8,7 @@
                 <span class="navbar-toggle-icon"><span class="toggle-line"></span></span>
             </button>
         </div>
-        <a class="navbar-brand" href="index.html">
+        <a class="navbar-brand" href="{% url 'web:home' %}">
             <div class="d-flex align-items-center py-3">
                 <img class="me-2" src="{% static 'assets/img/icons/spot-illustrations/falcon.png' %}" alt="" width="40">
                 <span class="font-sans-serif text-primary">sevinch</span>
@@ -24,7 +24,7 @@
                             <span class="nav-link-icon">
                                 <span class="fas fa-user-friends"></span>
                             </span>
-                            <span class="nav-link-text ps-1">Mijozlar</span>
+                            <span class="nav-link-text ps-1">Shifokor ko'rigi</span>
                         </div>
                     </a>
                     <a class="nav-link" href="{% url 'web:procedures:list' %}" role="button">
@@ -32,7 +32,7 @@
                             <span class="nav-link-icon">
                                 <span class="far fa-file-alt"></span>
                             </span>
-                            <span class="nav-link-text ps-1">Muolajalar</span>
+                            <span class="nav-link-text ps-1">Registratsiya</span>
                         </div>
                     </a>
                     <a class="nav-link" href="{% url 'web:referrals:list' %}" role="button">
@@ -41,6 +41,14 @@
                                 <span class="fas fa-hospital-user"></span>
                             </span>
                             <span class="nav-link-text ps-1">Hamkor shifokorlar</span>
+                        </div>
+                    </a>
+                    <a class="nav-link" href="{% url 'web:transfers:list' %}" role="button">
+                        <div class="d-flex align-items-center">
+                            <span class="nav-link-icon">
+                                <span class="bi-cash-stack"></span>
+                            </span>
+                            <span class="nav-link-text ps-1">Kirim chiqimlar</span>
                         </div>
                     </a>
 

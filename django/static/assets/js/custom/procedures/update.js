@@ -1,8 +1,8 @@
 window.onload = updateBillingData;
 
-function getSelectOption(needSelectId = 1) {
+function getSelectOption(needSelectId = 500) {
     let options = ``
-    let selectedProductId = 1
+    let selectedProductId = 500
     productsList.forEach((product, index) => {
         options += `<option value="${product.id}" id="${product.id}" ${product.id === needSelectId ? 'selected' : ''}>${product.name}</option>`
         if (needSelectId === product.id) {
@@ -65,8 +65,9 @@ function updateProductPrice(expanseId) {
 
 function getPriceById(productId) {
     const product = productsList.find(p => p.id === Number(productId));  // Find product by ID
-    console.log(productId)
     const price = product ? formatAmount(product.price) : 0;  // Return the price if product is found, otherwise null
+    console.log(productId, productsList)
+    console.log(product)
     return [price, product.default_quantity]
 }
 
@@ -315,6 +316,10 @@ function printCheck(printUrl) {
         alert("Chek chiqarishdan oldin ma'lumotlarni saqlang.")
         return
     }
+    window.open(printUrl, '_blank');
+}
+
+function printDetectionCheck(printUrl) {
     window.open(printUrl, '_blank');
 }
 

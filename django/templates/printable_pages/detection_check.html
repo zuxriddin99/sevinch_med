@@ -1,0 +1,137 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" style="width: 271.57px">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=80mm, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.0/font/bootstrap-icons.css"/>
+    <title>Receipt</title>
+    <style>
+        @page {
+            size: 80mm;
+            margin: 0;
+        }
+
+        .printArea {
+            margin: 0;
+            padding: 0;
+            font-size: 8pt;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .hyphen {
+            border-top: 1px dashed #000;
+            width: 100%;
+            margin: 5px 0;
+        }
+
+        p {
+            margin: 0;
+        }
+
+        .th-td {
+            border: 1px solid #000;
+            padding-left: 2px;
+            padding-right: 2px;
+        }
+    </style>
+    <script>
+        window.onafterprint = window.close;
+        window.print();
+
+    </script>
+</head>
+<body style="margin: 2px">
+<div class="printArea">
+    <div class="text-center">
+        <p style="margin: 0">*************************************************</p>
+        <h2 style="margin: 0"><b><i>Sevinch-medical</i></b></h2>
+        <p style="margin: 0">***********************************************</p>
+        <p>Manzil: <i>ул. Ж.Мангуберды 6/1</i></p>
+        <p>Telefon: <i>+99862 223-3593</i></p>
+        <p>Chek chiqarilgan vaht: <i>{% now "j M Y H:i" %}</i></p>
+    </div>
+    <div class="hyphen"></div>
+    <table class="mt-1" style="width: 100%">
+        <thead>
+        <tr>
+            <td colspan="2" class="text-center"><p style="font-size: 14px"><b>Analiz javoblari.</b></p></td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td style="text-align: left;">Ism familyasi:</td>
+            <td style="text-align: right;"><b><u>{{ full_name }}</u></b></td>
+        </tr>
+        <tr>
+            <td style="text-align: left;">Tug'ulgan sana:</td>
+            <td style="text-align: right;">{{ date_of_birth }}</td>
+        </tr>
+        </tbody>
+    </table>
+    <div class="hyphen"></div>
+    <table class="mt-1" style="width: 100%">
+        <thead>
+        <tr>
+            <td colspan="3" class="text-center"><b>Aniqlandi.</b></td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td class="pt-2" style="text-align: left;">Лямблии: . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+                . . . . . . . . . . . . . .
+            </td>
+        </tr>
+        <tr>
+            <td class="pt-2" style="text-align: left;">Аскариды: . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+                . . . . . . . . . . . . .
+            </td>
+        </tr>
+        <tr>
+            <td class="pt-2" style="text-align: left;">Острицы: . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+                . . . . . . . . . . . . . .
+            </td>
+        </tr>
+        <tr>
+            <td class="pt-2" style="text-align: left;">Карлю цепень: . . . . . . . . . . . . . . . . . . . . . . . . . .
+                . . . . . . . . . . .
+            </td>
+        </tr>
+
+        <tr>
+            <td class="pt-2" style="text-align: left;">Др.Грибы: . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+                . . . . . . . . . . . . . .
+            </td>
+        </tr>
+        <tr>
+            <td class="pt-2" style="text-align: left;">Дисбактериоз: . . . . . . . . . . . . . . . . . . . . . . . . . .
+                . . . . . . . . . . .
+            </td>
+        </tr>
+        </tbody>
+        <tfoot>
+        <tr>
+            <td class="text-right pt-4"><b>Sana:</b> <i>{{ today }}</i></td>
+        </tr>
+        <tr>
+            <td class="text-right pt-4"><b>Shifokor:</b> . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+                . . . . . . . . . . .
+            </td>
+        </tr>
+        </tfoot>
+    </table>
+    <br>
+    <div class="text-center mt-2">
+        <p>Biz bilan bog'langaningiz uchun tashakkur.</p>
+        <p>Tezroq tuzalib ketishingizni tilaymiz!</p>
+    </div>
+    <div class="hyphen"></div>
+    <div class="hyphen"></div>
+</div>
+<script src="{% static 'vendors/fontawesome/all.min.js' %}"></script>
+</body>
+</html>

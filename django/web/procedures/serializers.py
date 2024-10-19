@@ -5,8 +5,6 @@ from apps.main.models import ReferralPerson, Procedure, ProcedureType
 
 
 class ReferralPersonListSerializer(serializers.ModelSerializer):
-    total_invited_people = serializers.SerializerMethodField()
-    unpaid_invited_people = serializers.SerializerMethodField()
     trunc_name = serializers.SerializerMethodField()
     additional_information = serializers.SerializerMethodField()
     phone_number = serializers.SerializerMethodField()
@@ -35,14 +33,6 @@ class ReferralPersonListSerializer(serializers.ModelSerializer):
     @staticmethod
     def get_full_name(obj: ReferralPerson):
         return obj.full_name if obj.full_name else "-"
-
-    @staticmethod
-    def get_total_invited_people(obj: ReferralPerson):
-        return obj.total_invited_people
-
-    @staticmethod
-    def get_unpaid_invited_people(obj: ReferralPerson):
-        return obj.unpaid_invited_people
 
     @staticmethod
     def get_trunc_name(obj: ReferralPerson) -> str:
@@ -174,7 +164,7 @@ class ClientSerializer(serializers.Serializer):
     first_name = serializers.CharField(max_length=100, required=False)
     last_name = serializers.CharField(max_length=100, required=False)
     phone_number = serializers.CharField(max_length=20, required=False)
-    date_of_birth = serializers.DateField(input_formats=["%d/%m/%Y"], )  # Expecting date in "dd/mm/yyyy" format
+    date_of_birth = serializers.DateField(required=False, input_formats=["%d/%m/%Y"])  # Expecting date in "dd/mm/yyyy" format
     address = serializers.CharField(default="", required=False, allow_blank=True)
     workplace = serializers.CharField(allow_blank=True, required=False)
     diagnosis = serializers.CharField(allow_blank=True, required=False)

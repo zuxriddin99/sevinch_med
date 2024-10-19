@@ -2,7 +2,7 @@ from django.urls import include, path
 
 from web.procedures.views import ProcedureListAPIView, ProcedureListView, ProcedureCreateAPIView, \
     ProcedureTypeListAPIView, GeneratePaymentDataAPIView, ProcedureUpdateView, ProcedureUpdateAPIView, \
-    ProcedurePrintView
+    ProcedurePrintView, DetectionPrintView
 
 app_name = "procedures"
 urlpatterns = [
@@ -13,5 +13,6 @@ urlpatterns = [
     path("create/", ProcedureCreateAPIView.as_view(), name="create"),
     path("<int:pk>/update/", ProcedureUpdateView.as_view(), name="update"),
     path("<int:pk>/print/", ProcedurePrintView.as_view(), name="print-payment"),
+    path("<int:pk>/detection/", DetectionPrintView.as_view(), name="print-detection"),
     path("<int:pk>/update/api/", ProcedureUpdateAPIView.as_view(), name="update-api"),
 ]

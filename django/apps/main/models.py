@@ -121,6 +121,7 @@ class Transfer(BaseModel):
     transfer_method = models.CharField(choices=MethodTransferEnum.choices, max_length=20)
     transfer_type = models.CharField(choices=TypeTransferEnum.choices, max_length=20)
     amount = models.IntegerField(default=0)
+    description = models.TextField(blank=True, default='')
 
     class Meta:
         verbose_name = 'Transfer'
@@ -139,7 +140,7 @@ class Transfer(BaseModel):
     def translated_created_at(self):
         if self.created_at:
             locale.setlocale(locale.LC_TIME, 'uz_UZ.UTF-8')
-            return self.created_at.strftime('%Y/%-d/%m %H:%M')
+            return self.created_at.strftime('%Y-yil %-d-%b %H:%M')
         return ""
 
 
@@ -155,14 +156,14 @@ class ReferralPerson(BaseModel):
         verbose_name = 'Referral Person'
         verbose_name_plural = 'Referral Persons'
         db_table = 'referral_persons'
-
-    @property
-    def total_invited_people(self):
-        return self.referral_items.all().count()
-
-    @property
-    def unpaid_invited_people(self):
-        return self.referral_items.filter(was_paid=False).count()
+    # #
+    # # @property
+    # # def total_invited_people(self):
+    # #     return self.referral_items.all().count()
+    #
+    # @property
+    # def unpaid_invited_people(self):
+    #     return self.referral_items.filter(was_paid=False).count()
 
     @property
     def formated_phone_number(self):
@@ -193,54 +194,3 @@ class ProcedurePrice(BaseModel):
         db_table = 'procedure_prices'
 
 
-a = {
-    "procedure_items": [
-        {
-            "price": 150000,
-            "received": False,
-            "treatment_count": 1,
-            "procedure_item_id": 501,
-            "expanses": [
-                {
-                    "expanse_id": 516,
-                    "product": 1,
-                    "quantity": 1,
-                    "price": 11000
-                },
-                {
-                    "expanse_id": 517,
-                    "product": 3,
-                    "quantity": 2,
-                    "price": 14000
-                }
-            ]
-        },
-        {
-            "price": 150000,
-            "received": False,
-            "treatment_count": 2,
-            "procedure_item_id": 502,
-            "expanses": [
-                {
-                    "expanse_id": 518,
-                    "product": 1,
-                    "quantity": 1,
-                    "price": 11000
-                },
-                {
-                    "expanse_id": 519,
-                    "product": 3,
-                    "quantity": 2,
-                    "price": 14000
-                }
-            ]
-        }
-    ],
-    "description": "",
-    "discount": 0,
-    "billing_data": {
-        "cash_pay": 0,
-        "card_pay": 0,
-        "card_transfer_pay": 0
-    }
-}

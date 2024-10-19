@@ -29,7 +29,7 @@ function hideLoader() {
 // Function to fetch data from the API
 function fetchData(page = 1, search = '') {
     showLoader();  // Show loader before sending the request
-    const apiUrl = "api/";
+    const apiUrl = getTransfersListUrl;
     let limit = 20;  // Items per page
 
     $.ajax({
@@ -59,24 +59,22 @@ function populateTable(data) {
     tableBody.empty();  // Clear any existing rows
 
     $.each(data, function (index, item) {
-        const dateOfBirth = item.date_of_birth ? item.date_of_birth : 'N/A';
+        let transferType = `<span class="badge rounded-pill d-block badge-subtle-success fs-10">Kirim<span class="ms-1 fas fas fa-sort-numeric-down" data-fa-transform="shrink-2"></span></span>`
+        let description = item.description
+        if(item.transfer_type === 'expense'){
+            transferType = `<span class="badge rounded-pill d-block badge-subtle-warning fs-10">Chiqim<span class="ms-1 fas fas fa-sort-numeric-up" data-fa-transform="shrink-2"></span></span>`
+        }
+        if (item.procedure){
+            description = `<a target="_blank" href="/procedures/${item.procedure}/update/">#${item.procedure} - muolaja uchun qilingan to'lov</a>`
+        }
         const row = `
                         <tr class="btn-reveal-trigger">
-                            <td class="align-middle white-space-nowrap py-2"><span class="badge fs-10 w-100 badge-subtle-info">${item.id}</span></td>
-                            <td class="name align-middle white-space-nowrap py-2"><a style="cursor: pointer" onclick="updateClientDetail(${item.id})">
-                                <div class="d-flex d-flex align-items-center">
-                                    <div class="avatar avatar-xl me-2">
-                                        <div class="avatar-name rounded-circle"><span>${item.trunc_name}</span></div>
-                                    </div>
-                                    <div class="flex-1">
-                                        <h5 class="mb-0 fs-10">${item.last_name} ${item.first_name}</h5>
-                                    </div>
-                                </div>
-                            </a></td>
-                            <td class="phone align-middle white-space-nowrap py-2"><a href="tel:${item.phone_number}">${item.phone_number}</a></td>
-                            <td class="align-middle white-space-nowrap py-2">${item.date_of_birth}</td>
-                            <td class="address align-middle white-space-nowrap py-2">${item.address}</td>
-                            <td class="joined align-middle py-2">${item.created_at}</td>
+                            <td class="align-middle  py-2"><span class="badge rounded-pill fs-10 w-100 badge-subtle-info">${item.id}</span></td>
+                            <td class="py-2 align-middle text-center fs-9 ">${transferType}</td>
+                            <td class="py-2 align-middle text-center fs-9 ">${item.get_transfer_method_display}</td>
+                            <td class="py-2 align-middle text-end fs-9 fw-medium">${formatCurrency(item.amount)}</td>
+                            <td class="py-2 align-middle text-center fs-9 ">${item.translated_created_at}</td>
+                            <td class="py-2 align-middle text-center fs-9 ">${description}</td>
                         </tr>
                         `;
         tableBody.append(row);
@@ -127,6 +125,7 @@ function createPagination(currentPage, totalPages) {
     // Add click event to all pagination buttons
     $('.pagination-btn').click(function () {
         const page = $(this).data('page');
+        let searchTerm = ''
         if (page) {
             fetchData(page, searchTerm);  // Fetch data for the clicked page with search
         }

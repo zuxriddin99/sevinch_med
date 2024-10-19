@@ -8,10 +8,100 @@
     <script src="{% static 'vendors/select2-bootstrap-5-theme/select2-bootstrap-5-theme.min.css' %}"></script>
 {% endblock %}
 {% block main %}
+    <div class="row g-3 mb-3">
+        <div class="d-flex mt-3">
+            <div class="col">
+                <h5 class="mb-0 text-primary position-relative"><span
+                        class="bg-200 dark__bg-1100 pe-3"></span><span
+                        class="border position-absolute top-50 translate-middle-y w-100 start-0 z-n1"></span>
+                </h5>
+                <p class="mb-0"></p>
+            </div>
+        </div>
+        <div class="col-12 mb-3">
+            <div class="card bg-body-tertiary dark__bg-opacity-50 shadow-none">
+                <div class="bg-holder bg-card d-none d-sm-block"
+                     style="background-image:url({% static 'assets/img/illustrations/ticket-bg.png' %});"></div>
+                <!--/.bg-holder-->
+                <div class="d-flex align-items-center z-1 p-0"><img
+                        src="{% static 'assets/img/illustrations/ticket-welcome.png' %}" alt="" width="110"/>
+                    <div class="ms-n3">
+                        <h3 class="mb-0 text-primary fw-bold">Sevinch-Medical<span
+                                class="text-info fw-medium"> CRM</span>
+                        </h3>
+                        <h5 class="mb-1 text-primary">Tizimiga xush kelibsiz.</h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+         <div class="col-xxl-12 row g-2">
+            <div class="col-sm-6 col-md-4">
+                <div class="card overflow-hidden" style="min-width: 12rem">
+                    <div class="bg-holder bg-card"
+                         style="background-image:url({% static 'assets/img/icons/spot-illustrations/corner-1.png' %});"></div>
+                    <!--/.bg-holder-->
+                    <div class="card-body position-relative">
+                        <h6>Barcha muolajalar. </h6>
+                        <div class="display-4 fs-5 mb-2 fw-normal font-sans-serif text-warning"
+                             data-countup='{"endValue":58.386,"decimalPlaces":2,"suffix":"k"}'>{{ total_procedures }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-md-4">
+                <div class="card overflow-hidden" style="min-width: 12rem">
+                    <div class="bg-holder bg-card"
+                         style="background-image:url({% static 'assets/img/icons/spot-illustrations/corner-2.png' %});"></div>
+                    <!--/.bg-holder-->
+                    <div class="card-body position-relative">
+                        <h6>Bu oydagi muolajalar</h6>
+                        <div class="display-4 fs-5 mb-2 fw-normal font-sans-serif text-info"
+                             data-countup='{"endValue":23.434,"decimalPlaces":2,"suffix":"k"}'>{{ the_month_procedures }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-md-4">
+                <div class="card overflow-hidden" style="min-width: 12rem">
+                    <div class="bg-holder bg-card"
+                         style="background-image:url({% static 'assets/img/icons/spot-illustrations/corner-3.png' %});"></div>
+                    <!--/.bg-holder-->
+                    <div class="card-body position-relative">
+                        <h6>O'tgan oydagi muolajalar.</h6>
+                        <div class="display-4 fs-5 mb-2 fw-normal font-sans-serif"
+                             data-countup='{"endValue":43594,"prefix":"$"}'>{{ prev_month_procedures }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xxl-12">
+            <div class="card rounded-3 overflow-hidden h-100">
+                <div class="card-body bg-line-chart-gradient d-flex flex-column justify-content-between">
+                    <div class="row align-items-center g-0">
+                        <div class="col" data-bs-theme="light">
+                            <h4 class="text-white mb-0">Bugungi kirim {{ today_transfer_amount }} so'm</h4>
+                            <p class="fs-10 fw-semi-bold text-white">Kechagi kirim <span
+                                    class="opacity-50">{{ yesterday_transfer_amount }} so'm</span></p>
+                        </div>
+                    </div>
+                    <!-- Find the JS file for the following calendar at: src/js/charts/echarts/line-payment.js-->
+                    <!-- If you are not using gulp based workflow, you can find the transpiled code at: public/assets/js/theme.js-->
+                    <div class="chart-line-transfer" style="height:200px" data-echart-responsive="true"></div>
+                </div>
+            </div>
+        </div>
+
+    </div>
 {% endblock %}
 {% block script %}
-
+    <script>
+        var last15DaysLabel = {{ last_15_days_label|safe }}
+        var last15DaysTransfers = {{ last_15_days_transfers|safe }}
+    </script>
     <script src="{% static 'vendors/jquery/jquery.min.js' %}"></script>
     <script src="{% static 'vendors/select2/select2.min.js' %}"></script>
     <script src="{% static 'vendors/select2/select2.full.min.js' %}"></script>
+    <script src="{% static 'assets/js/custom/utils/price-utils.js' %}"></script>
+    <script src="{% static 'assets/js/custom/index/transfers_chart.js' %}"></script>
 {% endblock %}

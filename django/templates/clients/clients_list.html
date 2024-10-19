@@ -6,8 +6,8 @@
 
     <link rel="stylesheet" href="{% static 'vendors/select2/select2.min.css' %}">
     <link rel="stylesheet" href="{% static 'vendors/select2-bootstrap-5-theme/select2-bootstrap-5-theme.min.css' %}">
-    <link href="{% static 'vendors/flatpickr/flatpickr.min.css' %}" rel="stylesheet"/>
-    <script src="{% static 'vendors/flatpickr/flatpickr.min.js' %}"></script>
+    {#    <link href="{% static 'vendors/flatpickr/flatpickr.min.css' %}" rel="stylesheet"/>#}
+    {#    <script src="{% static 'vendors/flatpickr/flatpickr.min.js' %}"></script>#}
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
 
     <script src="https://jsuites.net/v5/jsuites.js"></script>
@@ -53,13 +53,7 @@
                     <form class="position-relative" data-bs-toggle="search" data-bs-display="static">
                         <input id="search-term" class="form-control search-input fuzzy-search" type="search"
                                placeholder="Mijozlar ismi va familyasi bo'yicha qidiruv..." aria-label="Search">
-                        <svg class="svg-inline--fa fa-search fa-w-16 search-box-icon" aria-hidden="true"
-                             focusable="false" data-prefix="fas" data-icon="search" role="img"
-                             xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg="">
-                            <path fill="currentColor"
-                                  d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"></path>
-                        </svg>
-                        <!-- <span class="fas fa-search search-box-icon"></span> Font Awesome fontawesome.com -->
+                        <span class="fas fa-search search-box-icon"></span>
                     </form>
                     <div class="btn-close-falcon-container position-absolute end-0 top-50 translate-middle shadow-none"
                          data-bs-dismiss="search">
@@ -141,148 +135,8 @@
 
 
     </div>
-    <div class="modal fade" id="createObject" data-bs-keyboard="false" data-bs-backdrop="static" tabindex="-1"
-         aria-labelledby="createObjectLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg mt-6" role="document" style="width: 90%; max-width: 100%">
-            <div class="modal-content border-0">
-                <div class="position-absolute top-0 end-0 mt-3 me-3 z-1">
-                    <button class="btn-close btn btn-sm btn-circle d-flex flex-center transition-base"
-                            data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body p-0">
-                    <div class="p-4">
-                        <div class="row">
-                            <div class="h-100">
-                                <div class="d-flex mb-4">
-                                    <span class="fa-stack me-2 ms-n1"><i
-                                            class="fas fa-circle fa-stack-2x text-300"></i><i
-                                            class="fa-inverse fa-stack-1x text-primary fas fa-spinner"></i></span>
-                                    <div class="col">
-                                        <h5 class="mb-0 text-primary position-relative"><span
-                                                class="bg-200 dark__bg-1100 pe-3">Mijoz qo'shish</span><span
-                                                class="border position-absolute top-50 translate-middle-y w-100 start-0 z-n1"></span>
-                                        </h5>
-                                        <p class="mb-0">Mijozni yaratish yoki o'zgartirish.</p>
-                                    </div>
-                                </div>
-                                <div id="errorDiv"></div>
-                                <div class="card mb-5">
-                                    <div class="tab-content">
-                                        <div class="active px-sm-3 px-md-5"
-                                             id="form-wizard-progress-tab1">
-                                            <form novalidate="novalidate"
-                                                  id="first-form">
-                                                <label class="form-label"
-                                                       for="bootstrap-wizard-wizard-select-name">Mijozni
-                                                    tanlash</label>
-                                                <div class="mb-3 input-group" style="flex-wrap: nowrap">
-                                                    <select id="bootstrap-wizard-wizard-select-name"
-                                                            name="exist_user_id"
-                                                            class="form-control client-select-generator"></select>
-                                                    <button class="input-group-text" id="clear_client"
-                                                            type="button"><span
-                                                            class="fas fa-trash-alt fs-9"></span></button>
-                                                </div>
-                                                <div class="row g-2">
-                                                    <div class="col">
-                                                        <div class="mb-3">
-                                                            <label class="form-label" for="first_name">Mijozni
-                                                                Ismi</label>
-                                                            <input class="form-control" placeholder="Ism"
-                                                                   type="text" name="first_name"
-                                                                   id="first_name"/>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col">
-                                                        <div class="mb-3">
-                                                            <label class="form-label" for="last_name">Mijozni
-                                                                Familyasi</label>
-                                                            <input class="form-control"
-                                                                   placeholder="Familya"
-                                                                   name="last_name" type="text"
-                                                                   id="last_name"/>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="row g-2">
-                                                    <div class="col">
-                                                        <label class="form-label" for="phone_number">Telefon
-                                                            raqam:</label>
-                                                        <div class="col-12 mb-3 input-group">
-                                                            <span class="input-group-text">+998</span>
-                                                            <input class="form-control" id="phone_number"
-                                                                   required="required" name="phone_number"
-                                                                   data-input-mask='{"mask":"(99) 999 99 99"}'
-                                                                   placeholder="(XX) XXX XX XX" type="tel"/>
-                                                            <div class="invalid-feedback">Telefon raqamni kiritish
-                                                                shart.
-                                                            </div>
-
-                                                        </div>
-                                                    </div>
-                                                    <div class="col">
-                                                        <div class="mb-3">
-                                                            <label class="form-label" for="date_of_birth">Tug'ilgan
-                                                                sana</label>
-                                                            <input class="form-control datetimepicker"
-                                                                   id="date_of_birth" type="text"
-                                                                   placeholder="dd/mm/yy" name="date_of_birth"
-                                                                   data-options='{"disableMobile":true}'/>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="mb-3">
-                                                    <label class="form-label" for="address">Manzil</label>
-                                                    <input
-                                                            class="form-control" type="text" name="address"
-                                                            placeholder="Manzil"
-                                                            id="address"/>
-                                                </div>
-                                                <div class="mb-3">
-                                                    <label class="form-label" for="workplace">Ish joyi</label>
-                                                    <input
-                                                            class="form-control" type="text" name="workplace"
-                                                            placeholder="Ish joyi"
-                                                            id="workplace"/>
-                                                </div>
-
-                                                <div class="mb-3">
-                                                    <label class="form-label" for="diagnosis">Tashxis</label>
-                                                    <textarea
-                                                            class="form-control" type="text" name="diagnosis"
-                                                            placeholder="Tashxis"
-                                                            id="diagnosis"></textarea>
-                                                </div>
-
-
-                                            </form>
-                                            <div class="bg-body-tertiary rounded-pill mb-3">
-                                                <div class="px-sm-3 px-md-5">
-                                                    <ul class="pager wizard list-inline mb-0 d-flex justify-content-between">
-                                                        <li class="previous">
-
-                                                        </li>
-                                                        <li class="next">
-                                                            <button class="btn btn-success px-5 px-sm-6"
-                                                                    type="submit" onclick="createClient()">
-                                                                Saqlash<span class="fas fa-chevron-right ms-2"
-                                                                             data-fa-transform="shrink-3"> </span>
-                                                            </button>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
+    {% include 'clients/create_modal.html' %}
+    {% include 'clients/update_modal.html' %}
 {% endblock %}
 {% block script %}
     <script>
@@ -298,5 +152,6 @@
     <script src="{% static 'assets/js/custom/base/get_client_select.js' %}"></script>
     <script src="{% static 'assets/js/custom/base/datepicker.js' %}"></script>
     <script src="{% static 'assets/js/custom/client/create.js' %}"></script>
+    <script src="{% static 'assets/js/custom/client/update.js' %}"></script>
 
 {% endblock %}

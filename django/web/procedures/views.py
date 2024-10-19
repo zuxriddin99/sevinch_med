@@ -1,3 +1,4 @@
+import locale
 from datetime import datetime
 from typing import List
 from django.urls import reverse
@@ -84,6 +85,11 @@ class ProcedureCreateAPIView(generics.GenericAPIView):
 class ProcedureListView(LoginRequiredMixin, generic.TemplateView):
     template_name = 'procedures/list.html'
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["procedure_types"] = ProcedureType.objects.all()
+        return context
+
 
 class ProcedureListAPIView(CustomListView):
     queryset = Procedure.objects.all()
@@ -163,9 +169,10 @@ class ProcedureUpdateAPIView(generics.GenericAPIView):
     service = ProcedureUpdateService()
 
     def post(self, request, *args, **kwargs):
+        print(request.data)
         serializer = ProcedureUpdateSerializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        # print(serializer.errors)
+        serializer.is_valid(raise_exception=False)
+        print(serializer.errors)
         self.service.perform(procedure_id=kwargs.get("pk"), val_data=serializer.validated_data)
         return JsonResponse(status=status.HTTP_200_OK, data={})
 
@@ -198,3 +205,16 @@ class ProcedurePrintView(generic.TemplateView):
             "discount": f"{format_price(discount)} so'm" if discount else None,
             "need_paid": f"{format_price(need_paid)} so'm" if need_paid else 0
         }
+
+
+class DetectionPrintView(generic.TemplateView):
+    template_name = "printable_pages/detection_check.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        locale.setlocale(locale.LC_TIME, 'uz_UZ.UTF-8')
+        client = Procedure.objects.get(pk=self.kwargs['pk']).client
+        context['full_name'] = f"{client.last_name} {client.first_name}"
+        context['date_of_birth'] = client.translated_date_of_birth
+        context['today'] = datetime.today().strftime('%Y-yil %d-%b')
+        return context

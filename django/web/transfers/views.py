@@ -9,20 +9,21 @@ from rest_framework import permissions, status
 from rest_framework.response import Response
 
 from apps.clients.models import Client
-from apps.main.models import ReferralPerson
+from apps.main.models import ReferralPerson, Transfer
 from conf.pagination import CustomPagination
 from services.clients import ClientCreateService
+from services.transfers import TransferListService
 from web.auth import forms
-from web.clients.serializers import ClientSerializer, ClientCreateOrUpdateSerializer
+from web.transfers.serializers import ClientSerializer, ClientCreateOrUpdateSerializer, TransferSerializer
 from rest_framework import generics
 
 from web.logics import phone_number_input_update
 from web.views import LoginRequiredMixin
 
 
-class ClientsListAPIView(generics.ListAPIView):
-    queryset = Client.objects.all()
-    serializer_class = ClientSerializer
+class TransferListAPIView(generics.ListAPIView):
+    queryset = Transfer.objects.all()
+    serializer_class = TransferSerializer
     permission_classes = (permissions.AllowAny,)
     pagination_class = CustomPagination
 
@@ -33,7 +34,7 @@ class ClientsListAPIView(generics.ListAPIView):
             q_filter = Q(first_name__icontains=search) | Q(last_name__icontains=search)
             if search.isdigit():
                 q_filter |= Q(id=search)
-        queryset = Client.objects.filter(q_filter).order_by('-updated_at')
+        queryset = Transfer.objects.filter(q_filter).order_by('-updated_at')
         data = self.get_response_data(self.serializer_class, queryset, many=True)
         return Response(data)
 
@@ -46,8 +47,14 @@ class ClientsListAPIView(generics.ListAPIView):
         return serializer_class(instance, **kwargs).data
 
 
-class ClientListView(LoginRequiredMixin, generic.TemplateView):
-    template_name = 'clients/clients_list.html'
+class TransfersListView(LoginRequiredMixin, generic.TemplateView):
+    template_name = 'transfers/list.html'
+    service = TransferListService()
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["statistics"] = self.service.get_transfer_list_context()
+        return context
 
 
 class ClientCreateAPIView(generics.GenericAPIView):
@@ -70,9 +77,3 @@ class ClientCreateAPIView(generics.GenericAPIView):
         if data.get("phone_number"):
             data["phone_number"] = phone_number_input_update(data.get("phone_number"))
         return data
-
-
-class ClientDetailAPIView(generics.RetrieveAPIView):
-    serializer_class = ClientSerializer
-    queryset = Client.objects.all()
-    permission_classes = (permissions.AllowAny,)

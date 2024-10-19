@@ -1,0 +1,133 @@
+<div class="modal fade" id="updateObject" data-bs-keyboard="false" data-bs-backdrop="static" tabindex="-1"
+     aria-labelledby="updateObjectLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg mt-6" role="document" style="width: 90%; max-width: 100%">
+        <div class="modal-content border-0">
+            <div class="position-absolute top-0 end-0 mt-3 me-3 z-1">
+                <button class="btn-close btn btn-sm btn-circle d-flex flex-center transition-base"
+                        data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body p-0">
+                <div class="p-4">
+                    <div class="row">
+                        <div class="h-100">
+                            <div class="d-flex mb-4">
+                                    <span class="fa-stack me-2 ms-n1"><i
+                                            class="fas fa-circle fa-stack-2x text-300"></i><i
+                                            class="fa-inverse fa-stack-1x text-primary fas fa-spinner"></i></span>
+                                <div class="col">
+                                    <h5 class="mb-0 text-primary position-relative"><span
+                                            class="bg-200 dark__bg-1100 pe-3">Mijozni ma'lumotlarini o'zgartirish.</span><span
+                                            class="border position-absolute top-50 translate-middle-y w-100 start-0 z-n1"></span>
+                                    </h5>
+                                    <p class="mb-0"></p>
+                                </div>
+                            </div>
+                            <div id="updateErrorDiv"></div>
+                            <div class="card mb-5">
+                                <div class="tab-content">
+                                    <div class="active px-sm-3 px-md-5"
+                                         id="form-wizard-progress-tab1">
+                                        <form novalidate="novalidate"
+                                              id="update-user-form">
+
+                                            <div class="row g-2">
+                                                <div class="col">
+                                                    <div class="mb-3">
+                                                        <label class="form-label" for="update_last_name">Mijozni
+                                                            Familyasi</label>
+                                                        <input class="form-control"
+                                                               placeholder="Familya"
+                                                               name="last_name" type="text"
+                                                               id="update_last_name"/>
+                                                    </div>
+                                                </div>
+                                                <div class="col">
+                                                    <div class="mb-3">
+                                                        <label class="form-label" for="update_first_name">Mijozni
+                                                            Ismi</label>
+                                                        <input class="form-control" placeholder="Ism"
+                                                               type="text" name="first_name"
+                                                               id="update_first_name"/>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <input type="hidden" name="exist_user_id" id="update_exist_user_id">
+                                            <div class="row g-2">
+                                                <div class="col">
+                                                    <label class="form-label" for="update_phone_number">Telefon
+                                                        raqam:</label>
+                                                    <div class="col-12 mb-3 input-group">
+                                                        <span class="input-group-text">+998</span>
+                                                        <input class="form-control" id="update_phone_number"
+                                                               required="required" name="phone_number"
+                                                               data-input-mask='{"mask":"(99) 999 99 99"}'
+                                                               placeholder="(XX) XXX XX XX" type="tel"/>
+                                                        <div class="invalid-feedback">Telefon raqamni kiritish
+                                                            shart.
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                                <div class="col">
+                                                    <div class="mb-3">
+                                                        <label class="form-label" for="update_date_of_birth">Tug'ilgan
+                                                            sana</label>
+                                                        <input class="form-control"
+                                                               id="update_date_of_birth" type="text"
+                                                               placeholder="DD/MM/YYYY" name="date_of_birth"
+                                                               data-input-mask='{"alias":"datetime","inputFormat":"dd/mm/yyyy"}'/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label class="form-label" for="update_address">Manzil</label>
+                                                <input
+                                                        class="form-control" type="text" name="address"
+                                                        placeholder="Manzil"
+                                                        id="update_address"/>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label class="form-label" for="update_workplace">Ish joyi</label>
+                                                <input
+                                                        class="form-control" type="text" name="workplace"
+                                                        placeholder="Ish joyi"
+                                                        id="update_workplace"/>
+                                            </div>
+
+                                            <div class="mb-3">
+                                                <label class="form-label" for="update_diagnosis">Tashxis</label>
+                                                <textarea
+                                                        class="form-control" type="text" name="diagnosis"
+                                                        placeholder="Tashxis"
+                                                        id="update_diagnosis"></textarea>
+                                            </div>
+
+
+                                        </form>
+                                        <div class="bg-body-tertiary rounded-pill mb-3">
+                                            <div class="px-sm-3 px-md-5">
+                                                <ul class="pager wizard list-inline mb-0 d-flex justify-content-between">
+                                                    <li class="previous">
+
+                                                    </li>
+                                                    <li class="next">
+                                                        <button class="btn btn-success px-5 px-sm-6"
+                                                                type="submit" onclick="updateClientRequest()">
+                                                            Saqlash<span class="fas fa-chevron-right ms-2"
+                                                                         data-fa-transform="shrink-3"> </span>
+                                                        </button>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

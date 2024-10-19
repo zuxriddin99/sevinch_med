@@ -47,7 +47,7 @@ class ProcedureTypeAdmin(nested_admin.NestedModelAdmin):
 
 @admin.register(Transfer)
 class TransferAdmin(admin.ModelAdmin):
-    list_display = ["id", "transfer_method", "transfer_type", "amount", ]
+    list_display = ["id", "transfer_method", "transfer_type", "amount", 'created_at']
 
 
 @admin.register(Product)

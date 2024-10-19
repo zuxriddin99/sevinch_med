@@ -19,12 +19,18 @@
                     <h5 class="mb-2 mb-md-0">Muolaja.</h5>
                 </div>
                 <div class="col-auto">
+                    <button class="btn btn-falcon-default mb-1 me-5" type="button" role="button"
+                            onclick="printDetectionCheck('{% url 'web:procedures:print-detection' procedure.id %}')"
+                    >
+                        Analiz javoblari uchun shablon chiqarish.
+                    </button>
                     {% if procedure.was_completed %}
                         <button class="btn btn-link text-warning p-0 me-3 fw-medium" role="button" disabled>Muolaja
                             tugatilgan shu sababli ma'lumotlarni o'zgartira olmaysiz.
                         </button>
                     {% else %}
-                        <button class="btn btn-link text-warning p-0 me-3 fw-medium" role="button" onclick="completeProcedure()">Muolajani tugatish.
+                        <button class="btn btn-link text-warning p-0 me-3 fw-medium" role="button"
+                                onclick="completeProcedure()">Muolajani tugatish.
                         </button>
                     {% endif %}
 
@@ -113,7 +119,7 @@
                                     <div class="row gx-2 ">
                                         <div class="col-sm-4 mb-3">
                                             <label class="form-label" for="field-name">&nbsp;</label>
-                                            <h4 class="form-control form-control-sm">{{ procedure_item.n_th_treatment }}-muolaja</h4>
+                                            <h4 class="form-control form-control-sm">{{ procedure_item.n_th_treatment }}-kun</h4>
                                         </div>
                                         <div class="col-sm-4 mb-3">
                                             <label class="form-label" for="price">Baxosi(so'm).</label>
@@ -300,7 +306,9 @@
                             <div class="col-md">
                                 <button class="btn btn-primary" id="print-check-button" data-bs-toggle="tooltip"
                                         data-bs-placement="top" title="Chek chiqarish uchun" role="button"
-                                        data-can-print="yes" onclick="printCheck('{% url 'web:procedures:print-payment' procedure.id %}')"> Chek chiqarish.
+                                        data-can-print="yes"
+                                        onclick="printCheck('{% url 'web:procedures:print-payment' procedure.id %}')">
+                                    Chek chiqarish.
                                 </button>
                             </div>
                             <div class="col-auto">
@@ -463,11 +471,12 @@
                                     <div class="mb-3">
                                         <label class="form-label" for="date_of_birth">Tug'ilgan
                                             sana</label>
-                                        <input class="form-control datetimepicker"
-                                               id="date_of_birth" type="text"
-                                               value="{{ procedure.client.translated_date_of_birth }}"
-                                               placeholder="dd/mm/yy" name="date_of_birth"
-                                               data-options='{"disableMobile":true}'/>
+                                        <input class="form-control"
+                                               id="date_of_birth" type="text" name="date_of_birth"
+                                               value="{{ procedure.client.date_of_birth|date:"d/m/Y" }}"
+                                               data-input-mask='{"alias":"datetime","inputFormat":"dd/mm/yyyy"}'
+                                               placeholder="DD/MM/YYYY"/>
+
                                     </div>
                                     <div class="mb-3">
                                         <label class="form-label" for="address">Manzil</label>

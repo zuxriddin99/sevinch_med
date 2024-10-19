@@ -71,3 +71,14 @@ class ReferralPersonShortListSerializer(serializers.ModelSerializer):
             "id",
             "full_name",
         ]
+
+
+class ReferralDetailSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ReferralPerson
+        fields = ["id", "full_name", "phone_number", "additional_information"]
+
+class ReferralInfoSerializer(serializers.Serializer):
+    all_referrals = serializers.IntegerField()
+    paid_referrals = serializers.IntegerField()
+    unpaid_referrals = serializers.IntegerField()

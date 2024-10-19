@@ -1,0 +1,79 @@
+<div class="modal fade" id="payObject" data-bs-keyboard="false" data-bs-backdrop="static" tabindex="-1"
+     aria-labelledby="payObjectLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg mt-6" role="document">
+        <div class="modal-content border-0">
+            <div class="position-absolute top-0 end-0 mt-3 me-3 z-1">
+                <button class="btn-close btn btn-sm btn-circle d-flex flex-center transition-base"
+                        data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body p-0">
+                <div class="rounded-top-3 bg-body-tertiary py-3 ps-4 pe-6">
+                    <h4 class="mb-1" id="payObjectLabel"><span>john devid </span>ni hamkorligi uchun to'lov qilish</h4>
+                    <p class="fs-11 mb-0">Hamkor shifokorga to'lov qilish.</p>
+                </div>
+                <div class="p-4">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div id="response-message"></div>
+                            <form id="pay-object-form">
+                                <div class="card-body">
+                                    <div class="row gx-2">
+                                        <div class="col-12 mb-3">
+                                            <label class="form-label" for="total_referrals">Umumiy taklif qilgan
+                                                mijozlar soni.</label>
+                                            <input class="form-control" id="total_referrals"
+                                                   type="number" disabled
+                                            />
+                                        </div>
+                                        <input type="hidden" id="info-hidden-referral-id">
+                                        <div class="col-12 mb-3">
+                                            <label class="form-label" for="paid_referrals">To'lov qilingan mijozlar
+                                                soni.</label>
+                                            <input class="form-control" id="paid_referrals"
+                                                   type="number" disabled
+                                            />
+                                        </div>
+                                        <div class="col-12 mb-3">
+                                            <label class="form-label" for="unpaid_referrals">To'lov qilinmagan mijozlar
+                                                soni.</label>
+                                            <input class="form-control" id="unpaid_referrals"
+                                                   type="number" disabled
+                                            />
+                                        </div>
+                                        <div class="col-12 mb-3">
+                                            <label class="form-label" for="pay">To'lov qilish.</label>
+                                            <input class="form-control" id="pay"
+                                                   type="number" max="0" value="0"
+                                            />
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="card mt-4">
+                                    <div class="card-body">
+                                        <div class="row justify-content-between align-items-center">
+                                            <div class="col-md">
+                                                <h5 class="mb-2 mb-md-0"></h5>
+                                            </div>
+                                            <div class="col-auto">
+                                                <button class="btn btn-link text-secondary p-0 me-3 fw-medium"
+                                                        role="button" data-bs-dismiss="modal" type="button">Bekor
+                                                    qilish
+                                                </button>
+                                                <button class="btn btn-primary" role="button" id="submit-btn"
+                                                        type="button" onclick="updateReferralInfoRequest()">Ma'lumotlarni
+                                                    saqlash
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

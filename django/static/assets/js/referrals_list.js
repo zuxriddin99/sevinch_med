@@ -4,6 +4,8 @@ $(document).ready(function () {
     const apiUrl = "list/api/";  // Your API endpoint
     console.log(apiUrl)
     let searchTerm = '';  // Initialize search term
+    let startDate = '';  // Initialize search term
+    let endDate = '';  // Initialize search term
     let debounceTimeout;  // For debouncing input
 
     // Function to show loader
@@ -17,7 +19,7 @@ $(document).ready(function () {
     }
 
     // Function to fetch data from the API
-    function fetchData(page, search = '') {
+    function fetchData(page, search = '', startDate = null, endDate = null) {
         showLoader();  // Show loader before sending the request
         $.ajax({
             url: apiUrl,
@@ -25,7 +27,9 @@ $(document).ready(function () {
             data: {
                 page: page,
                 limit: limit,
-                search: search  // Include search query in the request
+                search: search,  // Include search query in the request
+                start_date: startDate,  // Include search query in the request
+                end_date: endDate,  // Include search query in the request
             },
             success: function (response) {
                 populateTable(response.results);
@@ -50,7 +54,7 @@ $(document).ready(function () {
             const row = `
                         <tr class="btn-reveal-trigger">
                             <td class="align-middle white-space-nowrap py-2"><span class="badge fs-10 w-100 badge-subtle-info">${item.id}</span></td>
-                            <td class="name align-middle white-space-nowrap py-2"><a href="customer-details.html">
+                            <td class="name align-middle white-space-nowrap py-2"><a style="cursor: pointer" onclick="setDataToModalInputs(${item.id})">
                                 <div class="d-flex d-flex align-items-center">
                                     <div class="avatar avatar-xl me-2">
                                         <div class="avatar-name rounded-circle"><span>${item.trunc_name}</span></div>
@@ -64,6 +68,11 @@ $(document).ready(function () {
                             <td class="align-middle white-space-nowrap py-2">${item.additional_information}</td>
                             <td class="address align-middle white-space-nowrap py-2">${item.unpaid_invited_people}</td>
                             <td class="joined align-middle py-2">${item.total_invited_people}</td>
+                            <td class="align-middle white-space-nowrap text-end">
+                        <div class="dropstart font-sans-serif position-static d-inline-block">
+                        <button class="btn btn-link text-600 btn-sm dropdown-toggle btn-reveal float-end" type="button" id="" onclick="setReferralDataToInput(${item.id})"><span class="bi-cash-stack fs-10"></span></button>
+                        </div>
+                      </td>
                         </tr>
                         `;
             tableBody.append(row);
@@ -133,9 +142,23 @@ $(document).ready(function () {
 
     // Event listener for the search input field
     $('#search-term').on('input', debounce(function () {
+        console.log(141)
         searchTerm = $(this).val();  // Get the search term
         currentPage = 1;  // Reset to the first page when searching
         fetchData(currentPage, searchTerm);  // Fetch data based on search term
+    }, 500));  // Set debounce delay to 500ms
+
+    // Event listener for the search input field
+    $('#timepicker3').on('input', debounce(function () {
+        const datasList = $(this).val().split(" ")
+        if (datasList.length === 1) {
+            startDate = datasList[0]
+        } else if (datasList.length === 2) {
+            startDate = datasList[0]
+            endDate = datasList[1]
+        }
+        currentPage = 1;  // Reset to the first page when searching
+        fetchData(currentPage, searchTerm, startDate, endDate);  // Fetch data based on search term
     }, 500));  // Set debounce delay to 500ms
 
     // Initial fetch (without search)
@@ -143,9 +166,9 @@ $(document).ready(function () {
 });
 $(document).ready(function () {
     $('#submit-btn').click(function () {
-        var fullName = $('#full-name').val();
-        var phoneNumber = $('#phone-number').val();
-        var additionalInformation = $('#additional-information').val();
+        const fullName = $('#full-name').val();
+        const phoneNumber = $('#phone-number').val();
+        const additionalInformation = $('#additional-information').val();
 
         const alert = `<div class="alert alert-danger border-0 d-flex align-items-center" role="alert" style="font-size: 14px"><p class="mb-0 flex-1">Ism va familiya Maydonini to'ldirish shart.</p><button class="btn-close" type="button" data-bs-dismiss="alert" aria-label="Close"></button></div>`
         // Front-end validation

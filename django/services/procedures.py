@@ -90,6 +90,7 @@ class ProcedureCreateService(ProcedureBaseService):
 
 class ProcedureUpdateService(ProcedureBaseService):
     def perform(self, procedure_id: int, val_data: dict):
+        print(val_data)
         procedure = get_object_or_404(Procedure, id=procedure_id)
         self.update_client(client=procedure.client, client_data=val_data.get("client"))
         self.create_transfers(procedure=procedure, val_data=val_data.get("billing_data"))
@@ -137,6 +138,8 @@ class ProcedureUpdateService(ProcedureBaseService):
         for item in val_data:
             expanse_id = item.get('expanse_id')
             if item.get("quantity") == 0:
+                if expanse_id:
+                    ExpenseItem.objects.filter(id=expanse_id).delete()
                 continue
             try:
                 # Get the existing Expanse object by expanse_id
