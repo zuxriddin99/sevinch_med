@@ -119,53 +119,45 @@ function addProcedureItem() {
                                            value="${lasProcedureTreatmentCount}">
                                     <input type="hidden" name="procedure_item_id" value="0"> 
                                 </div>
-                            </form>
-                            <div class="accordion col-12  " id="accordionExample${procedureId}">
-                                        <div class="accordion-item">
-                                            <div class="accordion-header card-header bg-body-tertiary"
-                                                 id="heading${procedureId}"
-                                                 style="padding: 3px 3px 3px 10px;">
-                                                <button class="accordion-button bg-body-tertiary collapsed"
-                                                        type="button"
-                                                        style="padding: 0"
-                                                        data-bs-toggle="collapse"
-                                                        data-bs-target="#collapse${procedureId}"
-                                                        aria-expanded="true"
-                                                        aria-controls="collapse${procedureId}">Muolaja
-                                                    xarajatlari.
-                                                </button>
-                                            </div>
-                                            <div class="accordion-collapse collapse"
-                                                 id="collapse${procedureId}"
-                                                 aria-labelledby="heading${procedureId}"
-                                                 data-bs-parent="#accordionExample${procedureId}">
-                                                <div class="accordion-body">
-                                                    <div class="card-body" style="padding: 0">
-                                                        <div class="row gx-2 flex-between-center mb-3">
-                                                            <div class="col-sm-4">
-                                                                <h6 class="mb-0 text-600">Maxsulot</h6>
-                                                            </div>
-                                                            <div class="col-sm-4">
-                                                                <h6 class="mb-0 text-700">Soni.</h6>
-                                                            </div>
-                                                            <div class="col-sm-4">
-                                                                <h6 class="mb-0 text-700">Baxosi(1 ta maxsulot).</h6>
-                                                            </div>
-                                                        </div>
-                                                        <div id="procedure${procedureId}Expanses">
-                                                        ${getExpanseItems(procedureId)}
-                                                        </div>
-                                                        <div class="mt-3 text-end">
-                                                            <button type="button"
-                                                                    onclick="addProcedureExpanse(${procedureId})"
-                                                                    class="btn btn-secondary ">Xarajat qo'shish.
-                                                            </button>
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                <div class="row mb-2 gy-3 gx-2">
+                                        <div class="col-sm-4">
+                                            <input value="Giyox"
+                                                   class="form-control form-control-sm"
+                                                   type="text"
+                                                   disabled
+                                                   placeholder="Giyox"/>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <div class="d-flex gap-2 flex-between-center">
+                                                <input value="1"
+                                                       class="form-control form-control-sm"
+                                                       name="drug"
+                                                       id="drug"
+                                                       type="number"
+                                                       placeholder="Giyox"/>
                                             </div>
                                         </div>
                                     </div>
+                                <div class="row mb-2 gy-3 gx-2">
+                                        <div class="col-sm-4">
+                                            <input value="Nakanechnik"
+                                                   class="form-control form-control-sm"
+                                                   type="text"
+                                                   disabled
+                                                   placeholder="Nakanechnik"/>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <div class="d-flex gap-2 flex-between-center">
+                                                <input value="2"
+                                                       class="form-control form-control-sm"
+                                                       name="adapter"
+                                                       id="adapter"
+                                                       type="number"
+                                                       placeholder="adapter"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                            </form>
                         </div>`
     procedureItemsDiv.append(row)
     if (newProcedureDivIdList) {
@@ -384,7 +376,7 @@ function getFormDataProcedureItems() {
             // Check if the input is a "price" field
             else if (inputName === "price") {
                 inputValue = removeSpacesFromNumber($(this).val())
-            } else if (["procedure_item_id", "treatment_count"].includes(inputName)) {
+            } else if (["procedure_item_id", "treatment_count", "drug", "adapter"].includes(inputName)) {
                 inputValue = Number($(this).val())
             }
             // For other inputs
@@ -396,7 +388,6 @@ function getFormDataProcedureItems() {
                 formData[inputName] = inputValue;
             }
         });
-        formData["expanses"] = getFormDataExpanses(form.dataset.realId)
         formsData.push(formData);
     });
     return formsData;

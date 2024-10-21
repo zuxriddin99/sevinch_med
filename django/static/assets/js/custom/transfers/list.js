@@ -1,19 +1,8 @@
 $(document).ready(function () {
     let currentPage = 1;
 
-    // Your API endpoint
-    let searchTerm = '';  // Initialize search term
-
-
-    // Event listener for the search input field
-    $('#search-term').on('input', debounce(function () {
-        searchTerm = $(this).val();  // Get the search term
-        currentPage = 1;  // Reset to the first page when searching
-        fetchData(currentPage, searchTerm);  // Fetch data based on search term
-    }, 500));  // Set debounce delay to 500ms
-
     // Initial fetch (without search)
-    fetchData(currentPage);
+    fetchData(currentPage, false);
 });
 
 // Function to show loader
@@ -27,18 +16,20 @@ function hideLoader() {
 }
 
 // Function to fetch data from the API
-function fetchData(page = 1, search = '') {
+function fetchData(page = 1, getStatistic = true, transferMethod = null, transferType = null, startDate = null, endDate = null) {
     showLoader();  // Show loader before sending the request
-    const apiUrl = getTransfersListUrl;
     let limit = 20;  // Items per page
 
     $.ajax({
-        url: apiUrl,
+        url: getTransfersListUrl,
         type: 'GET',
         data: {
             page: page,
             limit: limit,
-            search: search  // Include search query in the request
+            transfer_method: transferMethod,
+            transfer_type: transferType,
+            start_date: startDate,
+            end_date: endDate,
         },
         success: function (response) {
             populateTable(response.results);
@@ -51,6 +42,62 @@ function fetchData(page = 1, search = '') {
             hideLoader();  // Hide loader when the request is complete
         }
     });
+    if (getStatistic) {
+        getTotalIncomeExpense(transferMethod, transferType, startDate, endDate)
+    }
+}
+
+function getTotalIncomeExpense(transferMethod = null, transferType = null, startDate = null, endDate = null) {
+
+    $.ajax({
+        url: getStatisticUrl,
+        type: 'GET',
+        data: {
+            transfer_method: transferMethod,
+            transfer_type: transferType,
+            start_date: startDate,
+            end_date: endDate,
+        },
+        success: function (response) {
+            console.log(response)
+            const statisticDiv = $('#statisticDiv')
+            statisticDiv.empty()
+            statisticDiv.append(
+                `<h4 class="mb-1 font-sans-serif">
+                     <span class="fw-normal text-600">Kirim:</span>
+                     <span class="text-700 mx-2" data-countup='{"endValue":"0"}'>${formatCurrency(response.income_total)}</span>
+                 </h4>
+                 <p class="fs-10 fw-semi-bold mb-0"><span class="text-600 fw-normal">Chiqim:</span>${response.expense_total} so'm</p>`
+            )
+        },
+        error: function (error) {
+            console.error('Error fetching data:', error);
+        },
+        complete: function () {
+            hideLoader();  // Hide loader when the request is complete
+        }
+    });
+}
+
+function useFilter() {
+    let transferMethod = $('#transfer_method').val()
+    let transferType = $('#transfer_type').val()
+    let datasList = $('#timepicker3').val().split(" ")
+    let startDate = null
+    let endDate = null
+    if (transferMethod === "null") {
+        transferMethod = null
+    }
+    if (transferType === "null") {
+        transferType = null
+    }
+    if (datasList.length === 1) {
+        startDate = datasList[0]
+    } else if (datasList.length === 2) {
+        startDate = datasList[0]
+        endDate = datasList[1]
+    }
+    fetchData(1, true, transferMethod, transferType, startDate, endDate)
 }
 
 // Function to populate the table with data
@@ -61,10 +108,10 @@ function populateTable(data) {
     $.each(data, function (index, item) {
         let transferType = `<span class="badge rounded-pill d-block badge-subtle-success fs-10">Kirim<span class="ms-1 fas fas fa-sort-numeric-down" data-fa-transform="shrink-2"></span></span>`
         let description = item.description
-        if(item.transfer_type === 'expense'){
+        if (item.transfer_type === 'expense') {
             transferType = `<span class="badge rounded-pill d-block badge-subtle-warning fs-10">Chiqim<span class="ms-1 fas fas fa-sort-numeric-up" data-fa-transform="shrink-2"></span></span>`
         }
-        if (item.procedure){
+        if (item.procedure) {
             description = `<a target="_blank" href="/procedures/${item.procedure}/update/">#${item.procedure} - muolaja uchun qilingan to'lov</a>`
         }
         const row = `
@@ -87,7 +134,6 @@ function populateTable(data) {
 function createPagination(currentPage, totalPages) {
     const paginationControls = $('#pagination-controls');
     paginationControls.empty();  // Clear existing pagination
-
 
     const maxVisiblePages = 5;  // How many page links to display at a time
 
@@ -125,9 +171,8 @@ function createPagination(currentPage, totalPages) {
     // Add click event to all pagination buttons
     $('.pagination-btn').click(function () {
         const page = $(this).data('page');
-        let searchTerm = ''
         if (page) {
-            fetchData(page, searchTerm);  // Fetch data for the clicked page with search
+            fetchData(page, false);  // Fetch data for the clicked page with search
         }
     });
 }

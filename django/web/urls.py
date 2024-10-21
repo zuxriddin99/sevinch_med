@@ -8,6 +8,7 @@ urlpatterns = [
     path("transfers/", include("web.transfers.urls", namespace="transfers")),
     path("referrals/", include("web.referrals.urls", namespace="referrals")),
     path("procedures/", include("web.procedures.urls", namespace="procedures")),
+    path("statistics/", include("web.statistics.urls", namespace="statistics")),
     path("home/", HomeView.as_view(), name="home"),
     path("test/", TestView.as_view(), name="test"),
     path("", include("web.auth.urls", namespace="auth")),

@@ -57,15 +57,11 @@ class ClientSerializer(serializers.ModelSerializer):
         return ""
 
 
-class ClientCreateOrUpdateSerializer(serializers.Serializer):
-    exist_user_id = serializers.IntegerField(required=False)
-    first_name = serializers.CharField(required=False)
-    last_name = serializers.CharField(required=False)
-    phone_number = serializers.CharField(required=False)
-    date_of_birth = serializers.DateField(required=False, input_formats=["%d/%m/%Y"], )
-    address = serializers.CharField(required=False)
-    workplace = serializers.CharField(required=False)
-    diagnosis = serializers.CharField(required=False)
+class TransferCreateSerializer(serializers.Serializer):
+    transfer_type = serializers.CharField(required=True)
+    transfer_method = serializers.CharField(required=True)
+    amount = serializers.IntegerField(required=False)
+    description = serializers.CharField(required=False)
 
 
 class TransferSerializer(serializers.ModelSerializer):

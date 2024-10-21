@@ -142,7 +142,6 @@ $(document).ready(function () {
 
     // Event listener for the search input field
     $('#search-term').on('input', debounce(function () {
-        console.log(141)
         searchTerm = $(this).val();  // Get the search term
         currentPage = 1;  // Reset to the first page when searching
         fetchData(currentPage, searchTerm);  // Fetch data based on search term

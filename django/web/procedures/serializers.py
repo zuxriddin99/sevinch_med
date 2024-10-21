@@ -156,7 +156,8 @@ class ProcedureItemSerializer(serializers.Serializer):
     received = serializers.BooleanField()
     treatment_count = serializers.IntegerField(default=0)
     procedure_item_id = serializers.IntegerField(default=0)
-    expanses = ExpanseSerializer(many=True, required=False)  # Nested list of expanses
+    drug = serializers.IntegerField(default=0)
+    adapter = serializers.IntegerField(default=0)
 
 
 # Serializer for Client Information
@@ -164,7 +165,8 @@ class ClientSerializer(serializers.Serializer):
     first_name = serializers.CharField(max_length=100, required=False)
     last_name = serializers.CharField(max_length=100, required=False)
     phone_number = serializers.CharField(max_length=20, required=False)
-    date_of_birth = serializers.DateField(required=False, input_formats=["%d/%m/%Y"])  # Expecting date in "dd/mm/yyyy" format
+    date_of_birth = serializers.DateField(required=False,
+                                          input_formats=["%d/%m/%Y"])  # Expecting date in "dd/mm/yyyy" format
     address = serializers.CharField(default="", required=False, allow_blank=True)
     workplace = serializers.CharField(allow_blank=True, required=False)
     diagnosis = serializers.CharField(allow_blank=True, required=False)

@@ -18,8 +18,6 @@ def phone_number_input_update(phone_number:str):
     return '+998' + cleaned_number
 
 def calculate_price(prices: List, treatments_count:int, paid: int, discount: int):
-
-
     # Initialize result data
     data = []
     total_price = 0

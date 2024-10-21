@@ -58,3 +58,9 @@ class ProductAdmin(admin.ModelAdmin):
 @admin.register(ProcedurePrice)
 class ProductAdmin(admin.ModelAdmin):
     list_display = ["id", "start_quantity", "end_quantity", "price"]
+
+
+@admin.register(ProcedureItem)
+class ProcedureItemAdmin(admin.ModelAdmin):
+    list_display = ["id", "procedure", "n_th_treatment", "price", "is_received", "received_dt", "drug", "adapter", ]
+    list_filter = ["n_th_treatment", 'is_received']

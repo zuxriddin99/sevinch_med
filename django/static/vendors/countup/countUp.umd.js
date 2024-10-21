@@ -22,9 +22,9 @@
                 separator: " ",
                 decimal: ".",
                 prefix: "",
-                suffix: "",
+                suffix: " so'm",
                 enableScrollSpy: !1,
-                scrollSpyDelay: 200,
+                scrollSpyDelay: 100,
                 scrollSpyOnce: !1
             }, this.finalEndVal = null, this.useEasing = !0, this.countDown = !1, this.error = "", this.startVal = 0, this.paused = !0, this.once = !1, this.count = function (t) {
                 e.startTime || (e.startTime = t);

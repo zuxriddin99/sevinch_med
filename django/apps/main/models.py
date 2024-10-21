@@ -69,6 +69,8 @@ class ProcedureItem(BaseModel):
     price = models.IntegerField(default=0)
     is_received = models.BooleanField(default=False)
     received_dt = models.DateTimeField(blank=True, null=True)
+    drug = models.IntegerField("Giyox", default=1)
+    adapter = models.IntegerField("Nakanechnik", default=2)
 
     class Meta:
         verbose_name = "Procedure item"
@@ -122,6 +124,8 @@ class Transfer(BaseModel):
     transfer_type = models.CharField(choices=TypeTransferEnum.choices, max_length=20)
     amount = models.IntegerField(default=0)
     description = models.TextField(blank=True, default='')
+    department = models.ForeignKey(
+        Department, on_delete=models.CASCADE, related_name='department_transfers', blank=True, null=True)
 
     class Meta:
         verbose_name = 'Transfer'
@@ -156,6 +160,7 @@ class ReferralPerson(BaseModel):
         verbose_name = 'Referral Person'
         verbose_name_plural = 'Referral Persons'
         db_table = 'referral_persons'
+
     # #
     # # @property
     # # def total_invited_people(self):
@@ -192,5 +197,3 @@ class ProcedurePrice(BaseModel):
         verbose_name = 'Procedure Price'
         verbose_name_plural = 'Procedure Prices'
         db_table = 'procedure_prices'
-
-

@@ -58,9 +58,9 @@ class ProcedureCreateService(ProcedureBaseService):
     def create_procedure_items(self, procedure: Procedure):
         prices = list(ProcedurePrice.objects.all().values("start_quantity", "end_quantity", "price"))
         for i in range(1, procedure.number_of_recommended_treatments + 1):
-            procedure_item = ProcedureItem.objects.create(
-                procedure=procedure, n_th_treatment=i, price=get_price(prices=prices, quantity=i))
-            self.create_procedure_expanse(procedure_item=procedure_item)
+            adapter = 1 if i == 1 else 2
+            ProcedureItem.objects.create(
+                procedure=procedure, n_th_treatment=i, price=get_price(prices=prices, quantity=i), adapter=adapter)
 
     @staticmethod
     def create_procedure_expanse(procedure_item: ProcedureItem):
@@ -90,7 +90,6 @@ class ProcedureCreateService(ProcedureBaseService):
 
 class ProcedureUpdateService(ProcedureBaseService):
     def perform(self, procedure_id: int, val_data: dict):
-        print(val_data)
         procedure = get_object_or_404(Procedure, id=procedure_id)
         self.update_client(client=procedure.client, client_data=val_data.get("client"))
         self.create_transfers(procedure=procedure, val_data=val_data.get("billing_data"))
@@ -121,6 +120,8 @@ class ProcedureUpdateService(ProcedureBaseService):
                 procedure_item.n_th_treatment = item.get("treatment_count")
                 procedure_item.price = item.get("price")
                 procedure_item.is_received = item.get("received")
+                procedure_item.drug = item.get("drug")
+                procedure_item.adapter = item.get("adapter")
                 procedure_item.received_dt = datetime.datetime.now()
                 procedure_item.save()
             except ProcedureItem.DoesNotExist:
@@ -131,28 +132,27 @@ class ProcedureUpdateService(ProcedureBaseService):
                     is_received=item.get("received"),
                     received_dt=datetime.datetime.now(),
                 )
-            self.expanse_update_or_create(procedure_item=procedure_item, val_data=item.get("expanses", []))
 
-    @staticmethod
-    def expanse_update_or_create(procedure_item: ProcedureItem, val_data: List[dict]):
-        for item in val_data:
-            expanse_id = item.get('expanse_id')
-            if item.get("quantity") == 0:
-                if expanse_id:
-                    ExpenseItem.objects.filter(id=expanse_id).delete()
-                continue
-            try:
-                # Get the existing Expanse object by expanse_id
-                expanse = ExpenseItem.objects.get(id=expanse_id)
-                # Update its fields
-                expanse.product_id = item['product']
-                expanse.quantity = item['quantity']
-                expanse.amount = item['price']
-                expanse.save()  # Save the updated object
-            except ExpenseItem.DoesNotExist:
-                expanse = ExpenseItem.objects.create(
-                    procedure_item=procedure_item,
-                    product_id=item['product'],
-                    quantity=item['quantity'],
-                    amount=item['price']
-                )
+    # @staticmethod
+    # def expanse_update_or_create(procedure_item: ProcedureItem, val_data: List[dict]):
+    #     for item in val_data:
+    #         expanse_id = item.get('expanse_id')
+    #         if item.get("quantity") == 0:
+    #             if expanse_id:
+    #                 ExpenseItem.objects.filter(id=expanse_id).delete()
+    #             continue
+    #         try:
+    #             # Get the existing Expanse object by expanse_id
+    #             expanse = ExpenseItem.objects.get(id=expanse_id)
+    #             # Update its fields
+    #             expanse.product_id = item['product']
+    #             expanse.quantity = item['quantity']
+    #             expanse.amount = item['price']
+    #             expanse.save()  # Save the updated object
+    #         except ExpenseItem.DoesNotExist:
+    #             expanse = ExpenseItem.objects.create(
+    #                 procedure_item=procedure_item,
+    #                 product_id=item['product'],
+    #                 quantity=item['quantity'],
+    #                 amount=item['price']
+    #             )

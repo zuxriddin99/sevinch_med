@@ -169,10 +169,8 @@ class ProcedureUpdateAPIView(generics.GenericAPIView):
     service = ProcedureUpdateService()
 
     def post(self, request, *args, **kwargs):
-        print(request.data)
         serializer = ProcedureUpdateSerializer(data=request.data)
-        serializer.is_valid(raise_exception=False)
-        print(serializer.errors)
+        serializer.is_valid(raise_exception=True)
         self.service.perform(procedure_id=kwargs.get("pk"), val_data=serializer.validated_data)
         return JsonResponse(status=status.HTTP_200_OK, data={})
 
