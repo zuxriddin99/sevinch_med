@@ -109,7 +109,7 @@ function setSumResult(data) {
                         <th class="no-sort pe-1 align-middle white-space-nowrap text-center"><u>${formatCurrency(total.card)}</u></th>
                         <th class="no-sort pe-1 align-middle white-space-nowrap text-center"><u>${formatCurrency(total.transfer_to_card)}</u></th>
                         <th class="no-sort pe-1 align-middle white-space-nowrap text-center"><u>${total.drug}</u></th>
-                        <th class="no-sort pe-1 align-middle white-space-nowrap text-center"><u>${total.adapter}</th</u>>`)
+                        <th class="no-sort pe-1 align-middle white-space-nowrap text-center"><u>${total.adapter}</u></th>`)
     }
 }
 
