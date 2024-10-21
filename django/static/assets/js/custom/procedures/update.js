@@ -393,6 +393,7 @@ function getFormDataProcedureItems() {
     return formsData;
 }
 
+
 function getFormClientData() {
     const clientForm = $(`#client-form-data`);
     const formData = {};

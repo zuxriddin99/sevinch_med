@@ -233,9 +233,31 @@ function saveProcedure() {
     });
 }
 
+function validateDate(dateString) {
+    // Regular expression to check if the format is DD/MM/YYYY
+    const regex = /^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/\d{4}$/;
+
+    // If the date string doesn't match the format, return false
+    if (!regex.test(dateString)) {
+        return false;
+    }
+
+    // Split the date into components
+    const parts = dateString.split('/');
+    const day = parseInt(parts[0], 10);
+    const month = parseInt(parts[1], 10) - 1;  // Month is zero-indexed in JavaScript Date object
+    const year = parseInt(parts[2], 10);
+
+    // Create a date object from the components
+    const date = new Date(year, month, day);
+
+    // Check if the date object represents the correct date
+    return (date.getFullYear() === year && date.getMonth() === month && date.getDate() === day);
+}
 function isValid() {
     const firstName = $("#first_name").val();
     const lastName = $("#last_name").val();
+    const dateOfBirth = $("#date_of_birth").val();
     const procedureType = $("#procedure-type-select").val();
     const needPaidHidden = Number($("#need-paid-hidden").val());
     const errorDiv = $("#errorDiv")
@@ -251,6 +273,10 @@ function isValid() {
     }
     if (!procedureType) {
         row += "<strong> - Muolaja turi</strong> maydonini to'ldirish shart.<br>"
+        hasError = true
+    }
+    if (!validateDate(dateOfBirth)) {
+        row += "<strong> - Tug'ilgan sana</strong> maydonini noto'g'ri kiritilgan.<br>"
         hasError = true
     }
     if (needPaidHidden < 0) {

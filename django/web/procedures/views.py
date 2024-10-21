@@ -58,21 +58,19 @@ class ProcedureCreateAPIView(generics.GenericAPIView):
     def post(self, request, *args, **kwargs):
         data = self.update_price_fields(request.data.copy())
         serializer = self.get_serializer(data=data)
-        serializer.is_valid(raise_exception=False)
-        print(serializer.errors)
-        # department_id = request.session.get('department_id')
-        # is_created, procedure_id = self.service.create_procedure(department_id=department_id,
-        #                                                          val_data=serializer.validated_data)
-        # if is_created:
-        #     data = {"message": "Mijoz uchun muolaja yaratildi", "is_created": is_created,
-        #             "url": reverse("web:procedures:update", kwargs={"pk": procedure_id})}
-        # else:
-        #     domain = request.scheme + "://" + request.get_host()
-        #     url = domain + reverse("web:procedures:update", kwargs={"pk": procedure_id})
-        #     data = {'message': f"Ushbu mijozda yakunlanmagan muolaja bor oldin shuni yakunlang.",
-        #             "is_created": is_created, "url": url}
-        # return JsonResponse(status=status.HTTP_200_OK, data=data)
-        return JsonResponse(status=status.HTTP_200_OK, data={})
+        serializer.is_valid(raise_exception=True)
+        department_id = request.session.get('department_id')
+        is_created, procedure_id = self.service.create_procedure(department_id=department_id,
+                                                                 val_data=serializer.validated_data)
+        if is_created:
+            data = {"message": "Mijoz uchun muolaja yaratildi", "is_created": is_created,
+                    "url": reverse("web:procedures:update", kwargs={"pk": procedure_id})}
+        else:
+            domain = request.scheme + "://" + request.get_host()
+            url = domain + reverse("web:procedures:update", kwargs={"pk": procedure_id})
+            data = {'message': f"Ushbu mijozda yakunlanmagan muolaja bor oldin shuni yakunlang.",
+                    "is_created": is_created, "url": url}
+        return JsonResponse(status=status.HTTP_200_OK, data=data)
 
     @staticmethod
     def update_price_fields(data):
