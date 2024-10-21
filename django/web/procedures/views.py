@@ -58,7 +58,8 @@ class ProcedureCreateAPIView(generics.GenericAPIView):
     def post(self, request, *args, **kwargs):
         data = self.update_price_fields(request.data.copy())
         serializer = self.get_serializer(data=data)
-        serializer.is_valid(raise_exception=True)
+        serializer.is_valid(raise_exception=False)
+        print(serializer.errors)
         department_id = request.session.get('department_id')
         is_created, procedure_id = self.service.create_procedure(department_id=department_id,
                                                                  val_data=serializer.validated_data)
