@@ -4,7 +4,7 @@
             data-bs-toggle="collapse" data-bs-target="#navbarVerticalCollapse"
             aria-controls="navbarVerticalCollapse" aria-expanded="false" aria-label="Toggle Navigation">
         <span class="navbar-toggle-icon"><span class="toggle-line"></span></span></button>
-    <a class="navbar-brand me-1 me-sm-3" href="index.html">
+    <a class="navbar-brand me-1 me-sm-3" href="{% url 'web:home' %}">
         <div class="d-flex align-items-center"><img class="me-2"
                                                     src="{% static 'assets/img/icons/spot-illustrations/falcon.png' %}"
                                                     alt="" width="40"><span
@@ -32,7 +32,7 @@
         <li class="nav-item ps-2 pe-0">
             <div class="dropdown theme-control-dropdown"><a
                     class="nav-link d-flex align-items-center dropdown-toggle fa-icon-wait fs-9 pe-1 py-0"
-                    href="index.html#" role="button" id="themeSwitchDropdown" data-bs-toggle="dropdown"
+                    href="{% url 'web:home' %}#" role="button" id="themeSwitchDropdown" data-bs-toggle="dropdown"
                     aria-haspopup="true" aria-expanded="false">
                 <svg class="svg-inline--fa fa-sun fa-w-16 fs-7" data-fa-transform="shrink-2"
                      data-theme-dropdown-toggle-icon="light" aria-hidden="true" focusable="false"
@@ -154,11 +154,11 @@
                          
                         <!-- <span class="fas fa-crown me-1"></span> Font Awesome fontawesome.com --><span>{{ request.user.username}}</span></a>
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="index.html#!">Set status</a>
-                    <a class="dropdown-item" href="pages/user/profile.html">Profile &amp; account</a>
-                    <a class="dropdown-item" href="index.html#!">Feedback</a>
+                    <a class="dropdown-item" href="{% url 'web:home' %}">Set status</a>
+                    <a class="dropdown-item" href="{% url 'web:home' %}">Profile &amp; account</a>
+                    <a class="dropdown-item" href="{% url 'web:home' %}">Feedback</a>
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="pages/user/settings.html">Settings</a>
+                    <a class="dropdown-item" href="{% url 'web:home' %}">Settings</a>
                     <a class="dropdown-item" href="{% url 'web:auth:log-out' %}">Tizimdan chiqish</a>
                 </div>
             </div>
