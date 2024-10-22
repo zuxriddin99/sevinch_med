@@ -137,6 +137,7 @@ class ReferralInfoAPIView(generics.GenericAPIView):
             "all_referrals": all_referrals,
             "paid_referrals": paid_referrals,
             "unpaid_referrals": unpaid_referrals,
+            "full_name": referral.full_name,
         }
         return JsonResponse(status=status.HTTP_200_OK, data=data)
 
