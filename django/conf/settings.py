@@ -29,7 +29,7 @@ SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY", "django-insecure-krgw8smzy-fd7v
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = bool(os.environ.get("DEBUG", True))
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ["http://localhost", "https://sevinch-med.uz"]
 
 # Application definition
 
@@ -163,9 +163,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 #     }
 # }
 
-CSRF_TRUSTED_ORIGINS = ["https://*.zukhriddin.uz", "https://*.zukhriddin.uz", "http://127.0.0.1", "http://localhost",
-                        "http://185.43.6.212", "http://185.43.6.212:81", "http://sevinch-med.uz",
-                        "https://sevinch-med.uz", "http://92.63.102.247"]
+CSRF_TRUSTED_ORIGINS = ["http://127.0.0.1", "http://localhost", "https://sevinch-med.uz"]
 
 # CELERY SETTINGS
 
@@ -197,9 +195,10 @@ MESSAGE_TAGS = {
     messages.ERROR: 'danger',
 }
 AUTH_USER_MODEL = "users.CustomUser"  # new
-
+# SENTRY_DSN = os.environ.get("SENTRY_DSN", None)
+SENTRY_DSN = "https://a73c426c371c453d508fecb70431d929@o4507339063296000.ingest.us.sentry.io/4508002260353024"
 sentry_sdk.init(
-    dsn=os.environ.get("SENTRY_DSN", None),
+    dsn=SENTRY_DSN,
     # Set traces_sample_rate to 1.0 to capture 100%
     # of transactions for tracing.
     traces_sample_rate=1.0,
