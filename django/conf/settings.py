@@ -29,7 +29,7 @@ SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY", "django-insecure-krgw8smzy-fd7v
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = bool(os.environ.get("DEBUG", True))
 
-ALLOWED_HOSTS = ["http://localhost", "https://sevinch-med.uz"]
+ALLOWED_HOSTS = ["http://localhost", "sevinch-med.uz"]
 
 # Application definition
 
@@ -91,8 +91,8 @@ WSGI_APPLICATION = 'conf.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-# database_url = os.environ.get("DATABASE_URL", None)
-database_url = "postgresql://med_user:rN6cR9mQ7kyN@localhost:5432/med_db"
+database_url = os.environ.get("DATABASE_URL", None)
+# database_url = "postgresql://med_user:rN6cR9mQ7kyN@localhost:5432/med_db"
 if database_url:
     db_from_env = dj_database_url.config(default=database_url, conn_max_age=600)
     DATABASES = {"default": db_from_env}
@@ -136,10 +136,10 @@ USE_I18N = True
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
 STATIC_URL = 'static/'
-STATIC_ROOT = os.path.join(BASE_DIR, "static/")
-# STATICFILES_DIRS = [
-#     BASE_DIR / 'static',
-# ]
+# STATIC_ROOT = os.path.join(BASE_DIR, "static/")
+STATICFILES_DIRS = [
+    BASE_DIR / 'static',
+]
 MEDIA_ROOT = os.path.join(BASE_DIR, "media/")
 MEDIA_PATH = "/media/"
 
