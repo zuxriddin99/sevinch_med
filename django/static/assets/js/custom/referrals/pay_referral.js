@@ -6,7 +6,7 @@ async function setReferralDataToInput(referralId) {
             $('#unpaid_referrals').val(data["unpaid_referrals"]);
             $('#paid_referrals').val(data["paid_referrals"]);
             $('#total_referrals').val(data["all_referrals"]);
-            $('#referralPersonName').val(data["full_name"]);
+            $('#referralPersonName').text(data["full_name"]);
             $('#pay').attr('max', data["unpaid_referrals"]);
             $('#payObject').modal('show');
         }
