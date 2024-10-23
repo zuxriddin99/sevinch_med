@@ -47,19 +47,19 @@
         <div class="card mb-3">
             <div class="card-body">
                 <div class="row">
-                    <div id="statisticDiv" class="col-xxl-3 px-3 text-center border-end-md border-bottom border-bottom-xxl-0  p-xxl-0 ps-md-0">
+                    <div id="statisticDiv" class="col px-3 text-center border-end-md   p-xxl-0 ps-md-0">
                         <h4 class="mb-1 font-sans-serif">
-                            <span class="fw-normal text-600">Kirim:</span>
-                            <span class="text-700 mx-2" data-countup='{"endValue":"{{ statistics.all.income_total }}"}'>0</span>
+                            <span style="font-size: 20px" class="fw-normal text-600">Kirim:</span>
+                            <span style="font-size: 20px" class="text-700 mx-2" data-countup='{"endValue":"{{ statistics.all.income_total }}"}'>0</span>
                         </h4>
                         <p class="fs-10 fw-semi-bold mb-0"><span
                                 class="text-600 fw-normal">Chiqim:</span> {{ statistics.all.expense_total }} so'm</p>
                     </div>
-                    <div class="col-xxl-3 px-3 text-center border-end-xxl border-bottom border-bottom-xxl-0 pt-4 pt-md-0 pe-md-0 p-xxl-0">
+                    <div class="col px-3 text-center border-end-xxl pt-4 pt-md-0 pe-md-0 p-xxl-0">
 
                         <h4 class="mb-1 font-sans-serif">
-                            <span class="fw-normal text-600">Bugungi kirim:</span>
-                            <span class="text-700 mx-2"
+                            <span style="font-size: 20px"  class="fw-normal text-600">Bugungi kirim:</span>
+                            <span style="font-size: 20px"  class="text-700 mx-2"
                                   data-countup='{"endValue":"{{ statistics.today.income_total }}"}'>0</span>
                         </h4>
                         <p class="fs-10 fw-semi-bold mb-0"><span
@@ -67,10 +67,10 @@
                             so'm
                         </p>
                     </div>
-                    <div class="col-xxl-3 px-3 text-center border-end-md border-bottom border-bottom-md-0 pt-4 p-xxl-0 pb-md-0 ps-md-0">
+                    <div class="col px-3 text-center ">
                         <h4 class="mb-1 font-sans-serif">
-                            <span class="fw-normal text-600">Kechagi kirim:</span>
-                            <span class="text-700 mx-2"
+                            <span style="font-size: 20px"  class="fw-normal text-600">Kechagi kirim:</span>
+                            <span style="font-size: 20px"  class="text-700 mx-2"
                                   data-countup='{"endValue":"{{ statistics.yesterday.income_total }}"}'>0</span>
 
                         </h4>
@@ -78,16 +78,6 @@
                                 class="text-600 fw-normal">Kechagi chiqim:</span> {{ statistics.yesterday.expense_total }}
                             so'm
                         </p>
-                    </div>
-                    <div class="col-xxl-3 px-3 text-center pt-4 p-xxl-0 pb-0 pe-md-0">
-                        <h4 class="mb-1 font-sans-serif">
-                            <span class="fw-normal text-600">Bu oydagi kirim:</span>
-                            <span class="text-700 mx-2"
-                                  data-countup='{"endValue":"{{ statistics.the_month.income_total }}"}'>0</span>
-
-                        </h4>
-                        <p class="fs-10 fw-semi-bold mb-0"><span class="text-600 fw-normal">Bu oydagi chiqim:</span>
-                            {{ statistics.the_month.expense_total }} so'm</p>
                     </div>
                 </div>
             </div>
@@ -103,7 +93,7 @@
                     <div id="table-customers-replace-element">
                         <select id="transfer_method" name="transfer_method" aria-label="transfer_method"
                                 class="form-select" onchange="useFilter()">
-                            <option selected value="null">To'lov turi bo'yicha filterlash.</option>
+                            <option selected value="null">To'lov turi.</option>
                             <option value="cash">Naqd</option>
                             <option value="card">Kartadan kartaga.</option>
                             <option value="transfer_to_card">Terminal orqali.
@@ -115,7 +105,7 @@
                     <div id="table-customers-replace-element">
                         <select id="transfer_type" name="transfer_type" onchange="useFilter()"
                                 class="form-select" aria-label="transfer_method">
-                            <option selected value="null">O'tkazma turi bo'yicha filterlash.</option>
+                            <option selected value="null">O'tkazma turi.</option>
                             <option value="income">Kirim</option>
                             <option value="expense">Chiqim</option>
                         </select>
