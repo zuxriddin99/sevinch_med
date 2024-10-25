@@ -86,7 +86,7 @@ class ProcedureClientSerializer(serializers.ModelSerializer):
 class ProcedureListSerializer(serializers.ModelSerializer):
     procedure_type_name = serializers.CharField(source='procedure_type.name')
     client = ProcedureClientSerializer()
-    items_count = serializers.IntegerField()
+    items_count = serializers.SerializerMethodField()
     created_at = serializers.SerializerMethodField()
 
     class Meta:
@@ -105,6 +105,9 @@ class ProcedureListSerializer(serializers.ModelSerializer):
     def get_created_at(obj: Procedure) -> str:
         return obj.translated_created_at
 
+    @staticmethod
+    def get_items_count(obj: Procedure):
+        return obj.items.filter(is_received=True).count()
 
 class ProcedureTypeListSerializer(serializers.ModelSerializer):
     class Meta:
