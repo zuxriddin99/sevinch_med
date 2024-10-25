@@ -34,5 +34,5 @@ class StatisticsListAPIView(generics.GenericAPIView):
         return serializer_class(instance, **kwargs).data
 
 
-class StatisticView(generic.TemplateView):
+class StatisticView(LoginRequiredMixin, generic.TemplateView):
     template_name = 'statistics/list.html'

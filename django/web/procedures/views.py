@@ -175,7 +175,7 @@ class ProcedureUpdateAPIView(generics.GenericAPIView):
         return JsonResponse(status=status.HTTP_200_OK, data={})
 
 
-class ProcedurePrintView(generic.TemplateView):
+class ProcedurePrintView(LoginRequiredMixin, generic.TemplateView):
     template_name = "printable_pages/payment_check.html"
 
     def get_context_data(self, **kwargs):
@@ -205,7 +205,7 @@ class ProcedurePrintView(generic.TemplateView):
         }
 
 
-class DetectionPrintView(generic.TemplateView):
+class DetectionPrintView(LoginRequiredMixin, generic.TemplateView):
     template_name = "printable_pages/detection_check.html"
 
     def get_context_data(self, **kwargs):
