@@ -112,16 +112,16 @@ function populateTable(data) {
             transferType = `<span class="badge rounded-pill d-block badge-subtle-warning fs-10">Chiqim<span class="ms-1 fas fas fa-sort-numeric-up" data-fa-transform="shrink-2"></span></span>`
         }
         if (item.procedure) {
-            description = `<a target="_blank" href="/procedures/${item.procedure}/update/">#${item.procedure} - muolaja uchun qilingan to'lov</a>`
+            description = `<a target="_blank" href="/procedures/${item.procedure}/update/">${item.procedure_full_name}</a>`
         }
         const row = `
                         <tr class="btn-reveal-trigger">
-                            <td class="align-middle  py-2"><span class="badge rounded-pill fs-10 w-100 badge-subtle-info">${item.id}</span></td>
+                            <td class="py-2 align-middle text-center fs-9 ">${description}</td>
                             <td class="py-2 align-middle text-center fs-9 ">${transferType}</td>
                             <td class="py-2 align-middle text-center fs-9 ">${item.get_transfer_method_display}</td>
                             <td class="py-2 align-middle text-end fs-9 fw-medium">${formatCurrency(item.amount)}</td>
                             <td class="py-2 align-middle text-center fs-9 ">${item.translated_created_at}</td>
-                            <td class="py-2 align-middle text-center fs-9 ">${description}</td>
+                            
                         </tr>
                         `;
         tableBody.append(row);

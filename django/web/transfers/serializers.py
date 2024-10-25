@@ -65,8 +65,13 @@ class TransferCreateSerializer(serializers.Serializer):
 
 
 class TransferSerializer(serializers.ModelSerializer):
+    procedure_full_name = serializers.SerializerMethodField()
     class Meta:
         model = Transfer
         fields = ["id", "procedure", "transfer_type", "transfer_method", "get_transfer_type_display",
                   "get_transfer_method_display", "amount", "description",
-                  "translated_created_at"]
+                  "translated_created_at", "procedure_full_name"]
+
+    @staticmethod
+    def get_procedure_full_name(obj: Transfer) -> str:
+        return f"{obj.procedure.client.last_name} {obj.procedure.client.first_name}" if obj.procedure else ""
