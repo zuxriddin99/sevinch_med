@@ -12,7 +12,6 @@ class TransferListService:
         data = {
             "all": self.reformat_data(self.get_all_data()),
             "today": self.reformat_data(self.get_today_data(today=today)),
-            "yesterday": self.reformat_data(self.get_yesterday_data(today=today)),
             "the_month": self.reformat_data(self.get_the_month_data(today=today)),
         }
         return data
