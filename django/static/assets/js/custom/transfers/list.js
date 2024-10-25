@@ -106,10 +106,10 @@ function populateTable(data) {
     tableBody.empty();  // Clear any existing rows
 
     $.each(data, function (index, item) {
-        let transferType = `<span class="badge rounded-pill d-block badge-subtle-success fs-10">Kirim<span class="ms-1 fas fas fa-sort-numeric-down" data-fa-transform="shrink-2"></span></span>`
+        let transferType = `<span class="badge rounded-pill badge-subtle-success fs-10">Kirim<span class="ms-1 fas fas fa-sort-numeric-down" data-fa-transform="shrink-2"></span></span>`
         let description = item.description
         if (item.transfer_type === 'expense') {
-            transferType = `<span class="badge rounded-pill d-block badge-subtle-warning fs-10">Chiqim<span class="ms-1 fas fas fa-sort-numeric-up" data-fa-transform="shrink-2"></span></span>`
+            transferType = `<span class="badge rounded-pill badge-subtle-warning fs-10">Chiqim<span class="ms-1 fas fas fa-sort-numeric-up" data-fa-transform="shrink-2"></span></span>`
         }
         if (item.procedure) {
             description = `<a target="_blank" href="/procedures/${item.procedure}/update/">${item.procedure_full_name}</a>`
