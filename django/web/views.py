@@ -14,12 +14,14 @@ from web.logics import format_price
 
 class LoginRequiredMixin(AccessMixin):
     """Verify that the current user is authenticated."""
+    login_url = 'web:auth:login'
+    permission_denied_message = "Sizda bu saxifaga kirishga ruxsat yo'q."
 
     def dispatch(self, request, *args, **kwargs):
         if not request.user.is_authenticated:
             return self.handle_no_permission()
-        # if not self.has_department(request.user):
-        #     return self.handle_no_permission()
+        if not self.has_department(request.user):
+            return self.handle_no_permission()
         return super().dispatch(request, *args, **kwargs)
 
     def has_department(self, user: CustomUser):
