@@ -97,7 +97,7 @@
 
                 <div class="card-body bg-body-tertiary">
                     <div id="procedureItemsMain">
-                        {% for procedure_item in procedure.items.all.order_by('n_th_treatment') %}
+                        {% for procedure_item in procedure.items.all %}
 
                             <script>
                                 newProcedureDivIdList.push({{ procedure_item.id }})
