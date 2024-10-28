@@ -2,8 +2,6 @@ from django.contrib import admin
 
 from apps.main.models import ReferralPerson, ReferralItem, Department, ProcedureType, Procedure, \
     Transfer, Product, ExpenseItem, ProcedureItem, ProcedurePrice
-import nested_admin
-import nested_admin
 
 
 # Register your models here.
@@ -28,19 +26,13 @@ class ProcedureTypeAdmin(admin.ModelAdmin):
     list_display = ["id", "name"]
 
 
-class ExpanseItemInline(nested_admin.NestedTabularInline):
-    model = ExpenseItem
-    extra = 1
-
-
-class ProcedureItemInline(nested_admin.NestedStackedInline):
+class ProcedureItemInline(admin.TabularInline):
     model = ProcedureItem
-    extra = 1
-    inlines = [ExpanseItemInline]
+    extra = 0
 
 
 @admin.register(Procedure)
-class ProcedureTypeAdmin(nested_admin.NestedModelAdmin):
+class ProcedureTypeAdmin(admin.ModelAdmin):
     list_display = ["id", "department", "client", "was_completed", "number_of_recommended_treatments"]
     inlines = [ProcedureItemInline]
 
