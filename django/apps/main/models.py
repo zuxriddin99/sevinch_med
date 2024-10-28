@@ -76,6 +76,7 @@ class ProcedureItem(BaseModel):
         verbose_name = "Procedure item"
         verbose_name_plural = "Procedure items"
         db_table = 'procedure_items'
+        ordering = ['n_th_treatment']
 
     @property
     def price_str(self):
