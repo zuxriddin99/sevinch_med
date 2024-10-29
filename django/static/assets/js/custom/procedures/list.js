@@ -56,7 +56,6 @@ $(document).ready(function () {
             }
             const row = `
                         <tr class="btn-reveal-trigger">
-                            <td class="align-middle white-space-nowrap py-2"><span class="badge fs-10 w-100 badge-subtle-info">${item.id}</span></td>
                             <td class="name align-middle white-space-nowrap py-2"><a href="/procedures/${item.id}/update/" target="_blank">
                                 <div class="d-flex d-flex align-items-center">
                                     <div class="avatar avatar-xl me-2">
