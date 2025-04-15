@@ -91,8 +91,8 @@ WSGI_APPLICATION = 'conf.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-# database_url = os.environ.get("DATABASE_URL", None)
-database_url = "postgresql://med_user:rN6cR9mQ7kyN@localhost:5432/med_db"
+database_url = os.environ.get("DATABASE_URL", None)
+# database_url = "postgresql://med_user:rN6cR9mQ7kyN@localhost:5432/med_db"
 if database_url:
     db_from_env = dj_database_url.config(default=database_url, conn_max_age=600)
     DATABASES = {"default": db_from_env}
