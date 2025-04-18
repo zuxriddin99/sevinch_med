@@ -1,4 +1,4 @@
-FROM python:3.12-slim AS development_build
+FROM python:3.11-slim-buster AS development_build
 
 ARG DJANGO_ENV
 
@@ -37,4 +37,3 @@ COPY pyproject.toml poetry.lock /django/
 # Install dependencies:
 RUN poetry install
 # copy project
-COPY /django .
